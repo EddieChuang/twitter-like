@@ -12,6 +12,8 @@ const middleware = applyMiddleware(thunk, logger)
 const initialState = window.INITIAL_STATE
 const store = createStore(reducers, initialState, middleware)
 
+require('./style/main.scss')
+
 const Routes = (
   // <Provider store={store}>
   <div>

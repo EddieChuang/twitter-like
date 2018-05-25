@@ -1,0 +1,198 @@
+
+#header{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;  
+}
+
+#header nav{
+  flex: 0 0 auto;
+}
+
+#banner{
+  flex: 1 0 auto;
+}
+
+#header nav ul{
+  list-style-type: none;
+}
+
+#header nav ul li a{
+  display: block;
+  color: $light-blue;
+  background: transparent;
+  text-decoration: none;
+  padding: 10px;
+  font-size: 20px;
+  transition: 
+    color 1s ease, 
+    background 1s ease,
+    padding 1s ease
+}
+
+#header nav ul li a:hover{
+  color: $light-grey;
+  padding-left: 60px;
+  background: $light-blue;
+}
+
+#nav-top{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px 20px 10px;
+}
+
+#nav-top span,
+#nav-top i{
+  font-size: 30px;
+  padding: 5px;
+  color: $light-blue;
+  
+}
+
+#nav-top > div{
+  color: $light-blue;
+  border: 3px solid;
+  transition: 
+    color 1s ease,
+    background 1s ease
+}
+
+#logo:hover{
+  background: $light-blue;
+  span, i{
+    color: $light-grey;
+  }
+}
+
+#menu-btn{
+  padding: 5px;
+  border: 2px solid $light-blue;
+  cursor: pointer;
+  align-self: center;
+}
+
+.bar1,
+.bar2,
+.bar3{
+  height: 5px;
+  width: 35px;
+  background-color: $light-blue;
+  margin: 5px 0;
+  transition: transform 1s ease;
+}
+
+.turn .bar1{
+  transform: rotate(-45deg) translate(-7px, 6px);
+}
+
+.turn .bar2{
+  opacity: 0;
+}
+
+.turn .bar3{
+  transform: rotate(45deg) translate(-7px, -8px);
+}
+
+@media screen and (min-width: 690px){
+  #header nav{
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    padding: 0 20px;
+  }
+  #menu-btn{
+    display: none;
+  }
+  #header nav ul{
+    flex: 1 1 auto;
+    display: flex !important;
+    flex-wrap: wrap;
+  }
+  #header nav ul li{
+    flex: 1 0 120px;
+  }
+  #header nav ul a{
+    text-align: center;
+
+  }
+  #header nav ul a:hover{
+    padding: 10px !important;
+  }
+  #nav-top{
+    padding: 10px;
+  }
+
+}
+
+
+/* Banner */
+
+#banner{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#banner-box{
+  color: $black;
+  text-align: center;
+}
+#banner-title{
+  text-transform: capitalize;
+  font-size: 60px;
+}
+.banner-underline{
+  width: 200px;
+  margin: 10px auto;
+  border: 3px solid $light-blue;
+}
+.banner-subtitle{
+  margin: 20px 0 40px 0;
+  text-transform: capitalize;
+  font-size: 25px;
+}
+
+.signup-btn,
+.signin-btn{
+  display: inline-block;
+  padding: 10px;
+  font-size: 40px;
+  color: $light-grey;
+  background: $light-blue;
+  border: 3px solid $light-blue;
+  border-radius: 5px;
+  margin: 0px 5px;
+  cursor: pointer;
+  transition: 
+    background 1s ease,
+    border 1s ease
+}
+
+.signup-btn:hover,
+.signin-btn:hover{
+  background: transparent;
+  color: $light-blue;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
