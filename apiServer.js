@@ -32,7 +32,7 @@ mongoose.connect(config.database, (err) => {
 })
 
 const userRoutes = require('./routes/user')
-app.use()
+app.use(userRoutes)
 
 app.get('/create-new-user', (req, res, next) => {
 

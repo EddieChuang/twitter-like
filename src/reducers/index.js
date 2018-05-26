@@ -1,7 +1,7 @@
 "use strict"
 import {combineReducers} from 'redux'
-import {xReducers} from './xReducers'
+import {userReducers} from './userReducers'
 
 export default combineReducers({
-  'x': xReducers
+  'userReducers': userReducers
 })

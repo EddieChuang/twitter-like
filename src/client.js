@@ -15,11 +15,11 @@ const store = createStore(reducers, initialState, middleware)
 require('./style/main.scss')
 
 const Routes = (
-  // <Provider store={store}>
-  <div>
-    {routes}
-  </div>
-  // </Provider>
+  <Provider store={store}>
+    {/* <div> */}
+      {routes}
+    {/* </div> */}
+  </Provider>
 )
 
 ReactDOM.render(

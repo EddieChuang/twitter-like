@@ -6,7 +6,11 @@ router.route('/signup')
     User.findOne({email: req.body.email}, (err, existingUser) => {
       if(existingUser){
         req.flash('errors', 'Account with that email address already exist.')
-        res.redirect('/signup')
+        res.status(500)
+        res.json({
+          message: 'Account with that email address already exist.'
+        })
+        // res.redirect('/signup')
       } else {
         let user   = User()
         user.name  = req.body.name
@@ -16,7 +20,10 @@ router.route('/signup')
         user.save((err) => {
           if(err)
               return next
-          res.redirect('/')
+          res.status(500)
+          res.json({
+            message: 'Account with that email address already exist.'
+          })
         })
       }
     })
