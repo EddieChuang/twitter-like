@@ -27754,7 +27754,7 @@ exports = module.exports = __webpack_require__(113)(false);
 
 
 // module
-exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box; }\n\nbody {\n  font-family: 'Roboto', sans-serif;\n  background: #F5F5F5; }\n\n#header {\n  display: flex;\n  flex-direction: column;\n  min-height: 10px; }\n\n#header nav {\n  flex: 0 0 auto;\n  background-color: #191919; }\n\n#header nav ul {\n  list-style-type: none; }\n\n#header nav ul li a {\n  display: block;\n  color: #2b98f0;\n  background: transparent;\n  text-decoration: none;\n  padding: 10px;\n  font-size: 20px;\n  transition: color 1s ease,  background 1s ease, padding 1s ease; }\n\n#header nav ul li a:hover {\n  color: #F5F5F5;\n  padding-left: 60px;\n  background: #2b98f0; }\n\n#nav-top {\n  display: flex;\n  justify-content: space-between;\n  padding: 20px 20px 20px 10px; }\n\n#nav-top span,\n#nav-top i {\n  font-size: 30px;\n  padding: 5px;\n  color: #2b98f0;\n  transition: color 1s ease; }\n\n#nav-top > div {\n  color: #2b98f0;\n  border: 3px solid;\n  transition: color 1s ease, background 1s ease; }\n\n#logo:hover {\n  background: #2b98f0; }\n  #logo:hover span, #logo:hover i {\n    color: #F5F5F5; }\n\n#menu-btn {\n  padding: 5px;\n  border: 2px solid #2b98f0;\n  cursor: pointer;\n  align-self: center; }\n\n.bar1,\n.bar2,\n.bar3 {\n  height: 5px;\n  width: 35px;\n  background-color: #2b98f0;\n  margin: 5px 0;\n  transition: transform 1s ease; }\n\n.turn .bar1 {\n  transform: rotate(-45deg) translate(-7px, 6px); }\n\n.turn .bar2 {\n  opacity: 0; }\n\n.turn .bar3 {\n  transform: rotate(45deg) translate(-7px, -8px); }\n\n@media screen and (min-width: 690px) {\n  #header nav {\n    display: flex;\n    align-items: baseline;\n    flex-wrap: wrap;\n    padding: 0 20px; }\n  #menu-btn {\n    display: none; }\n  #header nav ul {\n    flex: 1 1 auto;\n    display: flex !important;\n    flex-wrap: wrap; }\n  #header nav ul li {\n    flex: 1 0 120px; }\n  #header nav ul a {\n    text-align: center; }\n  #header nav ul a:hover {\n    padding: 10px !important; }\n  #nav-top {\n    padding: 10px; } }\n\n#banner {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex: 1 0 auto;\n  min-height: calc(100vh - 10px); }\n\n#banner-box {\n  color: #191919;\n  text-align: center; }\n\n#banner-title {\n  text-transform: capitalize;\n  font-size: 60px; }\n\n.banner-underline {\n  width: 200px;\n  margin: 10px auto;\n  border: 3px solid #2b98f0; }\n\n.banner-subtitle {\n  margin: 20px 0 40px 0;\n  text-transform: capitalize;\n  font-size: 25px; }\n\n#signup,\n#signin {\n  display: inline-block;\n  padding: 10px;\n  font-size: 40px;\n  color: #F5F5F5;\n  background: #2b98f0;\n  border: 3px solid #2b98f0;\n  border-radius: 5px;\n  margin: 0px 5px;\n  cursor: pointer;\n  text-decoration: none;\n  transition: background 1s ease, border 1s ease; }\n\n#signup:hover,\n#signin:hover {\n  background: transparent;\n  color: #2b98f0; }\n", ""]);
+exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box; }\n\nbody {\n  font-family: 'Roboto', sans-serif;\n  background: #F5F5F5; }\n\n#header {\n  display: flex;\n  flex-direction: column;\n  min-height: 10vh; }\n\n#header nav {\n  flex: 0 0 auto;\n  background-color: #191919; }\n\n#header nav ul {\n  list-style-type: none; }\n\n#header nav ul li a {\n  display: block;\n  color: #2b98f0;\n  background: transparent;\n  text-decoration: none;\n  padding: 10px;\n  font-size: 20px;\n  transition: color 1s ease,  background 1s ease, padding 1s ease; }\n\n#header nav ul li a:hover {\n  color: #F5F5F5;\n  padding-left: 60px;\n  background: #2b98f0; }\n\n#nav-top {\n  display: flex;\n  justify-content: space-between;\n  padding: 20px 20px 20px 10px; }\n\n#nav-top span,\n#nav-top i {\n  font-size: 30px;\n  padding: 5px;\n  color: #2b98f0;\n  transition: color 1s ease; }\n\n#nav-top > div {\n  color: #2b98f0;\n  border: 3px solid;\n  transition: color 1s ease, background 1s ease; }\n\n#logo:hover {\n  background: #2b98f0; }\n  #logo:hover span, #logo:hover i {\n    color: #F5F5F5; }\n\n#menu-btn {\n  padding: 5px;\n  border: 2px solid #2b98f0;\n  cursor: pointer;\n  align-self: center; }\n\n.bar1,\n.bar2,\n.bar3 {\n  height: 5px;\n  width: 35px;\n  background-color: #2b98f0;\n  margin: 5px 0;\n  transition: transform 1s ease; }\n\n.turn .bar1 {\n  transform: rotate(-45deg) translate(-7px, 6px); }\n\n.turn .bar2 {\n  opacity: 0; }\n\n.turn .bar3 {\n  transform: rotate(45deg) translate(-7px, -8px); }\n\n@media screen and (min-width: 690px) {\n  #header nav {\n    display: flex;\n    align-items: baseline;\n    flex-wrap: wrap;\n    padding: 0 20px; }\n  #menu-btn {\n    display: none; }\n  #header nav ul {\n    flex: 1 1 auto;\n    display: flex !important;\n    flex-wrap: wrap; }\n  #header nav ul li {\n    flex: 1 0 120px; }\n  #header nav ul a {\n    text-align: center; }\n  #header nav ul a:hover {\n    padding: 10px !important; }\n  #nav-top {\n    padding: 10px; } }\n\n#banner {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex: 1 0 auto;\n  min-height: calc(100vh - 10vh); }\n\n#banner-box {\n  color: #191919;\n  text-align: center; }\n\n#banner-title {\n  text-transform: capitalize;\n  font-size: 60px; }\n\n.banner-underline {\n  width: 200px;\n  margin: 10px auto;\n  border: 3px solid #2b98f0; }\n\n.banner-subtitle {\n  margin: 20px 0 40px 0;\n  text-transform: capitalize;\n  font-size: 25px; }\n\n#link-signup,\n#link-signin {\n  display: inline-block;\n  padding: 10px;\n  font-size: 40px;\n  color: #F5F5F5;\n  background: #2b98f0;\n  border: 3px solid #2b98f0;\n  border-radius: 5px;\n  margin: 0px 5px;\n  cursor: pointer;\n  text-decoration: none;\n  transition: background 1s ease, border 1s ease; }\n\n#link-signup:hover,\n#link-signin:hover {\n  background: transparent;\n  color: #2b98f0; }\n\n#signup {\n  display: flex;\n  height: calc(100vh - 10vh);\n  justify-content: center;\n  align-items: center; }\n\n.signup-form li {\n  display: flex;\n  list-style-type: none;\n  margin: 20px auto;\n  justify-content: flex-end; }\n\n.signup-form h3 {\n  font-size: 40px;\n  color: #2b98f0;\n  text-align: center; }\n\n.signup-form {\n  display: flex;\n  flex-direction: column; }\n\n.signup-form i {\n  font-size: 30px;\n  margin-right: 5px;\n  color: #456990;\n  align-self: center;\n  justify-content: center; }\n\n.signup-form input {\n  font-size: 25px;\n  border-radius: 5px; }\n\n.signup-form input::placeholder {\n  color: #BBB; }\n\n.signup-form input:focus {\n  border-radius: 5px; }\n\n.signup-form button {\n  font-size: 20px;\n  color: #F5F5F5;\n  background: #2EC4B6;\n  padding: 10px;\n  border: 2px solid #2EC4B6;\n  border-radius: 5px;\n  margin: 0px 10px;\n  cursor: pointer;\n  justify-content: flex-end;\n  transition: background-color 1s ease, border 1s ease; }\n\n.signup-form button:hover {\n  background: transparent;\n  color: #2EC4B6; }\n\n.signup-form a {\n  text-decoration: none;\n  align-self: flex-end;\n  justify-content: flex-end;\n  font-style: italic; }\n", ""]);
 
 // exports
 
@@ -28433,12 +28433,12 @@ var Banner = function (_React$Component) {
           ),
           _react2.default.createElement(
             "a",
-            { href: "/signup", id: "signup" },
+            { href: "/signup", id: "link-signup" },
             "Signup"
           ),
           _react2.default.createElement(
             "a",
-            { href: "/signup", id: "signin" },
+            { href: "/signup", id: "link-signin" },
             "Signin"
           )
         )
@@ -28490,8 +28490,52 @@ var SignupForm = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         "section",
-        null,
-        _react2.default.createElement("form", null)
+        { id: "signup" },
+        _react2.default.createElement(
+          "form",
+          { className: "signup-form" },
+          _react2.default.createElement(
+            "h3",
+            null,
+            "Sign Up"
+          ),
+          _react2.default.createElement(
+            "ul",
+            null,
+            _react2.default.createElement(
+              "li",
+              null,
+              _react2.default.createElement("i", { className: "fa fa-user" }),
+              _react2.default.createElement("input", { type: "text", id: "username", placeholder: "Username" })
+            ),
+            _react2.default.createElement(
+              "li",
+              null,
+              _react2.default.createElement("i", { className: "fa fa-envelope" }),
+              _react2.default.createElement("input", { type: "email", id: "email", placeholder: "Email" })
+            ),
+            _react2.default.createElement(
+              "li",
+              null,
+              _react2.default.createElement("i", { className: "fa fa-lock" }),
+              _react2.default.createElement("input", { type: "password", id: "password", placeholder: "Password" })
+            ),
+            _react2.default.createElement(
+              "li",
+              null,
+              _react2.default.createElement(
+                "button",
+                { type: "submit" },
+                "Submit"
+              ),
+              _react2.default.createElement(
+                "a",
+                { href: "/signin" },
+                "Have an account"
+              )
+            )
+          )
+        )
       );
     }
   }]);

@@ -2,12 +2,17 @@
 // color
 $light-grey: #F5F5F5;
 $light-blue: #2b98f0;
+$dark-blue:  #456990;
+$blue-green: #2EC4B6;
 $black: #191919;
 
 
 // header
-$header-height: 10px;
+$header-height: 10vh;
 $header-background-color: black;
 
 // banner
-$banner-height: calc(100vh - #{$header-height})
+$banner-height: calc(100vh - #{$header-height});
+
+// signup form
+$signup-form-height: calc(100vh - #{$header-height});

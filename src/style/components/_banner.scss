@@ -26,8 +26,8 @@
   font-size: 25px;
 }
 
-#signup,
-#signin{
+#link-signup,
+#link-signin{
   display: inline-block;
   padding: 10px;
   font-size: 40px;
@@ -43,8 +43,8 @@
     border 1s ease
 }
 
-#signup:hover,
-#signin:hover{
+#link-signup:hover,
+#link-signin:hover{
   background: transparent;
   color: $light-blue;
 }

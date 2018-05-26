@@ -1,0 +1,64 @@
+#signup{
+  display: flex;
+  height: $signup-form-height;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-form li{
+  display: flex;
+  list-style-type: none;
+  margin: 20px auto;
+  justify-content: flex-end;
+}
+.signup-form h3{
+  font-size: 40px;
+  color: $light-blue;
+  text-align: center;
+}
+.signup-form{
+  display: flex;
+  flex-direction: column;
+}
+.signup-form i{
+  font-size: 30px;
+  margin-right: 5px;
+  color: $dark-blue;
+  align-self: center;
+  justify-content: center;
+}
+
+.signup-form input{
+  font-size: 25px;
+  border-radius: 5px;
+}
+.signup-form input::placeholder{
+  color: #BBB;
+}
+.signup-form input:focus{
+  border-radius: 5px;
+}
+.signup-form button{
+  font-size: 20px;
+  color: $light-grey;
+  background: $blue-green;
+  padding: 10px;
+  border: 2px solid $blue-green;
+  border-radius: 5px;
+  margin: 0px 10px;
+  cursor: pointer;
+  justify-content: flex-end;
+  transition:
+    background-color 1s ease,
+    border 1s ease
+}
+.signup-form button:hover{
+  background: transparent;
+  color: $blue-green;
+}
+.signup-form a{
+  text-decoration: none;
+  align-self: flex-end;
+  justify-content: flex-end;
+  font-style: italic;
+}
