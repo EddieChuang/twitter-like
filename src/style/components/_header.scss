@@ -2,16 +2,12 @@
 #header{
   display: flex;
   flex-direction: column;
-  min-height: 100vh;  
+  min-height: $header-height;  
 }
 
 #header nav{
   flex: 0 0 auto;
   background-color: $black
-}
-
-#banner{
-  flex: 1 0 auto;
 }
 
 #header nav ul{
@@ -127,55 +123,6 @@
 
 }
 
-
-/* Banner */
-
-#banner{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#banner-box{
-  color: $black;
-  text-align: center;
-}
-#banner-title{
-  text-transform: capitalize;
-  font-size: 60px;
-}
-.banner-underline{
-  width: 200px;
-  margin: 10px auto;
-  border: 3px solid $light-blue;
-}
-.banner-subtitle{
-  margin: 20px 0 40px 0;
-  text-transform: capitalize;
-  font-size: 25px;
-}
-
-.signup-btn,
-.signin-btn{
-  display: inline-block;
-  padding: 10px;
-  font-size: 40px;
-  color: $light-grey;
-  background: $light-blue;
-  border: 3px solid $light-blue;
-  border-radius: 5px;
-  margin: 0px 5px;
-  cursor: pointer;
-  transition: 
-    background 1s ease,
-    border 1s ease
-}
-
-.signup-btn:hover,
-.signin-btn:hover{
-  background: transparent;
-  color: $light-blue;
-}
 
 
 

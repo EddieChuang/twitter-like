@@ -4,16 +4,25 @@ require('babel-core/register')
 const express      = require('express')
 const cookieParser = require('cookie-parser')
 const bodyParser   = require('body-parser')
-// const session      = require('express-session')
 const mongoose     = require('mongoose')
-// const MongoStore   = require('connect-mongo')(session)
 const config       = require('./config/secret')
 const User         = require('./models/user')
+const session      = require('express-session')
+const MongoStore   = require('connect-mongo')(session)
+const flash        = require('express-flash')
+
 
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(cookieParser())
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: config.secret,
+  store: new MongoStore({ url: config.database, autoReconnect: true})
+}))
+app.use(flash())
 
 // mongo connection 必須在 apiServer
 mongoose.connect(config.database, (err) => {
@@ -22,12 +31,15 @@ mongoose.connect(config.database, (err) => {
   console.log('Connected to the mongo database')
 })
 
+const userRoutes = require('./routes/user')
+app.use()
+
 app.get('/create-new-user', (req, res, next) => {
 
   let user = new User()
-  user.email = 'chiamin@gmail.com'
+  user.email = 'chiamin3@gmail.com'
   user.name  = 'chiamin'
-  user.apssword = 'chiamin'
+  user.password = 'chiamin'
   user.save((err) => {
     if(err)
         return next(err)

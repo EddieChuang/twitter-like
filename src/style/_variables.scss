@@ -5,4 +5,9 @@ $light-blue: #2b98f0;
 $black: #191919;
 
 
+// header
+$header-height: 10px;
 $header-background-color: black;
+
+// banner
+$banner-height: calc(100vh - #{$header-height})

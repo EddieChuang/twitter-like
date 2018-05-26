@@ -1,0 +1,50 @@
+
+#banner{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 auto;
+  min-height: $banner-height;
+}
+
+#banner-box{
+  color: $black;
+  text-align: center;
+}
+#banner-title{
+  text-transform: capitalize;
+  font-size: 60px;
+}
+.banner-underline{
+  width: 200px;
+  margin: 10px auto;
+  border: 3px solid $light-blue;
+}
+.banner-subtitle{
+  margin: 20px 0 40px 0;
+  text-transform: capitalize;
+  font-size: 25px;
+}
+
+#signup,
+#signin{
+  display: inline-block;
+  padding: 10px;
+  font-size: 40px;
+  color: $light-grey;
+  background: $light-blue;
+  border: 3px solid $light-blue;
+  border-radius: 5px;
+  margin: 0px 5px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 
+    background 1s ease,
+    border 1s ease
+}
+
+#signup:hover,
+#signin:hover{
+  background: transparent;
+  color: $light-blue;
+}

@@ -4,9 +4,7 @@ require('babel-core/register')
 const express    = require('express')
 const morgan     = require('morgan')
 const bodyParser = require('body-parser')
-// const mongoose   = require('mongoose')
 const path       = require('path')
-// const config     = require('./config/secret')
 const httpProxy  = require('http-proxy')
 
 const app = express();

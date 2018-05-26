@@ -21,8 +21,7 @@ const Routes = (
   </div>
   // </Provider>
 )
-console.log(routes)
-console.log(Routes)
+
 ReactDOM.render(
   Routes, document.getElementById('app')
 )

@@ -3447,8 +3447,7 @@ _react2.default.createElement(
 )
 // </Provider>
 ;
-console.log(_routes2.default);
-console.log(Routes);
+
 _reactDom2.default.render(Routes, document.getElementById('app'));
 
 /***/ }),
@@ -24449,6 +24448,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(82);
 
+var _Home = __webpack_require__(116);
+
+var _Home2 = _interopRequireDefault(_Home);
+
 var _SignUp = __webpack_require__(108);
 
 var _SignUp2 = _interopRequireDefault(_SignUp);
@@ -24461,7 +24464,15 @@ var routes = _react2.default.createElement(
   _react2.default.createElement(
     _reactRouterDom.Switch,
     null,
-    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _SignUp2.default })
+    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', render: function render() {
+        return _react2.default.createElement(_reactRouterDom.Redirect, { to: '/home' });
+      } }),
+    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/home', render: function render() {
+        return _react2.default.createElement(_Home2.default, null);
+      } }),
+    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/signup', render: function render() {
+        return _react2.default.createElement(_SignUp2.default, null);
+      } })
   )
 );
 
@@ -27529,7 +27540,8 @@ var SignUp = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_ui.Header, null)
+        _react2.default.createElement(_ui.Header, null),
+        _react2.default.createElement(_ui.SignupForm, null)
       );
     }
   }]);
@@ -27563,6 +27575,24 @@ Object.defineProperty(exports, 'Header', {
   enumerable: true,
   get: function get() {
     return _interopRequireDefault(_Header).default;
+  }
+});
+
+var _Banner = __webpack_require__(117);
+
+Object.defineProperty(exports, 'Banner', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_Banner).default;
+  }
+});
+
+var _SignupForm = __webpack_require__(118);
+
+Object.defineProperty(exports, 'SignupForm', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_SignupForm).default;
   }
 });
 
@@ -27641,7 +27671,7 @@ var Header = function (_React$Component) {
               null,
               _react2.default.createElement(
                 "a",
-                { href: "#" },
+                { href: "/home" },
                 "Home"
               )
             ),
@@ -27653,35 +27683,6 @@ var Header = function (_React$Component) {
                 { href: "#" },
                 "Tweet"
               )
-            )
-          )
-        ),
-        _react2.default.createElement(
-          "section",
-          { id: "banner" },
-          _react2.default.createElement(
-            "div",
-            { id: "banner-box" },
-            _react2.default.createElement(
-              "h1",
-              { id: "banner-title" },
-              "Join and Follow"
-            ),
-            _react2.default.createElement("div", { className: "banner-underline" }),
-            _react2.default.createElement(
-              "h3",
-              { className: "banner-subtitle" },
-              "Signup and enjoy new social experience"
-            ),
-            _react2.default.createElement(
-              "button",
-              { className: "signup-btn" },
-              "Signup"
-            ),
-            _react2.default.createElement(
-              "button",
-              { className: "signin-btn" },
-              "Signin"
             )
           )
         )
@@ -27753,7 +27754,7 @@ exports = module.exports = __webpack_require__(113)(false);
 
 
 // module
-exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box; }\n\nbody {\n  font-family: 'Roboto', sans-serif;\n  background: #F5F5F5; }\n\n#header {\n  display: flex;\n  flex-direction: column;\n  min-height: 100vh; }\n\n#header nav {\n  flex: 0 0 auto;\n  background-color: #191919; }\n\n#banner {\n  flex: 1 0 auto; }\n\n#header nav ul {\n  list-style-type: none; }\n\n#header nav ul li a {\n  display: block;\n  color: #2b98f0;\n  background: transparent;\n  text-decoration: none;\n  padding: 10px;\n  font-size: 20px;\n  transition: color 1s ease,  background 1s ease, padding 1s ease; }\n\n#header nav ul li a:hover {\n  color: #F5F5F5;\n  padding-left: 60px;\n  background: #2b98f0; }\n\n#nav-top {\n  display: flex;\n  justify-content: space-between;\n  padding: 20px 20px 20px 10px; }\n\n#nav-top span,\n#nav-top i {\n  font-size: 30px;\n  padding: 5px;\n  color: #2b98f0;\n  transition: color 1s ease; }\n\n#nav-top > div {\n  color: #2b98f0;\n  border: 3px solid;\n  transition: color 1s ease, background 1s ease; }\n\n#logo:hover {\n  background: #2b98f0; }\n  #logo:hover span, #logo:hover i {\n    color: #F5F5F5; }\n\n#menu-btn {\n  padding: 5px;\n  border: 2px solid #2b98f0;\n  cursor: pointer;\n  align-self: center; }\n\n.bar1,\n.bar2,\n.bar3 {\n  height: 5px;\n  width: 35px;\n  background-color: #2b98f0;\n  margin: 5px 0;\n  transition: transform 1s ease; }\n\n.turn .bar1 {\n  transform: rotate(-45deg) translate(-7px, 6px); }\n\n.turn .bar2 {\n  opacity: 0; }\n\n.turn .bar3 {\n  transform: rotate(45deg) translate(-7px, -8px); }\n\n@media screen and (min-width: 690px) {\n  #header nav {\n    display: flex;\n    align-items: baseline;\n    flex-wrap: wrap;\n    padding: 0 20px; }\n  #menu-btn {\n    display: none; }\n  #header nav ul {\n    flex: 1 1 auto;\n    display: flex !important;\n    flex-wrap: wrap; }\n  #header nav ul li {\n    flex: 1 0 120px; }\n  #header nav ul a {\n    text-align: center; }\n  #header nav ul a:hover {\n    padding: 10px !important; }\n  #nav-top {\n    padding: 10px; } }\n\n/* Banner */\n#banner {\n  display: flex;\n  align-items: center;\n  justify-content: center; }\n\n#banner-box {\n  color: #191919;\n  text-align: center; }\n\n#banner-title {\n  text-transform: capitalize;\n  font-size: 60px; }\n\n.banner-underline {\n  width: 200px;\n  margin: 10px auto;\n  border: 3px solid #2b98f0; }\n\n.banner-subtitle {\n  margin: 20px 0 40px 0;\n  text-transform: capitalize;\n  font-size: 25px; }\n\n.signup-btn,\n.signin-btn {\n  display: inline-block;\n  padding: 10px;\n  font-size: 40px;\n  color: #F5F5F5;\n  background: #2b98f0;\n  border: 3px solid #2b98f0;\n  border-radius: 5px;\n  margin: 0px 5px;\n  cursor: pointer;\n  transition: background 1s ease, border 1s ease; }\n\n.signup-btn:hover,\n.signin-btn:hover {\n  background: transparent;\n  color: #2b98f0; }\n", ""]);
+exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box; }\n\nbody {\n  font-family: 'Roboto', sans-serif;\n  background: #F5F5F5; }\n\n#header {\n  display: flex;\n  flex-direction: column;\n  min-height: 10px; }\n\n#header nav {\n  flex: 0 0 auto;\n  background-color: #191919; }\n\n#header nav ul {\n  list-style-type: none; }\n\n#header nav ul li a {\n  display: block;\n  color: #2b98f0;\n  background: transparent;\n  text-decoration: none;\n  padding: 10px;\n  font-size: 20px;\n  transition: color 1s ease,  background 1s ease, padding 1s ease; }\n\n#header nav ul li a:hover {\n  color: #F5F5F5;\n  padding-left: 60px;\n  background: #2b98f0; }\n\n#nav-top {\n  display: flex;\n  justify-content: space-between;\n  padding: 20px 20px 20px 10px; }\n\n#nav-top span,\n#nav-top i {\n  font-size: 30px;\n  padding: 5px;\n  color: #2b98f0;\n  transition: color 1s ease; }\n\n#nav-top > div {\n  color: #2b98f0;\n  border: 3px solid;\n  transition: color 1s ease, background 1s ease; }\n\n#logo:hover {\n  background: #2b98f0; }\n  #logo:hover span, #logo:hover i {\n    color: #F5F5F5; }\n\n#menu-btn {\n  padding: 5px;\n  border: 2px solid #2b98f0;\n  cursor: pointer;\n  align-self: center; }\n\n.bar1,\n.bar2,\n.bar3 {\n  height: 5px;\n  width: 35px;\n  background-color: #2b98f0;\n  margin: 5px 0;\n  transition: transform 1s ease; }\n\n.turn .bar1 {\n  transform: rotate(-45deg) translate(-7px, 6px); }\n\n.turn .bar2 {\n  opacity: 0; }\n\n.turn .bar3 {\n  transform: rotate(45deg) translate(-7px, -8px); }\n\n@media screen and (min-width: 690px) {\n  #header nav {\n    display: flex;\n    align-items: baseline;\n    flex-wrap: wrap;\n    padding: 0 20px; }\n  #menu-btn {\n    display: none; }\n  #header nav ul {\n    flex: 1 1 auto;\n    display: flex !important;\n    flex-wrap: wrap; }\n  #header nav ul li {\n    flex: 1 0 120px; }\n  #header nav ul a {\n    text-align: center; }\n  #header nav ul a:hover {\n    padding: 10px !important; }\n  #nav-top {\n    padding: 10px; } }\n\n#banner {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex: 1 0 auto;\n  min-height: calc(100vh - 10px); }\n\n#banner-box {\n  color: #191919;\n  text-align: center; }\n\n#banner-title {\n  text-transform: capitalize;\n  font-size: 60px; }\n\n.banner-underline {\n  width: 200px;\n  margin: 10px auto;\n  border: 3px solid #2b98f0; }\n\n.banner-subtitle {\n  margin: 20px 0 40px 0;\n  text-transform: capitalize;\n  font-size: 25px; }\n\n#signup,\n#signin {\n  display: inline-block;\n  padding: 10px;\n  font-size: 40px;\n  color: #F5F5F5;\n  background: #2b98f0;\n  border: 3px solid #2b98f0;\n  border-radius: 5px;\n  margin: 0px 5px;\n  cursor: pointer;\n  text-decoration: none;\n  transition: background 1s ease, border 1s ease; }\n\n#signup:hover,\n#signin:hover {\n  background: transparent;\n  color: #2b98f0; }\n", ""]);
 
 // exports
 
@@ -28320,6 +28321,185 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 116 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _ui = __webpack_require__(109);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Home = function (_React$Component) {
+  _inherits(Home, _React$Component);
+
+  function Home() {
+    _classCallCheck(this, Home);
+
+    return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).apply(this, arguments));
+  }
+
+  _createClass(Home, [{
+    key: 'render',
+    value: function render() {
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_ui.Header, null),
+        _react2.default.createElement(_ui.Banner, null)
+      );
+    }
+  }]);
+
+  return Home;
+}(_react2.default.Component);
+
+exports.default = Home;
+
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Banner = function (_React$Component) {
+  _inherits(Banner, _React$Component);
+
+  function Banner() {
+    _classCallCheck(this, Banner);
+
+    return _possibleConstructorReturn(this, (Banner.__proto__ || Object.getPrototypeOf(Banner)).call(this));
+  }
+
+  _createClass(Banner, [{
+    key: "render",
+    value: function render() {
+
+      return _react2.default.createElement(
+        "section",
+        { id: "banner" },
+        _react2.default.createElement(
+          "div",
+          { id: "banner-box" },
+          _react2.default.createElement(
+            "h1",
+            { id: "banner-title" },
+            "Join and Follow"
+          ),
+          _react2.default.createElement("div", { className: "banner-underline" }),
+          _react2.default.createElement(
+            "h3",
+            { className: "banner-subtitle" },
+            "Signup and enjoy new social experience"
+          ),
+          _react2.default.createElement(
+            "a",
+            { href: "/signup", id: "signup" },
+            "Signup"
+          ),
+          _react2.default.createElement(
+            "a",
+            { href: "/signup", id: "signin" },
+            "Signin"
+          )
+        )
+      );
+    }
+  }]);
+
+  return Banner;
+}(_react2.default.Component);
+
+exports.default = Banner;
+
+/***/ }),
+/* 118 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SignupForm = function (_React$Component) {
+  _inherits(SignupForm, _React$Component);
+
+  function SignupForm() {
+    _classCallCheck(this, SignupForm);
+
+    return _possibleConstructorReturn(this, (SignupForm.__proto__ || Object.getPrototypeOf(SignupForm)).apply(this, arguments));
+  }
+
+  _createClass(SignupForm, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "section",
+        null,
+        _react2.default.createElement("form", null)
+      );
+    }
+  }]);
+
+  return SignupForm;
+}(_react2.default.Component);
+
+exports.default = SignupForm;
 
 /***/ })
 /******/ ]);
