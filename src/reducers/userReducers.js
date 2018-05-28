@@ -1,13 +1,17 @@
 "use strict"
 
-export function userReducers(state={message:''}, action){
+export function userReducers(state={status:0, message:''}, action){
 
   console.log('userReducers', action)
   switch(action.type){
     case 'SIGNUP':
-      return { status: 200, message: action.payload.message}
+      return { status: action.payload.status, message: action.payload.data.message }
     case 'SIGNUP_ERROR':  
-      return { status: 500, message: action.payload.message}
+      return { status: action.payload.status, message: action.payload.data.message }
+    case 'SIGNIN':
+      return {}
+    case 'SIGNIN_ERROR':
+      return {}
   }
 
 

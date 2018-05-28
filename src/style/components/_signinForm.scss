@@ -1,44 +1,40 @@
-#signup{
+#signin{
   display: flex;
-  height: $signup-form-height;
   justify-content: center;
   align-items: center;
+  height: $signin-form-height;
 }
 
-.signup-form li{
-  display: flex;
-  list-style-type: none;
-  margin: 20px auto;
-  justify-content: flex-end;
-}
-.signup-form h3{
+#signin h3{
   font-size: 40px;
   color: $light-blue;
   text-align: center;
 }
-.signup-form{
+
+.input-field, .submit-field{
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+  margin: 20px auto;
 }
-.signup-form i{
+
+.input-field i{
   font-size: 30px;
   margin-right: 5px;
   color: $dark-blue;
-  align-self: center;
-  justify-content: center;
+  // align-self: center;
+  // justify-content: center;
 }
-
-.signup-form input{
+.input-field input{
   font-size: 25px;
   border-radius: 5px;
 }
-.signup-form input::placeholder{
+.input-field input::placeholder{
   color: #BBB;
 }
-.signup-form input:focus{
+.input-field input:focus{
   border-radius: 5px;
 }
-.signup-form button{
+.submit-field button{
   font-size: 20px;
   color: $light-grey;
   background: $blue-green;
@@ -47,18 +43,16 @@
   border-radius: 5px;
   margin: 0px 10px;
   cursor: pointer;
-  justify-content: flex-end;
   transition:
     background-color 1s ease,
     border 1s ease
 }
-.signup-form button:hover{
+.submit-field button:hover{
   background: transparent;
   color: $blue-green;
 }
-.signup-form a{
+.submit-field a{
   text-decoration: none;
   align-self: flex-end;
-  justify-content: flex-end;
   font-style: italic;
 }

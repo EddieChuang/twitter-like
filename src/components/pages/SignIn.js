@@ -1,18 +1,18 @@
 "use strict"
 import React from 'react'
 import { connect } from 'react-redux'
-import { Header, SignupForm } from '../ui'
+import { Header, SigninForm } from '../ui'
 
-class SignUp extends React.Component{
+class SignIn extends React.Component{
 
   render(){
     return(
       <div>
         <Header/>
-        <SignupForm/>
+        <SigninForm/>
       </div>
     )
   }
 }
 
-export default SignUp
+export default SignIn

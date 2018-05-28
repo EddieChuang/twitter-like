@@ -39,7 +39,7 @@ UserSchema.methods.gravatar = function(size){
   return 'https://gravatar.com/avatart/' + md5 + '?s=' + size + '&d=retro'
 }
 
-UserSchema.methods.comparePassword = (passowrd) => {
+UserSchema.methods.comparePassword = function(passowrd) {
  return bcrypt.compareSync(password, this.password)
 }
 

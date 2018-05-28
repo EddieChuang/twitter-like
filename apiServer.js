@@ -10,12 +10,14 @@ const User         = require('./models/user')
 const session      = require('express-session')
 const MongoStore   = require('connect-mongo')(session)
 const flash        = require('express-flash')
+const passport     = require('passport')
 
 
 const app = express()
+
+// middleware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true}))
-app.use(cookieParser())
 app.use(session({
   resave: true,
   saveUninitialized: true,
@@ -23,29 +25,23 @@ app.use(session({
   store: new MongoStore({ url: config.database, autoReconnect: true})
 }))
 app.use(flash())
+app.use(cookieParser())
+app.use(passport.initialize()) // init passport strategies
+app.use(passport.session())
 
-// mongo connection 必須在 apiServer
+// end middleware
+
+
+// mongodb
 mongoose.connect(config.database, (err) => {
   if(err)
       return console.log(err)
   console.log('Connected to the mongo database')
 })
+// end mongodb
 
 const userRoutes = require('./routes/user')
 app.use(userRoutes)
-
-app.get('/create-new-user', (req, res, next) => {
-
-  let user = new User()
-  user.email = 'chiamin3@gmail.com'
-  user.name  = 'chiamin'
-  user.password = 'chiamin'
-  user.save((err) => {
-    if(err)
-        return next(err)
-    res.json('Successfully created')
-  })
-})
 
 
 

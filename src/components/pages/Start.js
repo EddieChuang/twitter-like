@@ -2,17 +2,18 @@
 import React from 'react'
 import { Header, Banner } from '../ui'
 
-class Home extends React.Component{
+class Start extends React.Component{
   
   render(){
 
     return(
       <div>
         <Header/>
+        <Banner/>
       </div>
     )
 
   }
 }
 
-export default Home
+export default Start

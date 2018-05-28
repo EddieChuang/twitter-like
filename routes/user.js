@@ -1,5 +1,8 @@
-const router = require('express').Router()
-const User   = require('../models/user')
+const router        = require('express').Router()
+const User           = require('../models/user')
+const passport       = require('passport')
+const passportConfig = require('../config/passport')
+
 
 router.route('/signup')
   .post((req, res, next) => {
@@ -20,13 +23,20 @@ router.route('/signup')
         user.save((err) => {
           if(err)
               return next
-          res.status(500)
+          res.status(200)
           res.json({
-            message: 'Account with that email address already exist.'
+            message: 'Successfully. '
           })
         })
       }
     })
   })
+
+router.route('/signin')
+  .post(passport.authenticate('local-login', {
+    successRedirect: '/home',
+    failureRedirect: '/signin',
+    failureFlash: true
+  }))
 
 module.exports = router
