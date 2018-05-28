@@ -4,11 +4,16 @@
   align-items: center;
   justify-content: center;
   flex: 1 0 auto;
-  min-height: $banner-height;
+  // min-height: $banner-height;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/images/banner.jpg')center/cover fixed no-repeat;
+  // background: url('/images/banner.jpg');
+  // background-position: center;
+  // background-size: cover;
+  // background-attachment: fixed;
 }
 
 #banner-box{
-  color: $black;
+  color: $light-grey;
   text-align: center;
 }
 #banner-title{

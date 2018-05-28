@@ -8,7 +8,7 @@ $black: #191919;
 
 
 // header
-$header-height: 10vh;
+$header-height: 5em;
 $header-background-color: black;
 
 // banner
@@ -16,3 +16,19 @@ $banner-height: calc(100vh - #{$header-height});
 
 // signup form
 $signup-form-height: calc(100vh - #{$header-height});
+
+// main
+$main-height: calc(100vh - #{$header-height});
+$main-width: 100vw;
+
+// profile
+$profile-height: calc(100vh - #{$header-height});
+$profile-width: 25vw;
+// $profile-height: calc(100vh - #{$header-height} - 1em);
+// $profile-width: calc(20vw - 1em);
+
+// postList
+$postList-height: calc(100vh - #{$header-height});
+$postList-width: calc(100vw - #{$profile-width});
+// $postList-height: calc(100vh - #{$header-height} - 1em);
+// $postList-width: calc(100vw - #{$profile-width} - 1em);

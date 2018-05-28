@@ -7,9 +7,13 @@ class Home extends React.Component{
   render(){
 
     return(
-      <div>
-        <Header/>
-        <Banner/>
+      <div id="home">
+        {/* <header> */}
+          <Header/>
+        {/* </header> */}
+        {/* <article> */}
+          <Banner/>
+        {/* </article> */}
       </div>
     )
 
