@@ -6,6 +6,7 @@ import Home from './components/pages/Home'
 import SignUp from './components/pages/SignUp'
 import SignIn from './components/pages/SignIn'
 
+
 const routes = (
   <BrowserRouter>
     <Switch>

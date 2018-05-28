@@ -10,8 +10,8 @@ class Header extends React.Component{
   render(){
 
     return(
-      <header id="header">
-        <nav>
+      // <header id="header">
+        <nav id="nav-container">
           <div id="nav-top">
             <div id="logo">
               <i className="fa fa-twitter"/>
@@ -30,7 +30,7 @@ class Header extends React.Component{
         </nav>
         
 
-      </header>
+      // </header>
     )
     
 

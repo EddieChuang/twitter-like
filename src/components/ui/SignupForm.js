@@ -26,31 +26,19 @@ class SignupForm extends React.Component{
     this.props.signup(user)
   }
 
-  countdown(){
-
-    let second = this.state.second - 1
-    if(second === 0){
-      window.location = 'http://127.0.0.1:3030/home'
-    } else {
-      this.setState({second})
-      window.setTimeout(this.countdown(), 1000)
-    }
-
-  }
-
   renderMessage(){
 
     if(this.props.status === 0)
         return
         
     let success = this.props.status === 200
-    let message = this.props.message
+    let {user, message} = this.props
     if(success)
         window.setTimeout(() => {window.location = 'http://127.0.0.1:3030/home'}, 3000)
 
     return (
       success ? (
-        <div className='message message-success'>{message}After 3s to redirect to home page...</div>
+        <div className='message message-success'>Successfully. After 3s redirecting to home page...</div>
       ) 
       : (
         <div className='message message-error'>{message}</div>
@@ -94,7 +82,8 @@ function mapStateToProps(state){
   // console.log('SignupForm mapStateToProps', state)
   return {
     status: state.user.status,
-    message: state.user.message
+    message: state.user.message,
+    user: state.user.user
   }
 }
 

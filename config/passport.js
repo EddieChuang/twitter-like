@@ -9,7 +9,7 @@ passport.serializeUser((user, done) => {
 })
 
 // retreive the stored user.id in the session
-passport.deserializeUser((id, user) => {
+passport.deserializeUser((id, done) => {
   User.findById(id, function(err, user){
     done(err, user)
   })
@@ -20,14 +20,17 @@ passport.use('local-login', new LocalStrategy({
   passwordField: 'password',
   passReqToCallback: true
 }, (req, email, password, done) => {
-  User.find({email: email}, (err, user) => {
+  User.findOne({email: email}, function(err, user){
+
     if(err) 
         return done(err)
     if(!user)
-        return done(null, false, req.flash('loginMessage', 'No user found.'))
-    console.log(user)
+        return done('No user found.', false)
+   
     if(!user.comparePassword(password))
-        return done(null, false, req.flash('loginMessage', 'Oops! Wrong Password.'))
+        return done('Oops! Wrong Password.', false)
+    
     return done(null, user)
+    // don('error message', user)
   })
 }))

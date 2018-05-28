@@ -2,7 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: $signin-form-height;
+  // height: $signin-form-height;
+  flex: 1 0 auto;
 }
 
 #signin h3{

@@ -17,10 +17,10 @@ UserSchema.pre('save', function(next){
   if(!user.isModified('password'))
       return next()
   if(user.password){
-      bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.genSalt(10, function(err, salt){
         if(err)
             return next()
-        bcrypt.hash(user.password, salt, null, (err, hash) => {
+        bcrypt.hash(user.password, salt, null, function(err, hash){
           if(err)
               return next()
           user.password = hash
@@ -39,8 +39,8 @@ UserSchema.methods.gravatar = function(size){
   return 'https://gravatar.com/avatart/' + md5 + '?s=' + size + '&d=retro'
 }
 
-UserSchema.methods.comparePassword = function(passowrd) {
- return bcrypt.compareSync(password, this.password)
+UserSchema.methods.comparePassword = function(password) {
+  return bcrypt.compareSync(password, this.password)
 }
 
 

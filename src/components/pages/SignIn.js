@@ -7,7 +7,7 @@ class SignIn extends React.Component{
 
   render(){
     return(
-      <div>
+      <div className="container">
         <Header/>
         <SigninForm/>
       </div>

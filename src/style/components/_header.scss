@@ -1,20 +1,14 @@
-
-#header{
-  display: flex;
-  flex-direction: column;
-  min-height: $header-height;  
+#nav-container{
+  background-color: $black;
+  // flex: 0 0 10%;
 }
 
-#header nav{
-  flex: 0 0 auto;
-  background-color: $black
-}
-
-#header nav ul{
+#links{
   list-style-type: none;
+  display: none;
 }
 
-#header nav ul li a{
+#links a{
   display: block;
   color: $light-blue;
   background: transparent;
@@ -27,7 +21,7 @@
     padding 1s ease
 }
 
-#header nav ul li a:hover{
+#links a:hover{
   color: $light-grey;
   padding-left: 60px;
   background: $light-blue;
@@ -39,16 +33,18 @@
   padding: 20px 20px 20px 10px;
 }
 
-#nav-top span,
-#nav-top i{
-  font-size: 30px;
+// #nav-top span,
+// #nav-top i{
+#logo{
+  font-size: 25px;
   padding: 5px;
   color: $light-blue;
   transition:
     color 1s ease;
 }
 
-#nav-top > div{
+// #nav-top > div{
+#logo{
   color: $light-blue;
   border: 3px solid;
   transition: 
@@ -69,7 +65,6 @@
   cursor: pointer;
   align-self: center;
 }
-
 .bar1,
 .bar2,
 .bar3{
@@ -79,21 +74,18 @@
   margin: 5px 0;
   transition: transform 1s ease;
 }
-
 .turn .bar1{
   transform: rotate(-45deg) translate(-7px, 6px);
 }
-
 .turn .bar2{
   opacity: 0;
 }
-
 .turn .bar3{
   transform: rotate(45deg) translate(-7px, -8px);
 }
 
 @media screen and (min-width: 690px){
-  #header nav{
+  #nav-container{
     display: flex;
     align-items: baseline;
     flex-wrap: wrap;
@@ -102,19 +94,18 @@
   #menu-btn{
     display: none;
   }
-  #header nav ul{
+  #links{
     flex: 1 1 auto;
     display: flex !important;
     flex-wrap: wrap;
   }
-  #header nav ul li{
+  #links li{
     flex: 1 0 120px;
   }
-  #header nav ul a{
+  #links a{
     text-align: center;
-
   }
-  #header nav ul a:hover{
+  #links a:hover{
     padding: 10px !important;
   }
   #nav-top{

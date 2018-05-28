@@ -21,6 +21,7 @@
     "babel-preset-stage-1": "^6.24.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
+    "concurrently": "^3.5.1",
     "connect-mongo": "^2.0.1",
     "cookie-parser": "^1.4.3",
     "css-loader": "^0.28.11",

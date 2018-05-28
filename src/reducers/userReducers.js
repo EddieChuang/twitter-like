@@ -2,16 +2,15 @@
 
 export function userReducers(state={status:0, message:''}, action){
 
-  console.log('userReducers', action)
   switch(action.type){
     case 'SIGNUP':
-      return { status: action.payload.status, message: action.payload.data.message }
+      return { status: action.payload.status, user: action.payload.data.user, message: null }
     case 'SIGNUP_ERROR':  
-      return { status: action.payload.status, message: action.payload.data.message }
+      return { status: action.payload.status, user: null, message: action.payload.data.message }
     case 'SIGNIN':
-      return {}
+      return { status: action.payload.status, user: action.payload.data.user, message: null }
     case 'SIGNIN_ERROR':
-      return {}
+      return { status: action.payload.status, user: null, message: action.payload.data.message }
   }
 
 

@@ -19,9 +19,30 @@ class SigninForm extends React.Component{
       password: this.refs.password.value
     }
     this.props.signin(user)
-    
-
+    this.renderMessage = this.renderMessage.bind(this)    
   }
+
+  renderMessage(){
+    
+    if(this.props.status === 0)
+        return
+        
+    let success = this.props.status === 200
+    let {user, message} = this.props
+    if(success)
+        window.setTimeout(() => {window.location = 'http://127.0.0.1:3030/home'}, 3000)
+
+    return (
+      success ? (
+        <div className='message message-success'>Successfully. After 3s redirecting to home page...</div>
+      ) 
+      : (
+        <div className='message message-error'>{message}</div>
+      )
+    )
+  }
+
+
 
   
 
@@ -30,13 +51,14 @@ class SigninForm extends React.Component{
       <section id="signin">
         <form onSubmit={this.onSignin}> 
           <h3>Sign In</h3>
+          {this.renderMessage()}
           <div className='input-field'>
             <i className='fa fa-envelope'/>
             <input type='email' ref='email' placeholder='Email'/>
           </div>
           <div className='input-field'>
             <i className='fa fa-lock'/>
-            <input type='password' ref='password' placeholder='Password' />
+            <input type='password' ref='password' placeholder='Password'/>
           </div>
           <div className='submit-field'>
             <button type='submit'>Submit</button>
@@ -54,7 +76,9 @@ class SigninForm extends React.Component{
 
 function mapStateToProps(state){
   return {
-
+    status: state.user.status,
+    message: state.user.message,
+    user: state.user.user
   }
 }
 

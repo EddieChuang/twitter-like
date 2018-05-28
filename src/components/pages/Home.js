@@ -1,14 +1,18 @@
 "use strict"
 import React from 'react'
-import { Header, Banner } from '../ui'
+import { Header, Profile, PostList } from '../ui'
 
 class Home extends React.Component{
   
   render(){
 
     return(
-      <div>
+      <div className="container">
         <Header/>
+        <div id="content">
+					<Profile />
+					<PostList />
+				</div>
       </div>
     )
 

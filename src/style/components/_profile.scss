@@ -1,0 +1,133 @@
+#profile{
+	border: 3px solid blue;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	padding: 20px;
+	flex: 0 0 20%;
+}
+#profile hr{
+	width: 100%;
+	margin: 5px;
+}
+
+// image
+.profile-image img{
+	display: inline-block;
+	width: 200px;
+	height: 200px;
+	
+	// width: calc(#{$profile-width} - 2em);
+	// height: calc(#{$profile-width} - 2em);
+}
+
+// name
+.profile-name span{
+	font-size: 20px;
+	color: $light-blue;
+}
+
+// email
+.profile-email{
+	display: flex;
+	align-self: flex-start;
+	align-items: center;
+	padding: 5px;
+}
+.profile-email span{
+	display:inline-block;
+	margin-left: 5px;
+	overflow: hidden;
+	width: 200px;
+	text-overflow: ellipsis;
+}
+
+// activity
+.profile-activity{
+	margin-top: 5px;
+	border: 2px solid #BBB;
+	flex: 1 0 auto;
+	width: 100%;
+}
+
+// tab
+// #tab-following:target,
+// #tab-follower:target{
+// 	border: 3px solid #BBB;
+// }
+
+#tab-following:target ~ #tab > ul > li > a[href$="#tab-following"],
+#tab-follower:target  ~ #tab > ul > li > a[href$="#tab-follower"]{
+	// border: 3px solid #BBB;
+}
+
+#tab-following:target ~ #tab > .tab-following-content,
+#tab-follower:target  ~ #tab > .tab-follower-content{
+	// border: 3px solid #BBB;
+}
+
+#tab{
+	width: 100%;
+	// border: 1px solid #1caa5d;
+}
+
+#tab > ul{
+	overflow: hidden;
+	border-bottom: 2px solid #BBB;
+	// margin: 0;
+	// padding: 10px 20px 0px 20px;
+}
+
+#tab > ul > li{
+	list-style-type: none;
+}
+
+#tab>ul>li>a{
+	text-decoration: none;
+	font-size: 17px;
+	color: #333;
+	float: left;
+	padding: 10px;
+	transition:
+		font-style .5s ease,
+		font-weight .5s ease,
+		transform .5s ease
+	// margin-left: 5px;
+}
+
+#tab > div {
+  // clear:both;
+  padding:0 15px;
+  // height:0;
+  overflow:hidden;
+	display: none;
+  transition: all 1s ease-in-out;
+}
+
+// .profile-activity span ~ #tab > ul li:first-child a,
+#tab-following:target ~ #tab > ul > li > a[href$="#tab-following"],
+#tab-follower:target  ~ #tab > ul > li > a[href$="#tab-follower"]{
+	// background: #FFF;
+	color: $dark-blue;
+	font-style: italic;
+	font-weight: bold;
+	transform: scale(1.1);
+}
+
+// .profile-activity span ~ #tab > div:first-of-type,
+#tab-following:target ~ #tab > .tab-following-content,
+#tab-follower:target  ~ #tab > .tab-follower-content{
+	// visibility: visible;
+	display: block;
+	// height: 100%;
+	// background: #FFF;
+}
+
+.profile-activity span{
+	display: none;
+}
+
+
+
+
+
