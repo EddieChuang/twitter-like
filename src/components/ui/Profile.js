@@ -26,19 +26,37 @@ class Profile extends React.Component{
 				</div>
 				<hr/>
 				<div className="profile-activity">
-				 {/* display: none */}
+				 	{/* display: none */}
 					<span id="tab-following">Following</span>
 					<span id="tab-follower">Follower</span>
 					{/* display: none */}
-					<div id="tab">
+					<div id="tab-container">
 						<ul>
-						<li><a href="#tab-following">Following</a></li>
-						<li><a href="#tab-follower">Follower</a></li>
+							<li><a className="tab-item tab-item-following" href="#tab-following">Following</a></li>
+							<li><a className="tab-item tab-item-follower" href="#tab-follower">Follower</a></li>
 						</ul>
-						<div className="tab-following-content">
-							Following ...
+						<div className="tab-content tab-content-following">
+							{/* renderFollowing() */}
+							<div className="following-user">
+								<img src="/images/avatar.png"/>
+								<span>chiamin</span>
+							</div>
+							<div className="following-user">
+								<img src="/images/avatar.png"/>
+								<span>calleigh</span>
+							</div>
 						</div>
-						<div className="tab-follower-content">Follower ...</div>
+						<div className="tab-content tab-content-follower">
+							{/* renderFollower() */}
+							<div className="follower-user">
+								<img src="/images/avatar.png"/>
+								<span>chiamin</span>
+							</div>
+							<div className="follower-user">
+								<img src="/images/avatar.png"/>
+								<span>calleigh</span>
+							</div>
+						</div>
 					</div>
 				</div>
 			</section>
