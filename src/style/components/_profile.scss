@@ -56,33 +56,33 @@
 // 	border: 3px solid #BBB;
 // }
 
-#tab-following:target ~ #tab > ul > li > a[href$="#tab-following"],
-#tab-follower:target  ~ #tab > ul > li > a[href$="#tab-follower"]{
+// #tab-following:target ~ #tab > ul > li > a[href$="#tab-following"],
+// #tab-follower:target  ~ #tab > ul > li > a[href$="#tab-follower"]{
 	// border: 3px solid #BBB;
-}
+// }
 
-#tab-following:target ~ #tab > .tab-following-content,
-#tab-follower:target  ~ #tab > .tab-follower-content{
+// #tab-following:target ~ #tab-container > .tab-following-content,
+// #tab-follower:target  ~ #tab-container > .tab-follower-content{
 	// border: 3px solid #BBB;
-}
+// }
 
-#tab{
+#tab-container{
 	width: 100%;
 	// border: 1px solid #1caa5d;
 }
 
-#tab > ul{
+#tab-container > ul{
 	overflow: hidden;
 	border-bottom: 2px solid #BBB;
 	// margin: 0;
 	// padding: 10px 20px 0px 20px;
 }
 
-#tab > ul > li{
+#tab-container > ul > li{
 	list-style-type: none;
 }
 
-#tab>ul>li>a{
+.tab-item{
 	text-decoration: none;
 	font-size: 17px;
 	color: #333;
@@ -95,18 +95,15 @@
 	// margin-left: 5px;
 }
 
-#tab > div {
-  // clear:both;
-  padding:0 15px;
-  // height:0;
+.tab-content{
   overflow:hidden;
 	display: none;
   transition: all 1s ease-in-out;
 }
 
-// .profile-activity span ~ #tab > ul li:first-child a,
-#tab-following:target ~ #tab > ul > li > a[href$="#tab-following"],
-#tab-follower:target  ~ #tab > ul > li > a[href$="#tab-follower"]{
+// .profile-activity span ~ #tab-container > ul li:first-child a,
+#tab-following:target ~ #tab-container .tab-item-following,
+#tab-follower:target  ~ #tab-container .tab-item-follower{
 	// background: #FFF;
 	color: $dark-blue;
 	font-style: italic;
@@ -115,19 +112,85 @@
 }
 
 // .profile-activity span ~ #tab > div:first-of-type,
-#tab-following:target ~ #tab > .tab-following-content,
-#tab-follower:target  ~ #tab > .tab-follower-content{
+#tab-following:target ~ #tab-container > .tab-content-following,
+#tab-follower:target  ~ #tab-container > .tab-content-follower{
 	// visibility: visible;
-	display: block;
+	display: flex;
+	flex-direction: column;
 	// height: 100%;
 	// background: #FFF;
 }
 
-.profile-activity span{
+#tab-following,
+#tab-follower{
 	display: none;
 }
 
+// following user
+.following-user{
+	// border: 2px solid #BBB;
+	display: flex;
+	align-items: center;
+	color: $light-blue;
+	cursor: pointer;
+	padding: 5px;
+	transition:
+		background .5s ease,
+		transform .5s ease,
+		font-style .5s ease,
+		padding .5s ease,
+		opacity .5s ease;
+}
+.following-user:hover{
 
+	background: rgba(0, 0, 0, 0.3);
+	transform: scale(1.1);
+	font-style: italic;
+	// opacity: 0.5;
+	padding-left: 10px;
+}
+.following-user img{
+	width: 30px;
+	height: 30px;
+	margin-right: 5px;
+}
+.following-user span{
+	font-size: 20px;
+}
+// end of following user
+
+// follower user
+.follower-user{
+	// border: 2px solid #BBB;
+	display: flex;
+	align-items: center;
+	color: $light-blue;
+	cursor: pointer;
+	padding: 5px;
+	transition:
+		background .5s ease,
+		transform .5s ease,
+		font-style .5s ease,
+		padding .5s ease,
+		opacity .5s ease;
+}
+.follower-user:hover{
+
+	background: rgba(0, 0, 0, 0.3);
+	transform: scale(1.1);
+	font-style: italic;
+	// opacity: 0.5;
+	padding-left: 10px;
+}
+.follower-user img{
+	width: 30px;
+	height: 30px;
+	margin-right: 5px;
+}
+.follower-user span{
+	font-size: 20px;
+}
+// end of follower user
 
 
 

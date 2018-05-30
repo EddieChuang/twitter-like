@@ -4,7 +4,10 @@
 	// min-width: $postList-width;
 	// min-height: $postList-height;
 	
-	display: flex;
-	flex: 1 1 auto;
-	border: 3px solid black;
+  display: flex;
+  flex-direction: column;
+	flex: 1 0 80%;
+  border: 3px solid black;
+  overflow-y: scroll;
+  padding: 40px 50px;
 }

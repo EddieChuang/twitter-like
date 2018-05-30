@@ -29690,7 +29690,7 @@ var Profile = function (_React$Component) {
 					),
 					_react2.default.createElement(
 						'div',
-						{ id: 'tab' },
+						{ id: 'tab-container' },
 						_react2.default.createElement(
 							'ul',
 							null,
@@ -29699,7 +29699,7 @@ var Profile = function (_React$Component) {
 								null,
 								_react2.default.createElement(
 									'a',
-									{ href: '#tab-following' },
+									{ className: 'tab-item tab-item-following', href: '#tab-following' },
 									'Following'
 								)
 							),
@@ -29708,20 +29708,58 @@ var Profile = function (_React$Component) {
 								null,
 								_react2.default.createElement(
 									'a',
-									{ href: '#tab-follower' },
+									{ className: 'tab-item tab-item-follower', href: '#tab-follower' },
 									'Follower'
 								)
 							)
 						),
 						_react2.default.createElement(
 							'div',
-							{ className: 'tab-following-content' },
-							'Following ...'
+							{ className: 'tab-content tab-content-following' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'following-user' },
+								_react2.default.createElement('img', { src: '/images/avatar.png' }),
+								_react2.default.createElement(
+									'span',
+									null,
+									'chiamin'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'following-user' },
+								_react2.default.createElement('img', { src: '/images/avatar.png' }),
+								_react2.default.createElement(
+									'span',
+									null,
+									'calleigh'
+								)
+							)
 						),
 						_react2.default.createElement(
 							'div',
-							{ className: 'tab-follower-content' },
-							'Follower ...'
+							{ className: 'tab-content tab-content-follower' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'follower-user' },
+								_react2.default.createElement('img', { src: '/images/avatar.png' }),
+								_react2.default.createElement(
+									'span',
+									null,
+									'chiamin'
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'follower-user' },
+								_react2.default.createElement('img', { src: '/images/avatar.png' }),
+								_react2.default.createElement(
+									'span',
+									null,
+									'calleigh'
+								)
+							)
 						)
 					)
 				)
@@ -29796,7 +29834,7 @@ exports.default = PostList;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -29814,30 +29852,64 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Post = function (_React$Component) {
-	_inherits(Post, _React$Component);
+  _inherits(Post, _React$Component);
 
-	function Post() {
-		_classCallCheck(this, Post);
+  function Post() {
+    _classCallCheck(this, Post);
 
-		return _possibleConstructorReturn(this, (Post.__proto__ || Object.getPrototypeOf(Post)).call(this));
-	}
+    return _possibleConstructorReturn(this, (Post.__proto__ || Object.getPrototypeOf(Post)).call(this));
+  }
 
-	_createClass(Post, [{
-		key: "render",
-		value: function render() {
-			return _react2.default.createElement(
-				"section",
-				{ id: "post" },
-				_react2.default.createElement(
-					"h1",
-					null,
-					"Post"
-				)
-			);
-		}
-	}]);
+  _createClass(Post, [{
+    key: "render",
+    value: function render() {
+      return _react2.default.createElement(
+        "section",
+        { id: "post" },
+        _react2.default.createElement(
+          "div",
+          { className: "poster" },
+          _react2.default.createElement("img", { src: "/images/avatar.png" }),
+          _react2.default.createElement(
+            "span",
+            null,
+            "chiamin"
+          )
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "post-content" },
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lacinia, lorem finibus accumsan dictum, sapien dolor lacinia est, ut pharetra nulla erat et tortor. Ut ac urna ultricies, auctor enim eget, porttitor turpis. Donec eros enim, suscipit ut pulvinar ac, tempus id sapien. In bibendum hendrerit quam eu commodo. Nulla et mi id velit mattis tristique"
+        ),
+        _react2.default.createElement(
+          "div",
+          { className: "post-footer" },
+          _react2.default.createElement(
+            "div",
+            { className: "comment" },
+            _react2.default.createElement("i", { className: "far fa-comment" }),
+            _react2.default.createElement(
+              "span",
+              null,
+              "10"
+            )
+          ),
+          _react2.default.createElement(
+            "div",
+            { className: "like" },
+            _react2.default.createElement("i", { className: "far fa-heart" }),
+            _react2.default.createElement(
+              "span",
+              null,
+              "10"
+            )
+          )
+        )
+      );
+    }
+  }]);
 
-	return Post;
+  return Post;
 }(_react2.default.Component);
 
 exports.default = Post;
@@ -30016,7 +30088,7 @@ exports = module.exports = __webpack_require__(148)(false);
 
 
 // module
-exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box; }\n\nbody {\n  font-family: 'Roboto', sans-serif;\n  background: #F5F5F5;\n  width: 100vw;\n  height: 100vh; }\n\n.container {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#nav-container {\n  background-color: #191919; }\n\n#links {\n  list-style-type: none;\n  display: none; }\n\n#links a {\n  display: block;\n  color: #2b98f0;\n  background: transparent;\n  text-decoration: none;\n  padding: 10px;\n  font-size: 20px;\n  transition: color 1s ease, \r background 1s ease,\r padding 1s ease; }\n\n#links a:hover {\n  color: #F5F5F5;\n  padding-left: 60px;\n  background: #2b98f0; }\n\n#nav-top {\n  display: flex;\n  justify-content: space-between;\n  padding: 20px 20px 20px 10px; }\n\n#logo {\n  font-size: 25px;\n  padding: 5px;\n  color: #2b98f0;\n  transition: color 1s ease; }\n\n#logo {\n  color: #2b98f0;\n  border: 3px solid;\n  transition: color 1s ease,\r background 1s ease; }\n\n#logo:hover {\n  background: #2b98f0; }\n  #logo:hover span, #logo:hover i {\n    color: #F5F5F5; }\n\n#menu-btn {\n  padding: 5px;\n  border: 2px solid #2b98f0;\n  cursor: pointer;\n  align-self: center; }\n\n.bar1,\n.bar2,\n.bar3 {\n  height: 5px;\n  width: 35px;\n  background-color: #2b98f0;\n  margin: 5px 0;\n  transition: transform 1s ease; }\n\n.turn .bar1 {\n  transform: rotate(-45deg) translate(-7px, 6px); }\n\n.turn .bar2 {\n  opacity: 0; }\n\n.turn .bar3 {\n  transform: rotate(45deg) translate(-7px, -8px); }\n\n@media screen and (min-width: 690px) {\n  #nav-container {\n    display: flex;\n    align-items: baseline;\n    flex-wrap: wrap;\n    padding: 0 20px; }\n  #menu-btn {\n    display: none; }\n  #links {\n    flex: 1 1 auto;\n    display: flex !important;\n    flex-wrap: wrap; }\n  #links li {\n    flex: 1 0 120px; }\n  #links a {\n    text-align: center; }\n  #links a:hover {\n    padding: 10px !important; }\n  #nav-top {\n    padding: 10px; } }\n\n#banner {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex: 1 0 auto;\n  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(\"/images/banner.jpg\") center/cover fixed no-repeat; }\n\n#banner-box {\n  color: #F5F5F5;\n  text-align: center; }\n\n#banner-title {\n  text-transform: capitalize;\n  font-size: 60px; }\n\n.banner-underline {\n  width: 200px;\n  margin: 10px auto;\n  border: 3px solid #2b98f0; }\n\n.banner-subtitle {\n  margin: 20px 0 40px 0;\n  text-transform: capitalize;\n  font-size: 25px; }\n\n#link-signup,\n#link-signin {\n  display: inline-block;\n  padding: 10px;\n  font-size: 40px;\n  color: #F5F5F5;\n  background: #2b98f0;\n  border: 3px solid #2b98f0;\n  border-radius: 5px;\n  margin: 0px 5px;\n  cursor: pointer;\n  text-decoration: none;\n  transition: background 1s ease,\r border 1s ease; }\n\n#link-signup:hover,\n#link-signin:hover {\n  background: transparent;\n  color: #2b98f0; }\n\n#signup {\n  display: flex;\n  flex: 1 0 auto;\n  justify-content: center;\n  align-items: center; }\n\n.signup-form li {\n  display: flex;\n  list-style-type: none;\n  margin: 20px auto;\n  justify-content: flex-end; }\n\n.signup-form h3 {\n  font-size: 40px;\n  color: #2b98f0;\n  text-align: center; }\n\n.signup-form {\n  display: flex;\n  flex-direction: column; }\n\n.signup-form i {\n  font-size: 30px;\n  margin-right: 5px;\n  color: #456990;\n  align-self: center;\n  justify-content: center; }\n\n.signup-form input {\n  font-size: 25px;\n  border-radius: 5px; }\n\n.signup-form input::placeholder {\n  color: #BBB; }\n\n.signup-form input:focus {\n  border-radius: 5px; }\n\n.signup-form button {\n  font-size: 20px;\n  color: #F5F5F5;\n  background: #2EC4B6;\n  padding: 10px;\n  border: 2px solid #2EC4B6;\n  border-radius: 5px;\n  margin: 0px 10px;\n  cursor: pointer;\n  justify-content: flex-end;\n  transition: background-color 1s ease,\r border 1s ease; }\n\n.signup-form button:hover {\n  background: transparent;\n  color: #2EC4B6; }\n\n.signup-form a {\n  text-decoration: none;\n  align-self: flex-end;\n  justify-content: flex-end;\n  font-style: italic; }\n\n.message {\n  text-align: center;\n  padding: 10px;\n  margin: 10px 0px;\n  font-weight: bold; }\n\n.message-success {\n  background: #61FF7E; }\n\n.message-error {\n  background: #F8C0C8; }\n\n#signin {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex: 1 0 auto; }\n\n#signin h3 {\n  font-size: 40px;\n  color: #2b98f0;\n  text-align: center; }\n\n.input-field, .submit-field {\n  display: flex;\n  justify-content: flex-end;\n  margin: 20px auto; }\n\n.input-field i {\n  font-size: 30px;\n  margin-right: 5px;\n  color: #456990; }\n\n.input-field input {\n  font-size: 25px;\n  border-radius: 5px; }\n\n.input-field input::placeholder {\n  color: #BBB; }\n\n.input-field input:focus {\n  border-radius: 5px; }\n\n.submit-field button {\n  font-size: 20px;\n  color: #F5F5F5;\n  background: #2EC4B6;\n  padding: 10px;\n  border: 2px solid #2EC4B6;\n  border-radius: 5px;\n  margin: 0px 10px;\n  cursor: pointer;\n  transition: background-color 1s ease, border 1s ease; }\n\n.submit-field button:hover {\n  background: transparent;\n  color: #2EC4B6; }\n\n.submit-field a {\n  text-decoration: none;\n  align-self: flex-end;\n  font-style: italic; }\n\n#start {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#profile {\n  border: 3px solid blue;\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n  padding: 20px;\n  flex: 0 0 20%; }\n\n#profile hr {\n  width: 100%;\n  margin: 5px; }\n\n.profile-image img {\n  display: inline-block;\n  width: 200px;\n  height: 200px; }\n\n.profile-name span {\n  font-size: 20px;\n  color: #2b98f0; }\n\n.profile-email {\n  display: flex;\n  align-self: flex-start;\n  align-items: center;\n  padding: 5px; }\n\n.profile-email span {\n  display: inline-block;\n  margin-left: 5px;\n  overflow: hidden;\n  width: 200px;\n  text-overflow: ellipsis; }\n\n.profile-activity {\n  margin-top: 5px;\n  border: 2px solid #BBB;\n  flex: 1 0 auto;\n  width: 100%; }\n\n#tab {\n  width: 100%; }\n\n#tab > ul {\n  overflow: hidden;\n  border-bottom: 2px solid #BBB; }\n\n#tab > ul > li {\n  list-style-type: none; }\n\n#tab > ul > li > a {\n  text-decoration: none;\n  font-size: 17px;\n  color: #333;\n  float: left;\n  padding: 10px;\n  transition: font-style 0.5s ease, font-weight 0.5s ease, transform 0.5s ease; }\n\n#tab > div {\n  padding: 0 15px;\n  overflow: hidden;\n  display: none;\n  transition: all 1s ease-in-out; }\n\n#tab-following:target ~ #tab > ul > li > a[href$=\"#tab-following\"],\n#tab-follower:target ~ #tab > ul > li > a[href$=\"#tab-follower\"] {\n  color: #456990;\n  font-style: italic;\n  font-weight: bold;\n  transform: scale(1.1); }\n\n#tab-following:target ~ #tab > .tab-following-content,\n#tab-follower:target ~ #tab > .tab-follower-content {\n  display: block; }\n\n.profile-activity span {\n  display: none; }\n\n#postList {\n  display: flex;\n  flex: 1 1 auto;\n  border: 3px solid black; }\n\n#home {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#content {\n  display: flex;\n  flex-grow: 1; }\n", ""]);
+exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box; }\n\nbody {\n  font-family: 'Roboto', sans-serif;\n  background: #F5F5F5;\n  width: 100vw;\n  height: 100vh; }\n\n.container {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#nav-container {\n  background-color: #191919; }\n\n#links {\n  list-style-type: none;\n  display: none; }\n\n#links a {\n  display: block;\n  color: #2b98f0;\n  background: transparent;\n  text-decoration: none;\n  padding: 10px;\n  font-size: 20px;\n  transition: color 1s ease, \r background 1s ease,\r padding 1s ease; }\n\n#links a:hover {\n  color: #F5F5F5;\n  padding-left: 60px;\n  background: #2b98f0; }\n\n#nav-top {\n  display: flex;\n  justify-content: space-between;\n  padding: 20px 20px 20px 10px; }\n\n#logo {\n  font-size: 25px;\n  padding: 5px;\n  color: #2b98f0;\n  transition: color 1s ease; }\n\n#logo {\n  color: #2b98f0;\n  border: 3px solid;\n  transition: color 1s ease,\r background 1s ease; }\n\n#logo:hover {\n  background: #2b98f0; }\n  #logo:hover span, #logo:hover i {\n    color: #F5F5F5; }\n\n#menu-btn {\n  padding: 5px;\n  border: 2px solid #2b98f0;\n  cursor: pointer;\n  align-self: center; }\n\n.bar1,\n.bar2,\n.bar3 {\n  height: 5px;\n  width: 35px;\n  background-color: #2b98f0;\n  margin: 5px 0;\n  transition: transform 1s ease; }\n\n.turn .bar1 {\n  transform: rotate(-45deg) translate(-7px, 6px); }\n\n.turn .bar2 {\n  opacity: 0; }\n\n.turn .bar3 {\n  transform: rotate(45deg) translate(-7px, -8px); }\n\n@media screen and (min-width: 690px) {\n  #nav-container {\n    display: flex;\n    align-items: baseline;\n    flex-wrap: wrap;\n    padding: 0 20px; }\n  #menu-btn {\n    display: none; }\n  #links {\n    flex: 1 1 auto;\n    display: flex !important;\n    flex-wrap: wrap; }\n  #links li {\n    flex: 1 0 120px; }\n  #links a {\n    text-align: center; }\n  #links a:hover {\n    padding: 10px !important; }\n  #nav-top {\n    padding: 10px; } }\n\n#banner {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex: 1 0 auto;\n  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(\"/images/banner.jpg\") center/cover fixed no-repeat; }\n\n#banner-box {\n  color: #F5F5F5;\n  text-align: center; }\n\n#banner-title {\n  text-transform: capitalize;\n  font-size: 60px; }\n\n.banner-underline {\n  width: 200px;\n  margin: 10px auto;\n  border: 3px solid #2b98f0; }\n\n.banner-subtitle {\n  margin: 20px 0 40px 0;\n  text-transform: capitalize;\n  font-size: 25px; }\n\n#link-signup,\n#link-signin {\n  display: inline-block;\n  padding: 10px;\n  font-size: 40px;\n  color: #F5F5F5;\n  background: #2b98f0;\n  border: 3px solid #2b98f0;\n  border-radius: 5px;\n  margin: 0px 5px;\n  cursor: pointer;\n  text-decoration: none;\n  transition: background 1s ease,\r border 1s ease; }\n\n#link-signup:hover,\n#link-signin:hover {\n  background: transparent;\n  color: #2b98f0; }\n\n#signup {\n  display: flex;\n  flex: 1 0 auto;\n  justify-content: center;\n  align-items: center; }\n\n.signup-form li {\n  display: flex;\n  list-style-type: none;\n  margin: 20px auto;\n  justify-content: flex-end; }\n\n.signup-form h3 {\n  font-size: 40px;\n  color: #2b98f0;\n  text-align: center; }\n\n.signup-form {\n  display: flex;\n  flex-direction: column; }\n\n.signup-form i {\n  font-size: 30px;\n  margin-right: 5px;\n  color: #456990;\n  align-self: center;\n  justify-content: center; }\n\n.signup-form input {\n  font-size: 25px;\n  border-radius: 5px; }\n\n.signup-form input::placeholder {\n  color: #BBB; }\n\n.signup-form input:focus {\n  border-radius: 5px; }\n\n.signup-form button {\n  font-size: 20px;\n  color: #F5F5F5;\n  background: #2EC4B6;\n  padding: 10px;\n  border: 2px solid #2EC4B6;\n  border-radius: 5px;\n  margin: 0px 10px;\n  cursor: pointer;\n  justify-content: flex-end;\n  transition: background-color 1s ease,\r border 1s ease; }\n\n.signup-form button:hover {\n  background: transparent;\n  color: #2EC4B6; }\n\n.signup-form a {\n  text-decoration: none;\n  align-self: flex-end;\n  justify-content: flex-end;\n  font-style: italic; }\n\n.message {\n  text-align: center;\n  padding: 10px;\n  margin: 10px 0px;\n  font-weight: bold; }\n\n.message-success {\n  background: #61FF7E; }\n\n.message-error {\n  background: #F8C0C8; }\n\n#signin {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex: 1 0 auto; }\n\n#signin h3 {\n  font-size: 40px;\n  color: #2b98f0;\n  text-align: center; }\n\n.input-field, .submit-field {\n  display: flex;\n  justify-content: flex-end;\n  margin: 20px auto; }\n\n.input-field i {\n  font-size: 30px;\n  margin-right: 5px;\n  color: #456990; }\n\n.input-field input {\n  font-size: 25px;\n  border-radius: 5px; }\n\n.input-field input::placeholder {\n  color: #BBB; }\n\n.input-field input:focus {\n  border-radius: 5px; }\n\n.submit-field button {\n  font-size: 20px;\n  color: #F5F5F5;\n  background: #2EC4B6;\n  padding: 10px;\n  border: 2px solid #2EC4B6;\n  border-radius: 5px;\n  margin: 0px 10px;\n  cursor: pointer;\n  transition: background-color 1s ease, border 1s ease; }\n\n.submit-field button:hover {\n  background: transparent;\n  color: #2EC4B6; }\n\n.submit-field a {\n  text-decoration: none;\n  align-self: flex-end;\n  font-style: italic; }\n\n#start {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#profile {\n  border: 3px solid blue;\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n  padding: 20px;\n  flex: 0 0 20%; }\n\n#profile hr {\n  width: 100%;\n  margin: 5px; }\n\n.profile-image img {\n  display: inline-block;\n  width: 200px;\n  height: 200px; }\n\n.profile-name span {\n  font-size: 20px;\n  color: #2b98f0; }\n\n.profile-email {\n  display: flex;\n  align-self: flex-start;\n  align-items: center;\n  padding: 5px; }\n\n.profile-email span {\n  display: inline-block;\n  margin-left: 5px;\n  overflow: hidden;\n  width: 200px;\n  text-overflow: ellipsis; }\n\n.profile-activity {\n  margin-top: 5px;\n  border: 2px solid #BBB;\n  flex: 1 0 auto;\n  width: 100%; }\n\n#tab-container {\n  width: 100%; }\n\n#tab-container > ul {\n  overflow: hidden;\n  border-bottom: 2px solid #BBB; }\n\n#tab-container > ul > li {\n  list-style-type: none; }\n\n.tab-item {\n  text-decoration: none;\n  font-size: 17px;\n  color: #333;\n  float: left;\n  padding: 10px;\n  transition: font-style 0.5s ease, font-weight 0.5s ease, transform 0.5s ease; }\n\n.tab-content {\n  overflow: hidden;\n  display: none;\n  transition: all 1s ease-in-out; }\n\n#tab-following:target ~ #tab-container .tab-item-following,\n#tab-follower:target ~ #tab-container .tab-item-follower {\n  color: #456990;\n  font-style: italic;\n  font-weight: bold;\n  transform: scale(1.1); }\n\n#tab-following:target ~ #tab-container > .tab-content-following,\n#tab-follower:target ~ #tab-container > .tab-content-follower {\n  display: flex;\n  flex-direction: column; }\n\n#tab-following,\n#tab-follower {\n  display: none; }\n\n.following-user {\n  display: flex;\n  align-items: center;\n  color: #2b98f0;\n  cursor: pointer;\n  padding: 5px;\n  transition: background .5s ease,\r transform .5s ease,\r font-style .5s ease,\r padding .5s ease,\r opacity .5s ease; }\n\n.following-user:hover {\n  background: rgba(0, 0, 0, 0.3);\n  transform: scale(1.1);\n  font-style: italic;\n  padding-left: 10px; }\n\n.following-user img {\n  width: 30px;\n  height: 30px;\n  margin-right: 5px; }\n\n.following-user span {\n  font-size: 20px; }\n\n.follower-user {\n  display: flex;\n  align-items: center;\n  color: #2b98f0;\n  cursor: pointer;\n  padding: 5px;\n  transition: background .5s ease,\r transform .5s ease,\r font-style .5s ease,\r padding .5s ease,\r opacity .5s ease; }\n\n.follower-user:hover {\n  background: rgba(0, 0, 0, 0.3);\n  transform: scale(1.1);\n  font-style: italic;\n  padding-left: 10px; }\n\n.follower-user img {\n  width: 30px;\n  height: 30px;\n  margin-right: 5px; }\n\n.follower-user span {\n  font-size: 20px; }\n\n#postList {\n  display: flex;\n  flex-direction: column;\n  flex: 1 0 80%;\n  border: 3px solid black;\n  overflow-y: scroll;\n  padding: 40px 50px; }\n\n#post {\n  display: flex;\n  flex-direction: column;\n  flex: 0 0 calc(70%);\n  padding: 10px 20px;\n  margin: 10px 0px;\n  border: 2px solid #BBB;\n  border-radius: 3px;\n  background: white; }\n\n.poster {\n  flex: 0 0 calc(25% - 1em);\n  display: flex;\n  align-items: center; }\n\n.poster img {\n  width: 40px;\n  height: 40px;\n  margin-right: 5px;\n  border-radius: 50%; }\n\n.poster span {\n  cursor: pointer;\n  font-size: 30px;\n  color: #2b98f0; }\n\n.post-content {\n  flex: 1 0 auto;\n  border: 2px solid #BBB;\n  padding: 5px;\n  margin: 5px 0px; }\n\n.post-footer {\n  flex: 0 0 calc(15% - 1em);\n  display: flex;\n  align-items: center;\n  border: 2px solid #BBB;\n  padding: 5px; }\n\n.post-footer .comment,\n.post-footer .like {\n  font-size: 20px;\n  margin: 0 2px 0 2px;\n  cursor: pointer; }\n\n#home {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#content {\n  display: flex;\n  flex-grow: 1; }\n", ""]);
 
 // exports
 
