@@ -5,7 +5,7 @@ export function signup(user){
   // user = {'email': email, 'name': name, 'password': password}
   return (dispatch) => {
 
-    axios.post('/api/signup', user)
+    axios.post('/signup', user)
       .then((res) => {
         // console.log(res)
         dispatch({type: "SIGNUP", payload: res})
@@ -22,7 +22,7 @@ export function signin(user){
   // user = {'email': email, 'password': password}
   return (dispatch) => {
 
-    axios.post('/api/signin', user)
+    axios.post('/signin', user)
       .then((res) => {
         console.log('signin res', res)
         dispatch({type: "SIGNIN", payload: res})

@@ -54,11 +54,11 @@ class SigninForm extends React.Component{
           {this.renderMessage()}
           <div className='input-field'>
             <i className='fa fa-envelope'/>
-            <input type='email' ref='email' placeholder='Email'/>
+            <input type='email' ref='email' name='email' placeholder='Email'/>
           </div>
           <div className='input-field'>
             <i className='fa fa-lock'/>
-            <input type='password' ref='password' placeholder='Password'/>
+            <input type='password' ref='password' name='password' placeholder='Password'/>
           </div>
           <div className='submit-field'>
             <button type='submit'>Submit</button>

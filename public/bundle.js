@@ -28491,7 +28491,7 @@ var Banner = function (_React$Component) {
           ),
           _react2.default.createElement(
             "a",
-            { href: "/signup", id: "link-signin" },
+            { href: "/signin", id: "link-signin" },
             "Signin"
           )
         )
@@ -28611,19 +28611,19 @@ var SignupForm = function (_React$Component) {
               'li',
               null,
               _react2.default.createElement('i', { className: 'fa fa-user' }),
-              _react2.default.createElement('input', { type: 'text', ref: 'username', placeholder: 'Username' })
+              _react2.default.createElement('input', { type: 'text', ref: 'username', name: 'name', placeholder: 'Username' })
             ),
             _react2.default.createElement(
               'li',
               null,
               _react2.default.createElement('i', { className: 'fa fa-envelope' }),
-              _react2.default.createElement('input', { type: 'email', ref: 'email', placeholder: 'Email' })
+              _react2.default.createElement('input', { type: 'email', ref: 'email', name: 'email', placeholder: 'Email' })
             ),
             _react2.default.createElement(
               'li',
               null,
               _react2.default.createElement('i', { className: 'fa fa-lock' }),
-              _react2.default.createElement('input', { type: 'password', ref: 'password', placeholder: 'Password' })
+              _react2.default.createElement('input', { type: 'password', ref: 'password', name: 'password', placeholder: 'Password' })
             ),
             _react2.default.createElement(
               'li',
@@ -28689,7 +28689,7 @@ function signup(user) {
   // user = {'email': email, 'name': name, 'password': password}
   return function (dispatch) {
 
-    _axios2.default.post('/api/signup', user).then(function (res) {
+    _axios2.default.post('/signup', user).then(function (res) {
       // console.log(res)
       dispatch({ type: "SIGNUP", payload: res });
     }).catch(function (err) {
@@ -28702,7 +28702,7 @@ function signin(user) {
   // user = {'email': email, 'password': password}
   return function (dispatch) {
 
-    _axios2.default.post('/api/signin', user).then(function (res) {
+    _axios2.default.post('/signin', user).then(function (res) {
       console.log('signin res', res);
       dispatch({ type: "SIGNIN", payload: res });
     }).catch(function (err) {
@@ -30809,13 +30809,13 @@ var SigninForm = function (_React$Component) {
             'div',
             { className: 'input-field' },
             _react2.default.createElement('i', { className: 'fa fa-envelope' }),
-            _react2.default.createElement('input', { type: 'email', ref: 'email', placeholder: 'Email' })
+            _react2.default.createElement('input', { type: 'email', ref: 'email', name: 'email', placeholder: 'Email' })
           ),
           _react2.default.createElement(
             'div',
             { className: 'input-field' },
             _react2.default.createElement('i', { className: 'fa fa-lock' }),
-            _react2.default.createElement('input', { type: 'password', ref: 'password', placeholder: 'Password' })
+            _react2.default.createElement('input', { type: 'password', ref: 'password', name: 'password', placeholder: 'Password' })
           ),
           _react2.default.createElement(
             'div',

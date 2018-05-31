@@ -16,7 +16,7 @@ class Banner extends React.Component{
             <div className="banner-underline"></div>
             <h3 className="banner-subtitle">Signup and enjoy new social experience</h3>
             <a href="/signup" id="link-signup">Signup</a>
-            <a href="/signup" id="link-signin">Signin</a>
+            <a href="/signin" id="link-signin">Signin</a>
           </div>
         </section>
     )

@@ -11,9 +11,15 @@ const session      = require('express-session')
 const MongoStore   = require('connect-mongo')(session)
 const flash        = require('express-flash')
 const passport     = require('passport')
+const passportSocketIo = require('passport.socketio')
 
 
-const app = express()
+
+const app  = express()
+// const http = require('http').Server(app)
+// const io   = require('socket.io')(http)
+
+const sessionStore = new MongoStore({ url: config.database, autoReconnect: true})
 
 // middleware
 app.use(bodyParser.json())
@@ -22,7 +28,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   secret: config.secret,
-  store: new MongoStore({ url: config.database, autoReconnect: true})
+  store: sessionStore
 }))
 app.use(flash())
 app.use(cookieParser())
@@ -32,6 +38,26 @@ app.use(passport.session())
 // end middleware
 
 
+// io.use(passportSocketIo.authorize({
+//   cookieParser: cookieParser,
+//   key: 'connect.sid',
+//   secret: config.secret,
+//   store: sessionStore,
+//   success: onAuthorizeSuccess,
+//   fail: onAuthorizeFail
+// }))
+
+// function onAuthorizeSuccess(data, accept){
+//   console.log("Successful connection")
+//   accept()
+// }
+
+// function onAuthorizeFail(data, message, error, accetp){
+//   console.log('Failed connection')
+//   if(err)
+//       accept(new Error(message))
+// }
+
 // mongodb
 mongoose.connect(config.database, (err) => {
   if(err)
@@ -40,9 +66,11 @@ mongoose.connect(config.database, (err) => {
 })
 // end mongodb
 
+// require('./realtime/io')(io)
+
+// routing
 const userRoutes = require('./routes/user')
 app.use(userRoutes)
-
 
 
 app.listen(3031, (err) => {

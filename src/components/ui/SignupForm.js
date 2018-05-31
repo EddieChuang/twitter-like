@@ -56,15 +56,15 @@ class SignupForm extends React.Component{
           <ul>
             <li>
               <i className='fa fa-user' />
-              <input type='text' ref='username' placeholder='Username' />
+              <input type='text' ref='username' name='name' placeholder='Username' />
             </li>
             <li>
               <i className='fa fa-envelope' />
-              <input type='email' ref='email' placeholder='Email' />
+              <input type='email' ref='email' name='email' placeholder='Email' />
             </li>
             <li>
               <i className='fa fa-lock' />
-              <input type='password' ref='password'placeholder='Password' />
+              <input type='password' ref='password' name='password' placeholder='Password' />
             </li>
             <li>
               <button type='submit'>Submit</button>
