@@ -1,10 +1,19 @@
 "use strict"
 import React from 'react'
+import {auth} from '../../utils/auth'
 
 class Header extends React.Component{
 
   constructor(){
     super()
+
+    this.renderUserInfo = this.renderUserInfo.bind(this)
+  }
+
+  renderUserInfo(){
+    return(
+      ''
+    )
   }
 
   render(){
@@ -24,6 +33,7 @@ class Header extends React.Component{
             </div>
           </div>
           <ul id="links">
+
             <li><a href="/home">Home</a></li>
             <li><a href="#">Tweet</a></li>
           </ul>

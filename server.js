@@ -73,14 +73,14 @@ function onAuthorizeFail(data, message, error, accept){
 
 require('./realtime/io')(io)
 
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
-});
 const userRoutes = require('./routes/user')
 app.use(userRoutes)
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+});
 
 http.listen(3030, (err) => {
-    if(err)
-        console.log(err)
-    console.log('Server is listening on port 3030 ...');
+  if(err)
+      console.log(err)
+  console.log('Server is listening on port 3030 ...');
 });

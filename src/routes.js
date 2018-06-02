@@ -7,14 +7,17 @@ import SignUp from './components/pages/SignUp'
 import SignIn from './components/pages/SignIn'
 
 
+const signined = !!sessionStorage._id
+
+
 const routes = (
   <BrowserRouter>
     <Switch>
       <Route exact path='/' render={() => (<Redirect to='/start'/>)}/>
       <Route exact path='/start' render={() => (<Start/>)}/>
       <Route exact path='/signup' render={() => (<SignUp/>)}/>
-      <Route exact path='/signin' render={() => (<SignIn/>)}/>
-      <Route exact path='/home' render={() => (<Home/>)}/>
+      <Route exact path='/signin' render={() => (signined ? <Redirect to="/home"/> : <SignIn/>)}/>
+      <Route exact path='/home' render={() => (signined ? <Home/> : <Redirect to="/signin"/>)}/>
     </Switch>
   </BrowserRouter>
 )
