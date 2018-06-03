@@ -5,3 +5,5 @@ export { default as SigninForm } from './SigninForm'
 export { default as Profile } from './Profile'
 export { default as PostList } from './PostList'
 export { default as Post } from './Post'
+export { default as NewPostModal } from './NewPostModal'
+

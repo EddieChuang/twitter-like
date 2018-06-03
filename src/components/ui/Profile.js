@@ -3,26 +3,36 @@ import React from 'react'
 
 class Profile extends React.Component{
 	constructor(){
-		super()
-	}
+    super()
+    this.state = {
+      user: null
+    }
+  }
+  
+  componentWillReceiveProps(props){
+    this.setState({user: props.user})
+  }
 
 	componentDidMount(){
 		window.location.href = '#tab-following' // init tab
 	}
 
 	render(){
+    console.log(this.state.user)
+    let empty_user = {_id: '', name: '', email: '', photo: '', tweets: []}
+    let user = this.state.user === null ? empty_user : this.state.user
 		return(
 			<section id="profile">
 				<div className="profile-image">
-					<a><img src="/images/avatar.png"/></a>
+					<a><img src={user.photo}/></a>
 				</div>
 				<div className="profile-name">
-					<span>chiamin</span>
+					<span>{user.name}</span>
 				</div>
 				<hr/>
 				<div className="profile-email">
 					<i className="fa fa-envelope"/>
-					<span>example@example.com</span>
+					<span>{user.email}</span>
 				</div>
 				<hr/>
 				<div className="profile-activity">

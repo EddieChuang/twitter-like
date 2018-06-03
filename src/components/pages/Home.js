@@ -13,28 +13,21 @@ class Home extends React.Component{
   }
 
   componentDidMount(){
-    axios.get('/user/123')
+    let id = sessionStorage._id
+    axios.get('/user/' + id)
       .then((res) => {
-        console.log(res)
+        this.setState({user: res.data.user})
       })
-    // fetch('/user/:id')
-    //   .then(res => {console.log(res)})
-    // let param = new FormData()
-    // param.append('id', sessionStorage._id)
-    // axios.post('/user', param)
-    //   .then((res) => {
-    //     console.log('user')
-    //     console.log(res)
-    //   })
   }
 
   render(){
 
+    let user = this.state.user
     return(
       <div className="container">
-        <Header/>
+        <Header user={user}/>
         <div id="content">
-					<Profile />
+					<Profile user={user}/>
 					<PostList />
 				</div>
       </div>

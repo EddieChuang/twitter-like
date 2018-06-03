@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "concurrently --kill-others \"npm run webServer\" \"npm run apiServer\"",
+    "start": "concurrently --kill-others \"nodemon server.js\" \"webpack\"",
+    "start_": "concurrently --kill-others \"npm run webServer\" \"npm run apiServer\"",
     "webServer": "nodemon server.js",
     "apiServer": "nodemon apiServer.js",
     "test": "echo \"Error: no test specified\" && exit 1"

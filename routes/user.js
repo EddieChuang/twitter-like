@@ -58,14 +58,17 @@ router.route('/signin')
   })
   
 router.get('/logout', (req, res, next) => {
-    console.log('logout', req)
     req.logout()
-    res.json('logout success')
+    res.status(200)
+    res.json({message: 'Logout successfully'})
 })
 
 router.get('/user/:id', (req, res, next) => {
-  console.log('/user/:id', req.params.id)
-  res.json(req.params.id)
+  let id = req.params.id
+  User.findOne({_id: id}, function(err, user){
+    let {_id, name, email, photo, tweets} = user
+    res.json({user: {_id, name, email, photo, tweets}})
+  })
 })
 
 

@@ -9,20 +9,23 @@
   display: none;
 }
 
-#links a{
+#links a,
+#links span{
   display: block;
   color: $light-blue;
   background: transparent;
   text-decoration: none;
   padding: 10px;
   font-size: 20px;
+  cursor: pointer;
   transition: 
     color 1s ease, 
     background 1s ease,
     padding 1s ease
 }
 
-#links a:hover{
+#links a:hover,
+#links span:hover{
   color: $light-grey;
   padding-left: 60px;
   background: $light-blue;
@@ -97,16 +100,19 @@
   }
   #links{
     flex: 1 1 auto;
+    justify-content: flex-end;
     display: flex !important;
     flex-wrap: wrap;
   }
-  #links li{
-    flex: 1 0 120px;
-  }
-  #links a{
+  // #links li{
+  //   flex: 1 0 120px;
+  // }
+  #links a,
+  #links span{
     text-align: center;
   }
-  #links a:hover{
+  #links a:hover,
+  #links span:hover{
     padding: 10px !important;
   }
   #nav-top{
