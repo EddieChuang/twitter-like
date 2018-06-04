@@ -842,103 +842,6 @@ module.exports = emptyFunction;
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/*
-object-assign
-(c) Sindre Sorhus
-@license MIT
-*/
-
-
-/* eslint-disable no-unused-vars */
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-function toObject(val) {
-	if (val === null || val === undefined) {
-		throw new TypeError('Object.assign cannot be called with null or undefined');
-	}
-
-	return Object(val);
-}
-
-function shouldUseNative() {
-	try {
-		if (!Object.assign) {
-			return false;
-		}
-
-		// Detect buggy property enumeration order in older V8 versions.
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
-		test1[5] = 'de';
-		if (Object.getOwnPropertyNames(test1)[0] === '5') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test2 = {};
-		for (var i = 0; i < 10; i++) {
-			test2['_' + String.fromCharCode(i)] = i;
-		}
-		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
-			return test2[n];
-		});
-		if (order2.join('') !== '0123456789') {
-			return false;
-		}
-
-		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
-		var test3 = {};
-		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
-			test3[letter] = letter;
-		});
-		if (Object.keys(Object.assign({}, test3)).join('') !==
-				'abcdefghijklmnopqrst') {
-			return false;
-		}
-
-		return true;
-	} catch (err) {
-		// We don't expect any of the above to throw, but better to be safe.
-		return false;
-	}
-}
-
-module.exports = shouldUseNative() ? Object.assign : function (target, source) {
-	var from;
-	var to = toObject(target);
-	var symbols;
-
-	for (var s = 1; s < arguments.length; s++) {
-		from = Object(arguments[s]);
-
-		for (var key in from) {
-			if (hasOwnProperty.call(from, key)) {
-				to[key] = from[key];
-			}
-		}
-
-		if (getOwnPropertySymbols) {
-			symbols = getOwnPropertySymbols(from);
-			for (var i = 0; i < symbols.length; i++) {
-				if (propIsEnumerable.call(from, symbols[i])) {
-					to[symbols[i]] = from[symbols[i]];
-				}
-			}
-		}
-	}
-
-	return to;
-};
-
-
-/***/ }),
-/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -957,7 +860,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1561,145 +1464,7 @@ if (process.env.NODE_ENV !== 'production' && typeof isCrushed.name === 'string' 
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-var addLeadingSlash = exports.addLeadingSlash = function addLeadingSlash(path) {
-  return path.charAt(0) === '/' ? path : '/' + path;
-};
-
-var stripLeadingSlash = exports.stripLeadingSlash = function stripLeadingSlash(path) {
-  return path.charAt(0) === '/' ? path.substr(1) : path;
-};
-
-var hasBasename = exports.hasBasename = function hasBasename(path, prefix) {
-  return new RegExp('^' + prefix + '(\\/|\\?|#|$)', 'i').test(path);
-};
-
-var stripBasename = exports.stripBasename = function stripBasename(path, prefix) {
-  return hasBasename(path, prefix) ? path.substr(prefix.length) : path;
-};
-
-var stripTrailingSlash = exports.stripTrailingSlash = function stripTrailingSlash(path) {
-  return path.charAt(path.length - 1) === '/' ? path.slice(0, -1) : path;
-};
-
-var parsePath = exports.parsePath = function parsePath(path) {
-  var pathname = path || '/';
-  var search = '';
-  var hash = '';
-
-  var hashIndex = pathname.indexOf('#');
-  if (hashIndex !== -1) {
-    hash = pathname.substr(hashIndex);
-    pathname = pathname.substr(0, hashIndex);
-  }
-
-  var searchIndex = pathname.indexOf('?');
-  if (searchIndex !== -1) {
-    search = pathname.substr(searchIndex);
-    pathname = pathname.substr(0, searchIndex);
-  }
-
-  return {
-    pathname: pathname,
-    search: search === '?' ? '' : search,
-    hash: hash === '#' ? '' : hash
-  };
-};
-
-var createPath = exports.createPath = function createPath(location) {
-  var pathname = location.pathname,
-      search = location.search,
-      hash = location.hash;
-
-
-  var path = pathname || '/';
-
-  if (search && search !== '?') path += search.charAt(0) === '?' ? search : '?' + search;
-
-  if (hash && hash !== '#') path += hash.charAt(0) === '#' ? hash : '#' + hash;
-
-  return path;
-};
-
-/***/ }),
-/* 12 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addLeadingSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return stripLeadingSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return hasBasename; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return stripBasename; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return stripTrailingSlash; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return parsePath; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createPath; });
-var addLeadingSlash = function addLeadingSlash(path) {
-  return path.charAt(0) === '/' ? path : '/' + path;
-};
-
-var stripLeadingSlash = function stripLeadingSlash(path) {
-  return path.charAt(0) === '/' ? path.substr(1) : path;
-};
-
-var hasBasename = function hasBasename(path, prefix) {
-  return new RegExp('^' + prefix + '(\\/|\\?|#|$)', 'i').test(path);
-};
-
-var stripBasename = function stripBasename(path, prefix) {
-  return hasBasename(path, prefix) ? path.substr(prefix.length) : path;
-};
-
-var stripTrailingSlash = function stripTrailingSlash(path) {
-  return path.charAt(path.length - 1) === '/' ? path.slice(0, -1) : path;
-};
-
-var parsePath = function parsePath(path) {
-  var pathname = path || '/';
-  var search = '';
-  var hash = '';
-
-  var hashIndex = pathname.indexOf('#');
-  if (hashIndex !== -1) {
-    hash = pathname.substr(hashIndex);
-    pathname = pathname.substr(0, hashIndex);
-  }
-
-  var searchIndex = pathname.indexOf('?');
-  if (searchIndex !== -1) {
-    search = pathname.substr(searchIndex);
-    pathname = pathname.substr(0, searchIndex);
-  }
-
-  return {
-    pathname: pathname,
-    search: search === '?' ? '' : search,
-    hash: hash === '#' ? '' : hash
-  };
-};
-
-var createPath = function createPath(location) {
-  var pathname = location.pathname,
-      search = location.search,
-      hash = location.hash;
-
-
-  var path = pathname || '/';
-
-  if (search && search !== '?') path += search.charAt(0) === '?' ? search : '?' + search;
-
-  if (hash && hash !== '#') path += hash.charAt(0) === '#' ? hash : '#' + hash;
-
-  return path;
-};
-
-/***/ }),
-/* 13 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1772,7 +1537,7 @@ Object.defineProperty(exports, 'Post', {
   }
 });
 
-var _NewPostModal = __webpack_require__(52);
+var _NewPostModal = __webpack_require__(147);
 
 Object.defineProperty(exports, 'NewPostModal', {
   enumerable: true,
@@ -1782,6 +1547,241 @@ Object.defineProperty(exports, 'NewPostModal', {
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*
+object-assign
+(c) Sindre Sorhus
+@license MIT
+*/
+
+
+/* eslint-disable no-unused-vars */
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+
+function toObject(val) {
+	if (val === null || val === undefined) {
+		throw new TypeError('Object.assign cannot be called with null or undefined');
+	}
+
+	return Object(val);
+}
+
+function shouldUseNative() {
+	try {
+		if (!Object.assign) {
+			return false;
+		}
+
+		// Detect buggy property enumeration order in older V8 versions.
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=4118
+		var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
+		test1[5] = 'de';
+		if (Object.getOwnPropertyNames(test1)[0] === '5') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test2 = {};
+		for (var i = 0; i < 10; i++) {
+			test2['_' + String.fromCharCode(i)] = i;
+		}
+		var order2 = Object.getOwnPropertyNames(test2).map(function (n) {
+			return test2[n];
+		});
+		if (order2.join('') !== '0123456789') {
+			return false;
+		}
+
+		// https://bugs.chromium.org/p/v8/issues/detail?id=3056
+		var test3 = {};
+		'abcdefghijklmnopqrst'.split('').forEach(function (letter) {
+			test3[letter] = letter;
+		});
+		if (Object.keys(Object.assign({}, test3)).join('') !==
+				'abcdefghijklmnopqrst') {
+			return false;
+		}
+
+		return true;
+	} catch (err) {
+		// We don't expect any of the above to throw, but better to be safe.
+		return false;
+	}
+}
+
+module.exports = shouldUseNative() ? Object.assign : function (target, source) {
+	var from;
+	var to = toObject(target);
+	var symbols;
+
+	for (var s = 1; s < arguments.length; s++) {
+		from = Object(arguments[s]);
+
+		for (var key in from) {
+			if (hasOwnProperty.call(from, key)) {
+				to[key] = from[key];
+			}
+		}
+
+		if (getOwnPropertySymbols) {
+			symbols = getOwnPropertySymbols(from);
+			for (var i = 0; i < symbols.length; i++) {
+				if (propIsEnumerable.call(from, symbols[i])) {
+					to[symbols[i]] = from[symbols[i]];
+				}
+			}
+		}
+	}
+
+	return to;
+};
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+var addLeadingSlash = exports.addLeadingSlash = function addLeadingSlash(path) {
+  return path.charAt(0) === '/' ? path : '/' + path;
+};
+
+var stripLeadingSlash = exports.stripLeadingSlash = function stripLeadingSlash(path) {
+  return path.charAt(0) === '/' ? path.substr(1) : path;
+};
+
+var hasBasename = exports.hasBasename = function hasBasename(path, prefix) {
+  return new RegExp('^' + prefix + '(\\/|\\?|#|$)', 'i').test(path);
+};
+
+var stripBasename = exports.stripBasename = function stripBasename(path, prefix) {
+  return hasBasename(path, prefix) ? path.substr(prefix.length) : path;
+};
+
+var stripTrailingSlash = exports.stripTrailingSlash = function stripTrailingSlash(path) {
+  return path.charAt(path.length - 1) === '/' ? path.slice(0, -1) : path;
+};
+
+var parsePath = exports.parsePath = function parsePath(path) {
+  var pathname = path || '/';
+  var search = '';
+  var hash = '';
+
+  var hashIndex = pathname.indexOf('#');
+  if (hashIndex !== -1) {
+    hash = pathname.substr(hashIndex);
+    pathname = pathname.substr(0, hashIndex);
+  }
+
+  var searchIndex = pathname.indexOf('?');
+  if (searchIndex !== -1) {
+    search = pathname.substr(searchIndex);
+    pathname = pathname.substr(0, searchIndex);
+  }
+
+  return {
+    pathname: pathname,
+    search: search === '?' ? '' : search,
+    hash: hash === '#' ? '' : hash
+  };
+};
+
+var createPath = exports.createPath = function createPath(location) {
+  var pathname = location.pathname,
+      search = location.search,
+      hash = location.hash;
+
+
+  var path = pathname || '/';
+
+  if (search && search !== '?') path += search.charAt(0) === '?' ? search : '?' + search;
+
+  if (hash && hash !== '#') path += hash.charAt(0) === '#' ? hash : '#' + hash;
+
+  return path;
+};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return addLeadingSlash; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return stripLeadingSlash; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return hasBasename; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return stripBasename; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return stripTrailingSlash; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return parsePath; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createPath; });
+var addLeadingSlash = function addLeadingSlash(path) {
+  return path.charAt(0) === '/' ? path : '/' + path;
+};
+
+var stripLeadingSlash = function stripLeadingSlash(path) {
+  return path.charAt(0) === '/' ? path.substr(1) : path;
+};
+
+var hasBasename = function hasBasename(path, prefix) {
+  return new RegExp('^' + prefix + '(\\/|\\?|#|$)', 'i').test(path);
+};
+
+var stripBasename = function stripBasename(path, prefix) {
+  return hasBasename(path, prefix) ? path.substr(prefix.length) : path;
+};
+
+var stripTrailingSlash = function stripTrailingSlash(path) {
+  return path.charAt(path.length - 1) === '/' ? path.slice(0, -1) : path;
+};
+
+var parsePath = function parsePath(path) {
+  var pathname = path || '/';
+  var search = '';
+  var hash = '';
+
+  var hashIndex = pathname.indexOf('#');
+  if (hashIndex !== -1) {
+    hash = pathname.substr(hashIndex);
+    pathname = pathname.substr(0, hashIndex);
+  }
+
+  var searchIndex = pathname.indexOf('?');
+  if (searchIndex !== -1) {
+    search = pathname.substr(searchIndex);
+    pathname = pathname.substr(0, searchIndex);
+  }
+
+  return {
+    pathname: pathname,
+    search: search === '?' ? '' : search,
+    hash: hash === '#' ? '' : hash
+  };
+};
+
+var createPath = function createPath(location) {
+  var pathname = location.pathname,
+      search = location.search,
+      hash = location.hash;
+
+
+  var path = pathname || '/';
+
+  if (search && search !== '?') path += search.charAt(0) === '?' ? search : '?' + search;
+
+  if (hash && hash !== '#') path += hash.charAt(0) === '#' ? hash : '#' + hash;
+
+  return path;
+};
 
 /***/ }),
 /* 14 */
@@ -1885,7 +1885,7 @@ module.exports = warning;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return locationsAreEqual; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_resolve_pathname__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_value_equal__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PathUtils__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__PathUtils__ = __webpack_require__(13);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -2119,7 +2119,7 @@ var _valueEqual = __webpack_require__(40);
 
 var _valueEqual2 = _interopRequireDefault(_valueEqual);
 
-var _PathUtils = __webpack_require__(11);
+var _PathUtils = __webpack_require__(12);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4204,81 +4204,19 @@ module.exports = Cancel;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _redux = __webpack_require__(10);
-
-var _reactRedux = __webpack_require__(9);
-
-var _modalActions = __webpack_require__(174);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var NewPostModal = function (_React$Component) {
-  _inherits(NewPostModal, _React$Component);
-
-  function NewPostModal() {
-    _classCallCheck(this, NewPostModal);
-
-    return _possibleConstructorReturn(this, (NewPostModal.__proto__ || Object.getPrototypeOf(NewPostModal)).call(this));
-  }
-
-  _createClass(NewPostModal, [{
-    key: 'render',
-    value: function render() {
-
-      console.log('NewPostModal', this.props);
-      var hidden = this.props.visibility ? '' : 'hidden';
-      return _react2.default.createElement(
-        'div',
-        { className: "modal " + hidden },
-        _react2.default.createElement(
-          'div',
-          { className: 'modal-content' },
-          _react2.default.createElement(
-            'span',
-            { className: 'modal-close', onClick: this.props.close },
-            '\xD7'
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'New Post Content'
-          )
-        )
-      );
-    }
-  }]);
-
-  return NewPostModal;
-}(_react2.default.Component);
-
-function mapStateToProps(state) {
-  console.log('mapStateToProps NewPostModal');
-  return {
-    visibility: state.modal.visibility
+exports.show = show;
+exports.close = close;
+function show() {
+  return function (dispatch) {
+    dispatch({ type: "SHOW_MODAL" });
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  console.log('mapDispatchToProps NewPostModal');
-  return (0, _redux.bindActionCreators)({
-    close: _modalActions.close
-  }, dispatch);
+function close() {
+  return function (dispatch) {
+    dispatch({ type: "CLOSE_MODAL" });
+  };
 }
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NewPostModal);
 
 /***/ }),
 /* 53 */
@@ -4358,7 +4296,7 @@ var _reactDom = __webpack_require__(57);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _reactRedux = __webpack_require__(9);
+var _reactRedux = __webpack_require__(8);
 
 var _reduxLogger = __webpack_require__(89);
 
@@ -4368,7 +4306,7 @@ var _reduxThunk = __webpack_require__(90);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _redux = __webpack_require__(10);
+var _redux = __webpack_require__(9);
 
 var _index = __webpack_require__(91);
 
@@ -4384,7 +4322,7 @@ var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default, _reduxLogger2
 var initialState = window.INITIAL_STATE;
 var store = (0, _redux.createStore)(_index2.default, initialState, middleware);
 
-__webpack_require__(150);
+__webpack_require__(151);
 
 var Routes = _react2.default.createElement(
   _reactRedux.Provider,
@@ -4408,7 +4346,7 @@ _reactDom2.default.render(Routes, document.getElementById('app'));
  * LICENSE file in the root directory of this source tree.
  */
 
-var k=__webpack_require__(8),n=__webpack_require__(6),p=__webpack_require__(14),q=__webpack_require__(7),r="function"===typeof Symbol&&Symbol.for,t=r?Symbol.for("react.element"):60103,u=r?Symbol.for("react.portal"):60106,v=r?Symbol.for("react.fragment"):60107,w=r?Symbol.for("react.strict_mode"):60108,x=r?Symbol.for("react.profiler"):60114,y=r?Symbol.for("react.provider"):60109,z=r?Symbol.for("react.context"):60110,A=r?Symbol.for("react.async_mode"):60111,B=
+var k=__webpack_require__(11),n=__webpack_require__(6),p=__webpack_require__(14),q=__webpack_require__(7),r="function"===typeof Symbol&&Symbol.for,t=r?Symbol.for("react.element"):60103,u=r?Symbol.for("react.portal"):60106,v=r?Symbol.for("react.fragment"):60107,w=r?Symbol.for("react.strict_mode"):60108,x=r?Symbol.for("react.profiler"):60114,y=r?Symbol.for("react.provider"):60109,z=r?Symbol.for("react.context"):60110,A=r?Symbol.for("react.async_mode"):60111,B=
 r?Symbol.for("react.forward_ref"):60112;r&&Symbol.for("react.timeout");var C="function"===typeof Symbol&&Symbol.iterator;function D(a){for(var b=arguments.length-1,e="https://reactjs.org/docs/error-decoder.html?invariant="+a,c=0;c<b;c++)e+="&args[]="+encodeURIComponent(arguments[c+1]);n(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",e)}
 var E={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function F(a,b,e){this.props=a;this.context=b;this.refs=p;this.updater=e||E}F.prototype.isReactComponent={};F.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?D("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};F.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function G(){}
 G.prototype=F.prototype;function H(a,b,e){this.props=a;this.context=b;this.refs=p;this.updater=e||E}var I=H.prototype=new G;I.constructor=H;k(I,F.prototype);I.isPureReactComponent=!0;var J={current:null},K=Object.prototype.hasOwnProperty,L={key:!0,ref:!0,__self:!0,__source:!0};
@@ -4445,7 +4383,7 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(8);
+var _assign = __webpack_require__(11);
 var invariant = __webpack_require__(6);
 var emptyObject = __webpack_require__(14);
 var warning = __webpack_require__(15);
@@ -5968,7 +5906,7 @@ if (process.env.NODE_ENV === 'production') {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var aa=__webpack_require__(6),ca=__webpack_require__(0),m=__webpack_require__(29),p=__webpack_require__(8),v=__webpack_require__(7),da=__webpack_require__(30),ea=__webpack_require__(31),fa=__webpack_require__(32),ha=__webpack_require__(14);
+var aa=__webpack_require__(6),ca=__webpack_require__(0),m=__webpack_require__(29),p=__webpack_require__(11),v=__webpack_require__(7),da=__webpack_require__(30),ea=__webpack_require__(31),fa=__webpack_require__(32),ha=__webpack_require__(14);
 function A(a){for(var b=arguments.length-1,c="https://reactjs.org/docs/error-decoder.html?invariant="+a,d=0;d<b;d++)c+="&args[]="+encodeURIComponent(arguments[d+1]);aa(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",c)}ca?void 0:A("227");
 function ia(a,b,c,d,e,f,g,h,k){this._hasCaughtError=!1;this._caughtError=null;var n=Array.prototype.slice.call(arguments,3);try{b.apply(c,n)}catch(r){this._caughtError=r,this._hasCaughtError=!0}}
 var B={_caughtError:null,_hasCaughtError:!1,_rethrowError:null,_hasRethrowError:!1,invokeGuardedCallback:function(a,b,c,d,e,f,g,h,k){ia.apply(B,arguments)},invokeGuardedCallbackAndCatchFirstError:function(a,b,c,d,e,f,g,h,k){B.invokeGuardedCallback.apply(this,arguments);if(B.hasCaughtError()){var n=B.clearCaughtError();B._hasRethrowError||(B._hasRethrowError=!0,B._rethrowError=n)}},rethrowCaughtError:function(){return ka.apply(B,arguments)},hasCaughtError:function(){return B._hasCaughtError},clearCaughtError:function(){if(B._hasCaughtError){var a=
@@ -6278,7 +6216,7 @@ var invariant = __webpack_require__(6);
 var React = __webpack_require__(0);
 var warning = __webpack_require__(15);
 var ExecutionEnvironment = __webpack_require__(29);
-var _assign = __webpack_require__(8);
+var _assign = __webpack_require__(11);
 var emptyFunction = __webpack_require__(7);
 var checkPropTypes = __webpack_require__(18);
 var getActiveElement = __webpack_require__(30);
@@ -23825,7 +23763,7 @@ function createProvider() {
 var emptyFunction = __webpack_require__(7);
 var invariant = __webpack_require__(6);
 var warning = __webpack_require__(15);
-var assign = __webpack_require__(8);
+var assign = __webpack_require__(11);
 
 var ReactPropTypesSecret = __webpack_require__(19);
 var checkPropTypes = __webpack_require__(18);
@@ -24683,7 +24621,7 @@ function shallowEqual(objA, objB) {
 /* unused harmony export whenMapDispatchToPropsIsFunction */
 /* unused harmony export whenMapDispatchToPropsIsMissing */
 /* unused harmony export whenMapDispatchToPropsIsObject */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__wrapMapToProps__ = __webpack_require__(36);
 
 
@@ -25348,7 +25286,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _redux = __webpack_require__(10);
+var _redux = __webpack_require__(9);
 
 var _userReducers = __webpack_require__(92);
 
@@ -25436,15 +25374,15 @@ var _Start = __webpack_require__(121);
 
 var _Start2 = _interopRequireDefault(_Start);
 
-var _Home = __webpack_require__(147);
+var _Home = __webpack_require__(148);
 
 var _Home2 = _interopRequireDefault(_Home);
 
-var _SignUp = __webpack_require__(148);
+var _SignUp = __webpack_require__(149);
 
 var _SignUp2 = _interopRequireDefault(_SignUp);
 
-var _SignIn = __webpack_require__(149);
+var _SignIn = __webpack_require__(150);
 
 var _SignIn2 = _interopRequireDefault(_SignIn);
 
@@ -25627,7 +25565,7 @@ var _invariant2 = _interopRequireDefault(_invariant);
 
 var _LocationUtils = __webpack_require__(22);
 
-var _PathUtils = __webpack_require__(11);
+var _PathUtils = __webpack_require__(12);
 
 var _createTransitionManager = __webpack_require__(23);
 
@@ -26004,7 +25942,7 @@ var _invariant2 = _interopRequireDefault(_invariant);
 
 var _LocationUtils = __webpack_require__(22);
 
-var _PathUtils = __webpack_require__(11);
+var _PathUtils = __webpack_require__(12);
 
 var _createTransitionManager = __webpack_require__(23);
 
@@ -26408,7 +26346,7 @@ var _warning = __webpack_require__(2);
 
 var _warning2 = _interopRequireDefault(_warning);
 
-var _PathUtils = __webpack_require__(11);
+var _PathUtils = __webpack_require__(12);
 
 var _LocationUtils = __webpack_require__(22);
 
@@ -27324,7 +27262,7 @@ Redirect.contextTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__LocationUtils__ = __webpack_require__(16);
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_3__LocationUtils__["a"]; });
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_3__LocationUtils__["b"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PathUtils__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__PathUtils__ = __webpack_require__(13);
 /* unused harmony reexport parsePath */
 /* unused harmony reexport createPath */
 
@@ -27347,7 +27285,7 @@ Redirect.contextTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(45);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -27651,7 +27589,7 @@ var createBrowserHistory = function createBrowserHistory() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_invariant__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PathUtils__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__createTransitionManager__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMUtils__ = __webpack_require__(45);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -27969,7 +27907,7 @@ var createHashHistory = function createHashHistory() {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_warning___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_warning__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PathUtils__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PathUtils__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__LocationUtils__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__createTransitionManager__ = __webpack_require__(27);
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -28154,7 +28092,7 @@ var createMemoryHistory = function createMemoryHistory() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_history_PathUtils__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_history_PathUtils__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_history_PathUtils___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_history_PathUtils__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Router__ = __webpack_require__(25);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -28513,7 +28451,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ui = __webpack_require__(13);
+var _ui = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28567,9 +28505,9 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _redux = __webpack_require__(10);
+var _redux = __webpack_require__(9);
 
-var _reactRedux = __webpack_require__(9);
+var _reactRedux = __webpack_require__(8);
 
 var _auth = __webpack_require__(46);
 
@@ -28577,9 +28515,9 @@ var _axios = __webpack_require__(17);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _ = __webpack_require__(13);
+var _ = __webpack_require__(10);
 
-var _modalActions = __webpack_require__(174);
+var _modalActions = __webpack_require__(52);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28635,7 +28573,7 @@ var Header = function (_React$Component) {
           _react2.default.createElement(
             'span',
             { onClick: this.props.show },
-            'New Post'
+            _react2.default.createElement('i', { className: 'fas fa-user-edit' })
           )
         ),
         _react2.default.createElement(
@@ -29652,17 +29590,17 @@ var Banner = function (_React$Component) {
           _react2.default.createElement(
             "h3",
             { className: "banner-subtitle" },
-            "Signup and enjoy new social experience"
+            "Sign up and enjoy new social experience"
           ),
           _react2.default.createElement(
             "a",
             { href: "/signup", id: "link-signup" },
-            "Signup"
+            "Sign Up"
           ),
           _react2.default.createElement(
             "a",
             { href: "/signin", id: "link-signin" },
-            "Signin"
+            "Sign In"
           )
         )
       );
@@ -29691,9 +29629,9 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _redux = __webpack_require__(10);
+var _redux = __webpack_require__(9);
 
-var _reactRedux = __webpack_require__(9);
+var _reactRedux = __webpack_require__(8);
 
 var _userActions = __webpack_require__(53);
 
@@ -29853,9 +29791,9 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _redux = __webpack_require__(10);
+var _redux = __webpack_require__(9);
 
-var _reactRedux = __webpack_require__(9);
+var _reactRedux = __webpack_require__(8);
 
 var _userActions = __webpack_require__(53);
 
@@ -30182,7 +30120,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ui = __webpack_require__(13);
+var _ui = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30324,11 +30262,116 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _redux = __webpack_require__(9);
+
+var _reactRedux = __webpack_require__(8);
+
+var _modalActions = __webpack_require__(52);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var NewPostModal = function (_React$Component) {
+  _inherits(NewPostModal, _React$Component);
+
+  function NewPostModal() {
+    _classCallCheck(this, NewPostModal);
+
+    return _possibleConstructorReturn(this, (NewPostModal.__proto__ || Object.getPrototypeOf(NewPostModal)).call(this));
+  }
+
+  _createClass(NewPostModal, [{
+    key: 'render',
+    value: function render() {
+
+      console.log('NewPostModal', this.props);
+      var hidden = this.props.visibility ? '' : 'hidden';
+      return _react2.default.createElement(
+        'div',
+        { className: "modal " + hidden },
+        _react2.default.createElement(
+          'div',
+          { className: 'modal-content' },
+          _react2.default.createElement(
+            'div',
+            { className: 'modal-header' },
+            _react2.default.createElement(
+              'span',
+              { className: 'modal-title' },
+              _react2.default.createElement('i', { className: 'fas fa-edit' }),
+              'Net Post'
+            ),
+            _react2.default.createElement(
+              'span',
+              { className: 'modal-close', onClick: this.props.close },
+              '\xD7'
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'modal-body' },
+            _react2.default.createElement('textarea', { placeholder: 'Sharing Your Life' })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'modal-footer' },
+            _react2.default.createElement(
+              'button',
+              { type: 'submit' },
+              'POST'
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return NewPostModal;
+}(_react2.default.Component);
+
+function mapStateToProps(state) {
+  console.log('mapStateToProps NewPostModal');
+  return {
+    visibility: state.modal.visibility
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  console.log('mapDispatchToProps NewPostModal');
+  return (0, _redux.bindActionCreators)({
+    close: _modalActions.close
+  }, dispatch);
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NewPostModal);
+
+/***/ }),
+/* 148 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
 var _axios = __webpack_require__(17);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _ui = __webpack_require__(13);
+var _ui = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30387,7 +30430,7 @@ var Home = function (_React$Component) {
 exports.default = Home;
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30403,9 +30446,9 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(9);
+var _reactRedux = __webpack_require__(8);
 
-var _ui = __webpack_require__(13);
+var _ui = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30442,7 +30485,7 @@ var SignUp = function (_React$Component) {
 exports.default = SignUp;
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30458,9 +30501,9 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(9);
+var _reactRedux = __webpack_require__(8);
 
-var _ui = __webpack_require__(13);
+var _ui = __webpack_require__(10);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -30497,11 +30540,11 @@ var SignIn = function (_React$Component) {
 exports.default = SignIn;
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(151);
+var content = __webpack_require__(152);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -30515,7 +30558,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(153)(content, options);
+var update = __webpack_require__(154)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -30547,21 +30590,21 @@ if(false) {
 }
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(152)(false);
+exports = module.exports = __webpack_require__(153)(false);
 // imports
 
 
 // module
-exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box; }\n\nbody {\n  font-family: 'Roboto', sans-serif;\n  background: #F5F5F5;\n  width: 100vw;\n  height: 100vh; }\n\n.container {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#nav-container {\n  background-color: #191919; }\n\n#links {\n  list-style-type: none;\n  display: none; }\n\n#links a,\n#links span {\n  display: block;\n  color: #2b98f0;\n  background: transparent;\n  text-decoration: none;\n  padding: 10px;\n  font-size: 20px;\n  cursor: pointer;\n  transition: color 1s ease, \r background 1s ease,\r padding 1s ease; }\n\n#links a:hover,\n#links span:hover {\n  color: #F5F5F5;\n  padding-left: 60px;\n  background: #2b98f0; }\n\n#nav-top {\n  display: flex;\n  justify-content: space-between;\n  padding: 20px 20px 20px 10px; }\n\n#logo {\n  font-size: 25px;\n  padding: 5px;\n  color: #2b98f0;\n  transition: color 1s ease; }\n\n#logo {\n  color: #2b98f0;\n  border: 3px solid;\n  transition: color 1s ease,\r background 1s ease; }\n\n#logo:hover {\n  background: #2b98f0; }\n  #logo:hover span, #logo:hover i {\n    color: #F5F5F5; }\n\n#menu-btn {\n  padding: 5px;\n  border: 2px solid #2b98f0;\n  cursor: pointer;\n  align-self: center; }\n\n.bar1,\n.bar2,\n.bar3 {\n  height: 5px;\n  width: 35px;\n  background-color: #2b98f0;\n  margin: 5px 0;\n  transition: transform 1s ease; }\n\n.turn .bar1 {\n  transform: rotate(-45deg) translate(-7px, 6px); }\n\n.turn .bar2 {\n  opacity: 0; }\n\n.turn .bar3 {\n  transform: rotate(45deg) translate(-7px, -8px); }\n\n@media screen and (min-width: 690px) {\n  #nav-container {\n    display: flex;\n    align-items: baseline;\n    flex-wrap: wrap;\n    padding: 0 20px; }\n  #menu-btn {\n    display: none; }\n  #links {\n    flex: 1 1 auto;\n    justify-content: flex-end;\n    display: flex !important;\n    flex-wrap: wrap; }\n  #links a,\n  #links span {\n    text-align: center; }\n  #links a:hover,\n  #links span:hover {\n    padding: 10px !important; }\n  #nav-top {\n    padding: 10px; } }\n\n#banner {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex: 1 0 auto;\n  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(\"/images/banner.jpg\") center/cover fixed no-repeat; }\n\n#banner-box {\n  color: #F5F5F5;\n  text-align: center; }\n\n#banner-title {\n  text-transform: capitalize;\n  font-size: 60px; }\n\n.banner-underline {\n  width: 200px;\n  margin: 10px auto;\n  border: 3px solid #2b98f0; }\n\n.banner-subtitle {\n  margin: 20px 0 40px 0;\n  text-transform: capitalize;\n  font-size: 25px; }\n\n#link-signup,\n#link-signin {\n  display: inline-block;\n  padding: 10px;\n  font-size: 40px;\n  color: #F5F5F5;\n  background: #2b98f0;\n  border: 3px solid #2b98f0;\n  border-radius: 5px;\n  margin: 0px 5px;\n  cursor: pointer;\n  text-decoration: none;\n  transition: background 1s ease,\r border 1s ease; }\n\n#link-signup:hover,\n#link-signin:hover {\n  background: transparent;\n  color: #2b98f0; }\n\n#signup {\n  display: flex;\n  flex: 1 0 auto;\n  justify-content: center;\n  align-items: center; }\n\n.signup-form li {\n  display: flex;\n  list-style-type: none;\n  margin: 20px auto;\n  justify-content: flex-end; }\n\n.signup-form h3 {\n  font-size: 40px;\n  color: #2b98f0;\n  text-align: center; }\n\n.signup-form {\n  display: flex;\n  flex-direction: column; }\n\n.signup-form i {\n  font-size: 30px;\n  margin-right: 5px;\n  color: #456990;\n  align-self: center;\n  justify-content: center; }\n\n.signup-form input {\n  font-size: 25px;\n  border-radius: 5px; }\n\n.signup-form input::placeholder {\n  color: #BBB; }\n\n.signup-form input:focus {\n  border-radius: 5px; }\n\n.signup-form button {\n  font-size: 20px;\n  color: #F5F5F5;\n  background: #2EC4B6;\n  padding: 10px;\n  border: 2px solid #2EC4B6;\n  border-radius: 5px;\n  margin: 0px 10px;\n  cursor: pointer;\n  justify-content: flex-end;\n  transition: background-color 1s ease,\r border 1s ease; }\n\n.signup-form button:hover {\n  background: transparent;\n  color: #2EC4B6; }\n\n.signup-form a {\n  text-decoration: none;\n  align-self: flex-end;\n  justify-content: flex-end;\n  font-style: italic; }\n\n.message {\n  text-align: center;\n  padding: 10px;\n  margin: 10px 0px;\n  font-weight: bold; }\n\n.message-success {\n  background: #61FF7E; }\n\n.message-error {\n  background: #F8C0C8; }\n\n#signin {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex: 1 0 auto; }\n\n#signin h3 {\n  font-size: 40px;\n  color: #2b98f0;\n  text-align: center; }\n\n.input-field, .submit-field {\n  display: flex;\n  justify-content: flex-end;\n  margin: 20px auto; }\n\n.input-field i {\n  font-size: 30px;\n  margin-right: 5px;\n  color: #456990; }\n\n.input-field input {\n  font-size: 25px;\n  border-radius: 5px; }\n\n.input-field input::placeholder {\n  color: #BBB; }\n\n.input-field input:focus {\n  border-radius: 5px; }\n\n.submit-field button {\n  font-size: 20px;\n  color: #F5F5F5;\n  background: #2EC4B6;\n  padding: 10px;\n  border: 2px solid #2EC4B6;\n  border-radius: 5px;\n  margin: 0px 10px;\n  cursor: pointer;\n  transition: background-color 1s ease, border 1s ease; }\n\n.submit-field button:hover {\n  background: transparent;\n  color: #2EC4B6; }\n\n.submit-field a {\n  text-decoration: none;\n  align-self: flex-end;\n  font-style: italic; }\n\n#start {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#profile {\n  border: 3px solid blue;\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n  padding: 20px;\n  flex: 0 0 20%; }\n\n#profile hr {\n  width: 100%;\n  margin: 5px; }\n\n.profile-image img {\n  display: inline-block;\n  width: 200px;\n  height: 200px; }\n\n.profile-name span {\n  font-size: 20px;\n  color: #2b98f0; }\n\n.profile-email {\n  display: flex;\n  align-self: flex-start;\n  align-items: center;\n  padding: 5px; }\n\n.profile-email span {\n  display: inline-block;\n  margin-left: 5px;\n  overflow: hidden;\n  width: 200px;\n  text-overflow: ellipsis; }\n\n.profile-activity {\n  margin-top: 5px;\n  border: 2px solid #BBB;\n  flex: 1 0 auto;\n  width: 100%; }\n\n#tab-container {\n  width: 100%; }\n\n#tab-container > ul {\n  overflow: hidden;\n  border-bottom: 2px solid #BBB; }\n\n#tab-container > ul > li {\n  list-style-type: none; }\n\n.tab-item {\n  text-decoration: none;\n  font-size: 17px;\n  color: #333;\n  float: left;\n  padding: 10px;\n  transition: font-style 0.5s ease, font-weight 0.5s ease, transform 0.5s ease; }\n\n.tab-content {\n  overflow: hidden;\n  display: none;\n  transition: all 1s ease-in-out; }\n\n#tab-following:target ~ #tab-container .tab-item-following,\n#tab-follower:target ~ #tab-container .tab-item-follower {\n  color: #456990;\n  font-style: italic;\n  font-weight: bold;\n  transform: scale(1.1); }\n\n#tab-following:target ~ #tab-container > .tab-content-following,\n#tab-follower:target ~ #tab-container > .tab-content-follower {\n  display: flex;\n  flex-direction: column; }\n\n#tab-following,\n#tab-follower {\n  display: none; }\n\n.following-user {\n  display: flex;\n  align-items: center;\n  color: #2b98f0;\n  cursor: pointer;\n  padding: 5px;\n  transition: background .5s ease,\r transform .5s ease,\r font-style .5s ease,\r padding .5s ease,\r opacity .5s ease; }\n\n.following-user:hover {\n  background: rgba(0, 0, 0, 0.3);\n  transform: scale(1.1);\n  font-style: italic;\n  padding-left: 10px; }\n\n.following-user img {\n  width: 30px;\n  height: 30px;\n  margin-right: 5px; }\n\n.following-user span {\n  font-size: 20px; }\n\n.follower-user {\n  display: flex;\n  align-items: center;\n  color: #2b98f0;\n  cursor: pointer;\n  padding: 5px;\n  transition: background .5s ease,\r transform .5s ease,\r font-style .5s ease,\r padding .5s ease,\r opacity .5s ease; }\n\n.follower-user:hover {\n  background: rgba(0, 0, 0, 0.3);\n  transform: scale(1.1);\n  font-style: italic;\n  padding-left: 10px; }\n\n.follower-user img {\n  width: 30px;\n  height: 30px;\n  margin-right: 5px; }\n\n.follower-user span {\n  font-size: 20px; }\n\n#postList {\n  display: flex;\n  flex-direction: column;\n  flex: 1 0 80%;\n  border: 3px solid black;\n  overflow-y: scroll;\n  padding: 40px 50px; }\n\n#post {\n  display: flex;\n  flex-direction: column;\n  flex: 0 0 calc(70%);\n  padding: 10px 20px;\n  margin: 10px 0px;\n  border: 2px solid #BBB;\n  border-radius: 3px;\n  background: white; }\n\n.poster {\n  flex: 0 0 calc(25% - 1em);\n  display: flex;\n  align-items: center; }\n\n.poster img {\n  width: 40px;\n  height: 40px;\n  margin-right: 5px;\n  border-radius: 50%; }\n\n.poster span {\n  cursor: pointer;\n  font-size: 30px;\n  color: #2b98f0; }\n\n.post-content {\n  flex: 1 0 auto;\n  border: 2px solid #BBB;\n  padding: 5px;\n  margin: 5px 0px; }\n\n.post-footer {\n  flex: 0 0 calc(15% - 1em);\n  display: flex;\n  align-items: center;\n  border: 2px solid #BBB;\n  padding: 5px; }\n\n.post-footer .comment,\n.post-footer .like {\n  font-size: 20px;\n  margin: 0 2px 0 2px;\n  cursor: pointer; }\n\n#home {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#content {\n  display: flex;\n  flex-grow: 1; }\n\n.modal {\n  position: fixed;\n  z-index: 1;\n  padding-top: 100px;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  background-color: rgba(0, 0, 0, 0.3); }\n\n.hidden {\n  display: none !important; }\n\n.modal-content {\n  background-color: #F5F5F5;\n  margin: auto;\n  padding: 20px;\n  border: 1px solid #888;\n  border-radius: 5px;\n  width: 70%; }\n\n.modal-close {\n  color: #AAA;\n  font-size: 28px;\n  font-weight: bold; }\n\n.modal-close:hover {\n  color: black;\n  text-decoration: none;\n  cursor: pointer; }\n", ""]);
+exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box; }\n\nbody {\n  font-family: 'Roboto', sans-serif;\n  background: #F5F5F5;\n  width: 100vw;\n  height: 100vh; }\n\n.container {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#nav-container {\n  background-color: #191919; }\n\n#links {\n  list-style-type: none;\n  display: none; }\n\n#links a,\n#links span {\n  display: block;\n  color: #2b98f0;\n  background: transparent;\n  text-decoration: none;\n  padding: 10px;\n  font-size: 20px;\n  cursor: pointer;\n  transition: color 1s ease, \r background 1s ease,\r padding 1s ease; }\n\n#links a:hover,\n#links span:hover {\n  color: #F5F5F5;\n  padding-left: 60px;\n  background: #2b98f0; }\n\n#nav-top {\n  display: flex;\n  justify-content: space-between;\n  padding: 20px 20px 20px 10px; }\n\n#logo {\n  font-size: 25px;\n  padding: 5px;\n  color: #2b98f0;\n  transition: color 1s ease; }\n\n#logo {\n  color: #2b98f0;\n  border: 3px solid;\n  transition: color 1s ease,\r background 1s ease; }\n\n#logo:hover {\n  background: #2b98f0; }\n  #logo:hover span, #logo:hover i {\n    color: #F5F5F5; }\n\n#menu-btn {\n  padding: 5px;\n  border: 2px solid #2b98f0;\n  cursor: pointer;\n  align-self: center; }\n\n.bar1,\n.bar2,\n.bar3 {\n  height: 5px;\n  width: 35px;\n  background-color: #2b98f0;\n  margin: 5px 0;\n  transition: transform 1s ease; }\n\n.turn .bar1 {\n  transform: rotate(-45deg) translate(-7px, 6px); }\n\n.turn .bar2 {\n  opacity: 0; }\n\n.turn .bar3 {\n  transform: rotate(45deg) translate(-7px, -8px); }\n\n@media screen and (min-width: 690px) {\n  #nav-container {\n    display: flex;\n    align-items: baseline;\n    flex-wrap: wrap;\n    padding: 0 20px; }\n  #menu-btn {\n    display: none; }\n  #links {\n    flex: 1 1 auto;\n    justify-content: flex-end;\n    display: flex !important;\n    flex-wrap: wrap; }\n  #links a,\n  #links span {\n    text-align: center; }\n  #links a:hover,\n  #links span:hover {\n    padding: 10px !important; }\n  #nav-top {\n    padding: 10px; } }\n\n#banner {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex: 1 0 auto;\n  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(\"/images/banner.jpg\") center/cover fixed no-repeat; }\n\n#banner-box {\n  color: #F5F5F5;\n  text-align: center; }\n\n#banner-title {\n  text-transform: capitalize;\n  font-size: 60px; }\n\n.banner-underline {\n  width: 200px;\n  margin: 10px auto;\n  border: 3px solid #2b98f0; }\n\n.banner-subtitle {\n  margin: 20px 0 40px 0;\n  text-transform: capitalize;\n  font-size: 25px; }\n\n#link-signup,\n#link-signin {\n  display: inline-block;\n  padding: 10px;\n  font-size: 40px;\n  color: #F5F5F5;\n  background: #2b98f0;\n  border: 3px solid #2b98f0;\n  border-radius: 5px;\n  margin: 0px 5px;\n  cursor: pointer;\n  text-decoration: none;\n  transition: background 1s ease,\r border 1s ease; }\n\n#link-signup:hover,\n#link-signin:hover {\n  background: transparent;\n  color: #2b98f0; }\n\n#signup {\n  display: flex;\n  flex: 1 0 auto;\n  justify-content: center;\n  align-items: center; }\n\n.signup-form li {\n  display: flex;\n  list-style-type: none;\n  margin: 20px auto;\n  justify-content: flex-end; }\n\n.signup-form h3 {\n  font-size: 40px;\n  color: #2b98f0;\n  text-align: center; }\n\n.signup-form {\n  display: flex;\n  flex-direction: column; }\n\n.signup-form i {\n  font-size: 30px;\n  margin-right: 5px;\n  color: #456990;\n  align-self: center;\n  justify-content: center; }\n\n.signup-form input {\n  font-size: 25px;\n  border-radius: 5px; }\n\n.signup-form input::placeholder {\n  color: #BBB; }\n\n.signup-form input:focus {\n  border-radius: 5px; }\n\n.signup-form button {\n  font-size: 20px;\n  color: #F5F5F5;\n  background: #2EC4B6;\n  padding: 10px;\n  border: 2px solid #2EC4B6;\n  border-radius: 5px;\n  margin: 0px 10px;\n  cursor: pointer;\n  justify-content: flex-end;\n  transition: background-color 1s ease,\r border 1s ease; }\n\n.signup-form button:hover {\n  background: transparent;\n  color: #2EC4B6; }\n\n.signup-form a {\n  text-decoration: none;\n  align-self: flex-end;\n  justify-content: flex-end;\n  font-style: italic; }\n\n.message {\n  text-align: center;\n  padding: 10px;\n  margin: 10px 0px;\n  font-weight: bold; }\n\n.message-success {\n  background: #61FF7E; }\n\n.message-error {\n  background: #F8C0C8; }\n\n#signin {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex: 1 0 auto; }\n\n#signin h3 {\n  font-size: 40px;\n  color: #2b98f0;\n  text-align: center; }\n\n.input-field, .submit-field {\n  display: flex;\n  justify-content: flex-end;\n  margin: 20px auto; }\n\n.input-field i {\n  font-size: 30px;\n  margin-right: 5px;\n  color: #456990; }\n\n.input-field input {\n  font-size: 25px;\n  border-radius: 5px; }\n\n.input-field input::placeholder {\n  color: #BBB; }\n\n.input-field input:focus {\n  border-radius: 5px; }\n\n.submit-field button {\n  font-size: 20px;\n  color: #F5F5F5;\n  background: #2EC4B6;\n  padding: 10px;\n  border: 2px solid #2EC4B6;\n  border-radius: 5px;\n  margin: 0px 10px;\n  cursor: pointer;\n  transition: background-color 1s ease, border 1s ease; }\n\n.submit-field button:hover {\n  background: transparent;\n  color: #2EC4B6; }\n\n.submit-field a {\n  text-decoration: none;\n  align-self: flex-end;\n  font-style: italic; }\n\n#start {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#profile {\n  border: 3px solid blue;\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n  padding: 20px;\n  flex: 0 0 20%; }\n\n#profile hr {\n  width: 100%;\n  margin: 5px; }\n\n.profile-image img {\n  display: inline-block;\n  width: 200px;\n  height: 200px; }\n\n.profile-name span {\n  font-size: 20px;\n  color: #2b98f0; }\n\n.profile-email {\n  display: flex;\n  align-self: flex-start;\n  align-items: center;\n  padding: 5px; }\n\n.profile-email span {\n  display: inline-block;\n  margin-left: 5px;\n  overflow: hidden;\n  width: 200px;\n  text-overflow: ellipsis; }\n\n.profile-activity {\n  margin-top: 5px;\n  border: 2px solid #BBB;\n  flex: 1 0 auto;\n  width: 100%; }\n\n#tab-container {\n  width: 100%; }\n\n#tab-container > ul {\n  overflow: hidden;\n  border-bottom: 2px solid #BBB; }\n\n#tab-container > ul > li {\n  list-style-type: none; }\n\n.tab-item {\n  text-decoration: none;\n  font-size: 17px;\n  color: #333;\n  float: left;\n  padding: 10px;\n  transition: font-style 0.5s ease, font-weight 0.5s ease, transform 0.5s ease; }\n\n.tab-content {\n  overflow: hidden;\n  display: none;\n  transition: all 1s ease-in-out; }\n\n#tab-following:target ~ #tab-container .tab-item-following,\n#tab-follower:target ~ #tab-container .tab-item-follower {\n  color: #456990;\n  font-style: italic;\n  font-weight: bold;\n  transform: scale(1.1); }\n\n#tab-following:target ~ #tab-container > .tab-content-following,\n#tab-follower:target ~ #tab-container > .tab-content-follower {\n  display: flex;\n  flex-direction: column; }\n\n#tab-following,\n#tab-follower {\n  display: none; }\n\n.following-user {\n  display: flex;\n  align-items: center;\n  color: #2b98f0;\n  cursor: pointer;\n  padding: 5px;\n  transition: background .5s ease,\r transform .5s ease,\r font-style .5s ease,\r padding .5s ease,\r opacity .5s ease; }\n\n.following-user:hover {\n  background: rgba(0, 0, 0, 0.3);\n  transform: scale(1.1);\n  font-style: italic;\n  padding-left: 10px; }\n\n.following-user img {\n  width: 30px;\n  height: 30px;\n  margin-right: 5px; }\n\n.following-user span {\n  font-size: 20px; }\n\n.follower-user {\n  display: flex;\n  align-items: center;\n  color: #2b98f0;\n  cursor: pointer;\n  padding: 5px;\n  transition: background .5s ease,\r transform .5s ease,\r font-style .5s ease,\r padding .5s ease,\r opacity .5s ease; }\n\n.follower-user:hover {\n  background: rgba(0, 0, 0, 0.3);\n  transform: scale(1.1);\n  font-style: italic;\n  padding-left: 10px; }\n\n.follower-user img {\n  width: 30px;\n  height: 30px;\n  margin-right: 5px; }\n\n.follower-user span {\n  font-size: 20px; }\n\n#postList {\n  display: flex;\n  flex-direction: column;\n  flex: 1 0 80%;\n  border: 3px solid black;\n  overflow-y: scroll;\n  padding: 40px 50px; }\n\n#post {\n  display: flex;\n  flex-direction: column;\n  flex: 0 0 calc(70%);\n  padding: 10px 20px;\n  margin: 10px 0px;\n  border: 2px solid #BBB;\n  border-radius: 3px;\n  background: white; }\n\n.poster {\n  flex: 0 0 calc(25% - 1em);\n  display: flex;\n  align-items: center; }\n\n.poster img {\n  width: 40px;\n  height: 40px;\n  margin-right: 5px;\n  border-radius: 50%; }\n\n.poster span {\n  cursor: pointer;\n  font-size: 30px;\n  color: #2b98f0; }\n\n.post-content {\n  flex: 1 0 auto;\n  border: 2px solid #BBB;\n  padding: 5px;\n  margin: 5px 0px; }\n\n.post-footer {\n  flex: 0 0 calc(15% - 1em);\n  display: flex;\n  align-items: center;\n  border: 2px solid #BBB;\n  padding: 5px; }\n\n.post-footer .comment,\n.post-footer .like {\n  font-size: 20px;\n  margin: 0 2px 0 2px;\n  cursor: pointer; }\n\n#home {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#content {\n  display: flex;\n  flex-grow: 1; }\n\n.modal {\n  position: fixed;\n  z-index: 1;\n  padding-top: 100px;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  background-color: rgba(0, 0, 0, 0.3); }\n\n.hidden {\n  display: none !important; }\n\n.modal-content {\n  display: flex;\n  flex-direction: column;\n  background-color: white;\n  margin: auto;\n  border: 1px solid #888888;\n  border-radius: 5px;\n  width: 70%;\n  height: 50vh; }\n\n.modal-header {\n  background-color: #F6F7F9;\n  border-bottom: 1px solid #DDDFE2;\n  border-radius: 5px;\n  display: flex;\n  justify-content: space-between; }\n\n.modal-close {\n  color: #AAAAAA;\n  font-size: 30px;\n  font-weight: bold;\n  margin-right: 10px; }\n\n.modal-title {\n  font-size: 20px;\n  font-weight: bold;\n  padding: 10px; }\n\n.modal-title i {\n  margin-right: 8px; }\n\n.modal-close:hover {\n  color: black;\n  text-decoration: none;\n  cursor: pointer; }\n\n.modal-body {\n  flex: 1 0;\n  padding: 15px; }\n\n.modal-body textarea {\n  width: 100%;\n  height: 100%;\n  font-size: 30px; }\n\n.modal-footer {\n  display: flex;\n  justify-content: flex-end;\n  flex: 0 0 15%;\n  padding: 10px; }\n\n.modal-footer button {\n  border-radius: 5px;\n  color: white;\n  background-color: #337ab7;\n  border: #337ab7;\n  padding: 6px 12px;\n  font-size: 15px; }\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 152 */
+/* 153 */
 /***/ (function(module, exports) {
 
 /*
@@ -30643,7 +30686,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 153 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -30709,7 +30752,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(154);
+var	fixUrls = __webpack_require__(155);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -31029,7 +31072,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 154 */
+/* 155 */
 /***/ (function(module, exports) {
 
 
@@ -31122,49 +31165,6 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
-
-/***/ }),
-/* 155 */,
-/* 156 */,
-/* 157 */,
-/* 158 */,
-/* 159 */,
-/* 160 */,
-/* 161 */,
-/* 162 */,
-/* 163 */,
-/* 164 */,
-/* 165 */,
-/* 166 */,
-/* 167 */,
-/* 168 */,
-/* 169 */,
-/* 170 */,
-/* 171 */,
-/* 172 */,
-/* 173 */,
-/* 174 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.show = show;
-exports.close = close;
-function show() {
-  return function (dispatch) {
-    dispatch({ type: "SHOW_MODAL" });
-  };
-}
-
-function close() {
-  return function (dispatch) {
-    dispatch({ type: "CLOSE_MODAL" });
-  };
-}
 
 /***/ })
 /******/ ]);

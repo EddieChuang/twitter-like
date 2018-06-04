@@ -20,8 +20,20 @@ class NewPostModal extends React.Component{
     return (
       <div className={"modal " + hidden}>
         <div className="modal-content">
-          <span className="modal-close" onClick={this.props.close}>&times;</span>
-          <p>New Post Content</p>
+          {/* <form> */}
+            <div className="modal-header">
+              <span className="modal-title"><i className="fas fa-edit"/>Net Post</span>
+              <span className="modal-close" onClick={this.props.close}>&times;</span>
+            </div>
+            <div className="modal-body">
+              <textarea placeholder="Sharing Your Life">
+
+              </textarea>
+            </div>
+            <div className="modal-footer">
+              <button type="submit">POST</button>
+            </div>
+          {/* </form> */}
         </div>
       </div>
     )

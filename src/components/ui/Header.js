@@ -29,7 +29,7 @@ class Header extends React.Component{
     let nav  = user === null ? '' : (
       <ul id="links">
         <li><a href="/home">Hi, {user.name}</a></li>
-        <li><span onClick={this.props.show}>New Post</span></li>
+        <li><span onClick={this.props.show}><i className="fas fa-user-edit"></i></span></li>
         <li><span onClick={this.onLogout}><i className="fas fa-sign-out-alt"/></span></li>
       </ul>
     )
