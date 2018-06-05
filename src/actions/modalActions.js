@@ -11,3 +11,11 @@ export function close(){
     dispatch({type: "CLOSE_MODAL"})
   }
 }
+
+export function newPost(text){
+
+  return (dispatch) => {
+    let tweet = {owner: sessionStorage_id, content: text}
+    dispatch({type: "NEW_POST", payload: {tweet}})
+  }
+}

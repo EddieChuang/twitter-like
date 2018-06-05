@@ -1,12 +1,21 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { close } from '../../actions/modalActions'
+import { close, newPost } from '../../actions/modalActions'
 
 class NewPostModal extends React.Component{
 
   constructor(){
     super()
+
+    this.onNewPost = this.onNewPost.bind(this)
+  }
+
+  onNewPost(){
+
+    let text = this.refs.text.value
+
+    this.props.newPost(text)
 
   }
 
@@ -26,12 +35,12 @@ class NewPostModal extends React.Component{
               <span className="modal-close" onClick={this.props.close}>&times;</span>
             </div>
             <div className="modal-body">
-              <textarea placeholder="Sharing Your Life">
+              <textarea ref="text" placeholder="Sharing Your Life">
 
               </textarea>
             </div>
             <div className="modal-footer">
-              <button type="submit">POST</button>
+              <button type="submit" onClick={this.onNewPost}>POST</button>
             </div>
           {/* </form> */}
         </div>
@@ -52,7 +61,8 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
   console.log('mapDispatchToProps NewPostModal')
   return bindActionCreators({
-    close: close
+    close: close,
+    newPost: newPost
   }, dispatch)
 }
 

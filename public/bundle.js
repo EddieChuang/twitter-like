@@ -3920,6 +3920,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
 
   signined: function signined() {
+
     return !!sessionStorage._id;
   }
 
@@ -4206,6 +4207,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.show = show;
 exports.close = close;
+exports.newPost = newPost;
 function show() {
   return function (dispatch) {
     dispatch({ type: "SHOW_MODAL" });
@@ -4215,6 +4217,14 @@ function show() {
 function close() {
   return function (dispatch) {
     dispatch({ type: "CLOSE_MODAL" });
+  };
+}
+
+function newPost(text) {
+
+  return function (dispatch) {
+    var tweet = { owner: sessionStorage_id, content: text };
+    dispatch({ type: "NEW_POST", payload: { tweet: tweet } });
   };
 }
 
@@ -25338,6 +25348,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.modalReducers = modalReducers;
+
+var _tweet = __webpack_require__(156);
+
 function modalReducers() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { visibility: false };
   var action = arguments[1];
@@ -25348,6 +25361,16 @@ function modalReducers() {
       return { visibility: true };
     case 'CLOSE_MODAL':
       return { visibility: false };
+    case 'NEW_POST':
+      _tweet.tweet.save(action.payload.tweet, function (success, tweet) {
+        if (success) {
+          return { visibility: false, tweet: tweet };
+        } else {
+          alert("fail");
+          return { visibility: true, tweet: null };
+        }
+      });
+    // return {visibility: false}
   }
 
   return state;
@@ -30155,6 +30178,10 @@ var PostList = function (_React$Component) {
 	return PostList;
 }(_react2.default.Component);
 
+function mapStateToProps(state) {
+	return;
+}
+
 exports.default = PostList;
 
 /***/ }),
@@ -30282,10 +30309,21 @@ var NewPostModal = function (_React$Component) {
   function NewPostModal() {
     _classCallCheck(this, NewPostModal);
 
-    return _possibleConstructorReturn(this, (NewPostModal.__proto__ || Object.getPrototypeOf(NewPostModal)).call(this));
+    var _this = _possibleConstructorReturn(this, (NewPostModal.__proto__ || Object.getPrototypeOf(NewPostModal)).call(this));
+
+    _this.onNewPost = _this.onNewPost.bind(_this);
+    return _this;
   }
 
   _createClass(NewPostModal, [{
+    key: 'onNewPost',
+    value: function onNewPost() {
+
+      var text = this.refs.text.value;
+
+      this.props.newPost(text);
+    }
+  }, {
     key: 'render',
     value: function render() {
 
@@ -30315,14 +30353,14 @@ var NewPostModal = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'modal-body' },
-            _react2.default.createElement('textarea', { placeholder: 'Sharing Your Life' })
+            _react2.default.createElement('textarea', { ref: 'text', placeholder: 'Sharing Your Life' })
           ),
           _react2.default.createElement(
             'div',
             { className: 'modal-footer' },
             _react2.default.createElement(
               'button',
-              { type: 'submit' },
+              { type: 'submit', onClick: this.onNewPost },
               'POST'
             )
           )
@@ -30344,7 +30382,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   console.log('mapDispatchToProps NewPostModal');
   return (0, _redux.bindActionCreators)({
-    close: _modalActions.close
+    close: _modalActions.close,
+    newPost: _modalActions.newPost
   }, dispatch);
 }
 
@@ -31165,6 +31204,40 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 156 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _axios = __webpack_require__(17);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+
+  save: function save(tweet, callback) {
+    var param = FormData();
+    param.append('owner', tweet.owner);
+    param.append('content', tweet.content);
+    _axios2.default.post('/tweet/save', param).then(function (res) {
+      console.log(res);
+      callback(true, JSON.parse(res.tweet)); // (success, tweet)
+    }).catch(function (err) {
+      console.log(err.response);
+      callback(false, null);
+    });
+  }
+
+};
 
 /***/ })
 /******/ ]);

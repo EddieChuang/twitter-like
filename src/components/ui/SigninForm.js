@@ -64,9 +64,6 @@ class SigninForm extends React.Component{
             <button type='submit'>Submit</button>
             <a href='/signup'>Sign up an account</a>
           </div>
-
-
-
         </form>
       </section>
     )
