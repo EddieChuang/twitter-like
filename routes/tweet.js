@@ -37,3 +37,5 @@ router.route('/tweet/save')
     ])
 
   })
+
+  module.exports = router

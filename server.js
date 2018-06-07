@@ -74,7 +74,9 @@ function onAuthorizeFail(data, message, error, accept){
 require('./realtime/io')(io)
 
 const userRoutes = require('./routes/user')
+const tweetRoutes = require('./routes/tweet')
 app.use(userRoutes)
+app.use(tweetRoutes)
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });

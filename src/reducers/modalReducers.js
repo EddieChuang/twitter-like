@@ -1,5 +1,5 @@
 "use strict"
-import {tweet} from '../utils/tweet'
+import tweet from '../utils/tweet'
 
 export function modalReducers(state={visibility: false}, action){
 
@@ -9,15 +9,9 @@ export function modalReducers(state={visibility: false}, action){
     case 'CLOSE_MODAL':
       return {visibility: false}
     case 'NEW_POST':
-      tweet.save(action.payload.tweet, (success, tweet) => {
-        if(success){
-          return {visibility: false, tweet}
-        } else {
-          alert("fail")
-          return {visibility: true, tweet: null}
-        }
-      })
-      // return {visibility: false}
+      return {visibility: false, tweet: action.payload.tweet}
+    case 'FAIL_POST':
+      return {visibility: true}
   }
 
 

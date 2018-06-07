@@ -12,6 +12,7 @@ const middleware = applyMiddleware(thunk, logger)
 const initialState = window.INITIAL_STATE
 const store = createStore(reducers, initialState, middleware)
 
+import "babel-polyfill"
 require('./style/main.scss')
 
 const Routes = (

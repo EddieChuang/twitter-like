@@ -1,4 +1,6 @@
 "use strict"
+import axios from 'axios'
+import tweet from '../utils/tweet'
 
 export function show(){
   return (dispatch) => {
@@ -15,7 +17,14 @@ export function close(){
 export function newPost(text){
 
   return (dispatch) => {
-    let tweet = {owner: sessionStorage_id, content: text}
-    dispatch({type: "NEW_POST", payload: {tweet}})
+    let tweet = {owner: sessionStorage._id, content: text}
+    return axios.post('/tweet/save', tweet)
+      .then((res) => {
+        dispatch({type: "NEW_POST", payload: {tweet: JSON.parse(res.data.tweet)}})
+      })
+      .catch((err) => {
+        alert('fail')
+        dispatch({type: "FAIL_POST"})
+      })
   }
 }
