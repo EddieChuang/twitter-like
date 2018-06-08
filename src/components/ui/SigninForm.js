@@ -30,7 +30,7 @@ class SigninForm extends React.Component{
     let success = this.props.status === 200
     let {user, message} = this.props
     if(success)
-        window.setTimeout(() => {window.location = 'http://127.0.0.1:3030/home'}, 3000)
+        window.setTimeout(() => {window.location = 'http://127.0.0.1:3030/home?id=' + user.id}, 3000)
 
     return (
       success ? (
@@ -41,10 +41,6 @@ class SigninForm extends React.Component{
       )
     )
   }
-
-
-
-  
 
   render(){
     return(

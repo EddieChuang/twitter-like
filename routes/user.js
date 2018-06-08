@@ -4,7 +4,7 @@ const passport       = require('passport')
 const passportConfig = require('../config/passport')
 const async          = require('async')
 
-router.route('/signup')
+router.route('/user/signup')
   .post((req, res, next) => {
     User.findOne({email: req.body.email}, (err, existingUser) => {
       if(existingUser){
@@ -36,9 +36,7 @@ router.route('/signup')
       }
     })
   })
-
-
-router.route('/signin')
+router.route('/user/signin')
   .post((req, res, next) => {
     passport.authenticate('local-login', {
       session: true,
@@ -56,18 +54,38 @@ router.route('/signin')
       }
     })(req, res, next)
   })
-  
-router.get('/logout', (req, res, next) => {
+router.get('/user/logout', (req, res, next) => {
     req.logout()
     res.status(200)
     res.json({message: 'Logout successfully'})
 })
-
 router.get('/user/:id', (req, res, next) => {
   let id = req.params.id
   User.findOne({_id: id}, function(err, user){
     let {_id, name, email, photo, tweets} = user
     res.json({user: {_id, name, email, photo, tweets}})
+  })
+})
+router.get('/user/followings/:id', (req, res, next) => {
+  let id = req.params.id
+  User.findOne({_id: id}, function(err, user){
+    console.log(user)
+    let followings = user.followings.map((followingId, i) => {
+      User.findOne({_id: followingId})
+    })
+    console.log('followings', followings)
+    res.json({followings})
+  })
+})
+router.get('/user/followers/:id', (req, res, next) => {
+  let id = req.params.id
+  User.findOne({_id: id}, function(err, user){
+    console.log(user)
+    let followers = user.followers.map((followerId, i) => {
+      User.findOne({_id: followerId})
+    })
+    console.log('followers', followers)
+    res.json({followers})
   })
 })
 

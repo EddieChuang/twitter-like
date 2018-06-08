@@ -3,6 +3,15 @@ const async  = require('async')
 const User   = require('../models/user')
 const Tweet  = require('../models/tweet')
 
+router.get('/tweet/:id', (req, res, next) => {
+  let id = req.params.id
+  Tweet.find({owner: id}, function(err, tweets){
+    res.json({tweets})
+  })
+
+})
+
+
 router.route('/tweet/save')
   .post((req, res, next) => {
     let owner   = req.body.owner
@@ -14,6 +23,7 @@ router.route('/tweet/save')
         tweet.owner   = owner
         tweet.content = content
         tweet.comment = []
+        tweet.like    = 0
         tweet.save(function(err){
           console.log('successfully save tweet to mongodb', tweet)
           callback(err, tweet)
@@ -35,7 +45,6 @@ router.route('/tweet/save')
         res.json({tweet: JSON.stringify(tweet)})
       }
     ])
-
   })
 
   module.exports = router

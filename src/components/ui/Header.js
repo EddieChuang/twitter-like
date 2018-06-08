@@ -28,7 +28,7 @@ class Header extends React.Component{
     let user = this.state.user
     let nav  = user === null ? '' : (
       <ul id="links">
-        <li><a href="/home">Hi, {user.name}</a></li>
+        <li><a href={`/home?id=${user._id}`}>Hi, {user.name}</a></li>
         <li><span onClick={this.props.show}><i className="fas fa-user-edit"></i></span></li>
         <li><span onClick={this.onLogout}><i className="fas fa-sign-out-alt"/></span></li>
       </ul>
@@ -52,7 +52,7 @@ class Header extends React.Component{
   }
 
   render(){
-    console.log('Header', this.props)
+
     return(
       <nav id="nav-container">
         <div id="nav-top">

@@ -1,12 +1,13 @@
 #nav-container{
   background-color: $black;
   // min-height: 10vh;
-  // flex: 0 0 10%;
+  flex: 0 0 8%;
 }
 
 #links{
   list-style-type: none;
   display: none;
+  align-self: center;
 }
 
 #links a,
@@ -35,6 +36,7 @@
   display: flex;
   justify-content: space-between;
   padding: 20px 20px 20px 10px;
+  align-self: center;
 }
 
 // #nav-top span,

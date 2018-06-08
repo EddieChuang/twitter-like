@@ -7,6 +7,7 @@ const TweetSchema = new Schema({
   comments: [{
     comment: {type: Schema.Types.ObjectId, ref: 'Comment'}
   }],
+  like: {type: Number, default: 0},
   created:{type: Date, default: Date.now}
 })
 

@@ -1,5 +1,6 @@
 "use strict"
 import React from 'react'
+import {Followings, Followers} from '.'
 
 class Profile extends React.Component{
 	constructor(){
@@ -7,18 +8,20 @@ class Profile extends React.Component{
     this.state = {
       user: null
     }
+
   }
   
   componentWillReceiveProps(props){
-    this.setState({user: props.user})
+    this.setState({user: props.user})    
   }
 
 	componentDidMount(){
-		window.location.href = '#tab-following' // init tab
-	}
+    window.location.href = '#tab-following' // init tab
+  }
+
 
 	render(){
-    console.log(this.state.user)
+
     let empty_user = {_id: '', name: '', email: '', photo: '', tweets: []}
     let user = this.state.user === null ? empty_user : this.state.user
 		return(
@@ -45,28 +48,9 @@ class Profile extends React.Component{
 							<li><a className="tab-item tab-item-following" href="#tab-following">Following</a></li>
 							<li><a className="tab-item tab-item-follower" href="#tab-follower">Follower</a></li>
 						</ul>
-						<div className="tab-content tab-content-following">
-							{/* renderFollowing() */}
-							<div className="following-user">
-								<img src="/images/avatar.png"/>
-								<span>chiamin</span>
-							</div>
-							<div className="following-user">
-								<img src="/images/avatar.png"/>
-								<span>calleigh</span>
-							</div>
-						</div>
-						<div className="tab-content tab-content-follower">
-							{/* renderFollower() */}
-							<div className="follower-user">
-								<img src="/images/avatar.png"/>
-								<span>chiamin</span>
-							</div>
-							<div className="follower-user">
-								<img src="/images/avatar.png"/>
-								<span>calleigh</span>
-							</div>
-						</div>
+            <Followings />
+            <Followers />
+
 					</div>
 				</div>
 			</section>
