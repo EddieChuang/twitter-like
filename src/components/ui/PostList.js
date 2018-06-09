@@ -55,8 +55,8 @@ class PostList extends React.Component{
 
 }
 
-function mapStateToProps(state){
-  return
-}
+// function mapStateToProps(state){
+//   return
+// }
 
 export default PostList

@@ -49,3 +49,18 @@ export function logout(){
       })
   }
 }
+
+export function follow(idToFollow){
+  return (dispatch) => {
+    let params = {id: sessionStorage._id, idToFollow}
+    axios.post('/user/follow', params)
+      .then((res) => {
+        console.log('follow res', res)
+        disaptch({type: "FOLLOW", payload: res.data})
+      })
+      .catch((err) => {
+        console.log('follow err', err.response)
+      })
+
+  }
+}

@@ -29,12 +29,13 @@ class Home extends React.Component{
   render(){
 
     let user = this.state.user
+    
     return(
       <div className="container">
-        <Header user={user}/>
+        {user ? (<Header user={user}/>) : ''}
         <div id="content">
-					<Profile user={user}/>
-					<PostList user={user}/>
+          {user ? (<Profile user={user}/>) : ''}
+          {user ? (<PostList user={user}/>) : ''}
 				</div>
       </div>
     )

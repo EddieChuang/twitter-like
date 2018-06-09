@@ -7,19 +7,25 @@ class Followings extends React.Component{
   constructor(){
     super()
     this.state = {
-      user: null,
       followings: []
     }
 
     this.renderFollowings = this.renderFollowings.bind(this)    
-    
+    this.getFollowings = this.getFollowings.bind(this)
+  }
+
+  componentDidMount(){
+    this.getFollowings(this.props.user)
   }
 
   componentWillReceiveProps(props){
-    let user = props.user
-    if(!user)
-        return  
+    // let user = props.user
+    // if(!user)
+    //     return  
+    this.getFollowings(props.user)
+  }
 
+  getFollowings(user){
     axios.get(`user/followings/${user._id}`)
       .then((res) => {
         let followings = res.data.followings
@@ -45,7 +51,6 @@ class Followings extends React.Component{
 
   render(){
 
-    let user = this.state.user
     return(
       <div className="tab-content tab-content-following">
         {this.renderFollowings()}

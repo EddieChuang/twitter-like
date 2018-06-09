@@ -24,7 +24,6 @@ class NewPostModal extends React.Component{
 
   render(){
 
-    console.log('NewPostModal', this.props)
     let hidden = this.props.visibility ? '' : 'hidden'
     return (
       <div className={"modal " + hidden}>
@@ -52,14 +51,14 @@ class NewPostModal extends React.Component{
 }
 
 function mapStateToProps(state){
-  console.log('mapStateToProps NewPostModal')
+  // console.log('mapStateToProps NewPostModal')
   return {
     visibility: state.modal.visibility
   }
 }
 
 function mapDispatchToProps(dispatch){
-  console.log('mapDispatchToProps NewPostModal')
+  // console.log('mapDispatchToProps NewPostModal')
   return bindActionCreators({
     close: close,
     newPost: newPost

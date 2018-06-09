@@ -18,15 +18,25 @@ class Header extends React.Component{
 
     this.onLogout  = this.onLogout.bind(this) 
     this.renderNav = this.renderNav.bind(this)   
+    console.log('constructor Header')
   }
 
-  componentWillReceiveProps(props){
-    this.setState({user: props.user})
+  // componentWillReceiveProps(props){
+  //   console.log('componentWillReceiveProps Header')
+  //   this.setState({user: props.user})
+  // }
+
+  componentWillMount(){
+    console.log('componentWillMount Header')
+  }
+
+  componentDidMount(){
+    console.log('componentDidMount Header')
   }
 
   renderNav(){
-    let user = this.state.user
-    let nav  = user === null ? '' : (
+    let user = this.props.user
+    let nav  = !user ? '' : (
       <ul id="links">
         <li><a href={`/home?id=${user._id}`}>Hi, {user.name}</a></li>
         <li><span onClick={this.props.show}><i className="fas fa-user-edit"></i></span></li>
@@ -52,7 +62,7 @@ class Header extends React.Component{
   }
 
   render(){
-
+    console.log('render Header')
     return(
       <nav id="nav-container">
         <div id="nav-top">

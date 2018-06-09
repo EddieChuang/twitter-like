@@ -86,6 +86,37 @@ router.get('/user/followers/:id', (req, res, next) => {
     res.json({followers})
   })
 })
+router.post('/user/follow', (req, res, next) => {
+  let {id, idToFollow} = req.params
+
+  async.waterfall([
+    function(callback){
+      User.update(
+        {_id: id},
+        {$push: {followings: idToFollow}},
+        function(err, count){
+          callback(err)
+        }
+      )
+    },
+    function(callback){
+      User.update(
+        {_id: idToFollow},
+        {$push: {followers: id}},
+        function(err, count){
+          callback(err)
+        }
+      )
+    },
+    function(callback){
+      let userToFollow = User.findById(idToFollow)
+      let {_id, name, email, photo, tweets, followers, followings} = user
+      res.json({user: {_id, name, email, photo, tweets, followers, followings}})
+    }
+
+  ])
+  
+})
 
 
 // const multer         = require('multer')()  // extract FormData
