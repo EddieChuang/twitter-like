@@ -7,7 +7,7 @@ export function signup(user){
   return (dispatch) => {
 
     
-    axios.post('/signup', user)
+    axios.post('/user/signup', user)
       .then((res) => {
         console.log('signup', res)
         sessionStorage._id = res.data.user._id
@@ -23,7 +23,7 @@ export function signin(user){
   // user = {'email': email, 'password': password}
   return (dispatch) => {
 
-    axios.post('/signin', user)
+    axios.post('/user/signin', user)
       .then((res) => {
         console.log('signin res', res)
         sessionStorage._id = res.data.user._id
@@ -38,7 +38,7 @@ export function signin(user){
 
 export function logout(){
   return (dispatch) => {
-    axios.get('/logout')
+    axios.get('/user/logout')
       .then((res) => {
         console.log('logout res', res)
         delete sessionStorage._id

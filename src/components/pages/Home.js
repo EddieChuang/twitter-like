@@ -16,6 +16,10 @@ class Home extends React.Component{
   componentDidMount(){
     // let id = sessionStorage._id
     let id = parser.getUrlParams().id
+    if(!id){
+      id = sessionStorage._id
+      window.location.href = `/home?id=${id}`
+    }
     axios.get('/user/' + id)
       .then((res) => {
         this.setState({user: res.data.user})

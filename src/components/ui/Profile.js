@@ -1,6 +1,7 @@
 "use strict"
 import React from 'react'
 import {Followings, Followers} from '.'
+import tweet from '../../utils/tweet'
 
 class Profile extends React.Component{
 	constructor(){
@@ -19,18 +20,22 @@ class Profile extends React.Component{
     window.location.href = '#tab-following' // init tab
   }
 
-
 	render(){
 
-    let empty_user = {_id: '', name: '', email: '', photo: '', tweets: []}
+    let empty_user = {_id: '', name: '', email: '', photo: '', tweets: [], followering: [], followers: []}
     let user = this.state.user === null ? empty_user : this.state.user
+    let isFollowed = tweet.isFollowed(user)
 		return(
 			<section id="profile">
 				<div className="profile-image">
 					<a><img src={user.photo}/></a>
 				</div>
 				<div className="profile-name">
-					<span>{user.name}</span>
+          {isFollowed ? 
+            (<span><i className="fas fa-user-check" onClick={this.unFollow}/></span>) : 
+            (<span><i className="fas fa-user" onClick={this.onFollow}/></span>)}
+          <span><a href={`/home?id=${user._id}`}>{user.name}</a></span>
+          
 				</div>
 				<hr/>
 				<div className="profile-email">

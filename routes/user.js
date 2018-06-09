@@ -15,12 +15,14 @@ router.route('/user/signup')
         })
         // res.redirect('/signup')
       } else {
-        let user   = User()
-        user.name  = req.body.name
-        user.email = req.body.email
-        user.photo = user.gravatar()
-        user.password = req.body.password
-        user.tweets = []
+        let user        = User()
+        user.name       = req.body.name
+        user.email      = req.body.email
+        user.photo      = user.gravatar()
+        user.password   = req.body.password
+        user.tweets     = []
+        user.followers  = []
+        user.followings = []
         user.save((err) => {
           if(err)
               return next
@@ -48,9 +50,9 @@ router.route('/user/signin')
         res.status(404)
         res.json({message: err})
       } else {
-        let {_id, name, email, photo, tweets} = user
+        let {_id, name, email, photo, tweets, followers, followings} = user
         res.status(200)
-        res.json({user: {_id, name, email, photo, tweets}})
+        res.json({user: {_id, name, email, photo, tweets, followers, followings}})
       }
     })(req, res, next)
   })
@@ -62,29 +64,25 @@ router.get('/user/logout', (req, res, next) => {
 router.get('/user/:id', (req, res, next) => {
   let id = req.params.id
   User.findOne({_id: id}, function(err, user){
-    let {_id, name, email, photo, tweets} = user
-    res.json({user: {_id, name, email, photo, tweets}})
+    let {_id, name, email, photo, tweets, followers, followings} = user
+    res.json({user: {_id, name, email, photo, tweets, followers, followings}})
   })
 })
 router.get('/user/followings/:id', (req, res, next) => {
   let id = req.params.id
   User.findOne({_id: id}, function(err, user){
-    console.log(user)
     let followings = user.followings.map((followingId, i) => {
       User.findOne({_id: followingId})
     })
-    console.log('followings', followings)
     res.json({followings})
   })
 })
 router.get('/user/followers/:id', (req, res, next) => {
   let id = req.params.id
   User.findOne({_id: id}, function(err, user){
-    console.log(user)
     let followers = user.followers.map((followerId, i) => {
       User.findOne({_id: followerId})
     })
-    console.log('followers', followers)
     res.json({followers})
   })
 })
