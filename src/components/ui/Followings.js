@@ -29,7 +29,7 @@ class Followings extends React.Component{
     axios.get(`user/followings/${user._id}`)
       .then((res) => {
         let followings = res.data.followings
-        console.log('followings res.data', res.data)
+        // console.log('followings res.data', res.data)
         this.setState({user, followings})
       })
       .catch((err) => {

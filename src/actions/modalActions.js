@@ -20,7 +20,8 @@ export function newPost(text){
     let tweet = {owner: sessionStorage._id, content: text}
     return axios.post('/tweet/save', tweet)
       .then((res) => {
-        dispatch({type: "NEW_POST", payload: {tweet: JSON.parse(res.data.tweet)}})
+        console.log(res.data)
+        dispatch({type: "NEW_POST", payload: {tweet: res.data.tweet}})
       })
       .catch((err) => {
         alert('fail')

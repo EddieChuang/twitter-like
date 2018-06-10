@@ -11,18 +11,19 @@ class Post extends React.Component{
   }
   
   componentWillMount(){
-    let {user, tweet} = this.props
-    this.setState({tweet, user})
+    // let {user, tweet} = this.props
+    // this.setState({tweet, user})
   }
 
 	render(){
 
-    let {user, tweet} = this.state
+    // let {user, tweet} = this.state
+    let tweet = this.props.tweet
 		return(
 			<section id="post">
 				<div className="poster">
           <img src="/images/avatar.png"/>
-          <span>{user.name}</span>
+          <span>{tweet.owner.name}</span>
         </div>
         <div className="post-content">
           {tweet.content}

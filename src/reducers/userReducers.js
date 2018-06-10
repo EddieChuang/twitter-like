@@ -12,9 +12,9 @@ export function userReducers(state={status:0, user:null, message:''}, action){
     case 'SIGNIN_ERROR':
       return { status: action.payload.status, user: null, message: action.payload.data.message }
     case 'FOLLOW':
-      return {user: action.payload.user}
+      return { userToFollow: action.payload.userToFollow }
     case 'UNFOLLOW':
-      return {user: action.payload.user}
+      return { userToFollow: action.payload.userToFollow }
   }
 
 

@@ -37,7 +37,6 @@ class Profile extends React.Component{
 
     // let empty_user = {_id: '', name: '', email: '', photo: '', tweets: [], followering: [], followers: []}
     let user = this.props.user// === null ? empty_user : this.state.user
-    console.log(this.props)
     let isFollowed = tweet.isFollowed(user)
 		return(
 			<section id="profile">

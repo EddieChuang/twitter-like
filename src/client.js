@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 import { applyMiddleware, createStore } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
-import storage from 'redux-persist/lib/storage'
+import storageSession from 'redux-persist/lib/storage/session'
 import reducers from './reducers/index'
 import routes from './routes'
 import "babel-polyfill"
@@ -16,7 +16,7 @@ require('./style/main.scss')
 
 const persistConfig = {
   key: 'root',
-  storage
+  storage: storageSession
 }
 const persistedReducer = persistReducer(persistConfig, reducers)
 const middleware       = applyMiddleware(thunk, logger)

@@ -63,28 +63,40 @@ router.get('/user/logout', (req, res, next) => {
 })
 router.get('/user/:id', (req, res, next) => {
   let id = req.params.id
-  User.findOne({_id: id}, function(err, user){
-    let {_id, name, email, photo, tweets, followers, followings} = user
-    res.json({user: {_id, name, email, photo, tweets, followers, followings}})
-  })
+  User.findOne({_id: id}, '_id name email photo tweets followers followings')
+    .populate('followers followings')
+    .exec(function(err, user){
+      res.json({user})
+    }
+  )
 })
 router.get('/user/followings/:id', (req, res, next) => {
   let id = req.params.id
-  User.findOne({_id: id}, function(err, user){
-    let followings = user.followings.map((followingId, i) => {
-      User.findOne({_id: followingId})
+  User.findById(id)
+    .populate('followings')
+    .exec(function(err, user){
+      res.json({followings: user.followings})
     })
-    res.json({followings})
-  })
+  // User.findOne({_id: id}, function(err, user){
+  //   let followings = user.followings.map((followingId, i) => {
+  //     User.findOne({_id: followingId})
+  //   })
+  //   res.json({followings})
+  // })
 })
 router.get('/user/followers/:id', (req, res, next) => {
   let id = req.params.id
-  User.findOne({_id: id}, function(err, user){
-    let followers = user.followers.map((followerId, i) => {
-      User.findOne({_id: followerId})
+  User.findById(id)
+    .populate('followers')
+    .exec(function(err, user){
+      res.json({followers: user.followers})
     })
-    res.json({followers})
-  })
+  // User.findOne({_id: id}, function(err, user){
+  //   let followers = user.followers.map((followerId, i) => {
+  //     User.findOne({_id: followerId})
+  //   })
+  //   res.json({followers})
+  // })
 })
 router.post('/user/follow', (req, res, next) => {
   let {id, idToFollow} = req.params
@@ -109,9 +121,8 @@ router.post('/user/follow', (req, res, next) => {
       )
     },
     function(callback){
-      let userToFollow = User.findById(idToFollow)
-      let {_id, name, email, photo, tweets, followers, followings} = user
-      res.json({user: {_id, name, email, photo, tweets, followers, followings}})
+      let userToFollow = User.findById(idToFollow, '_id name email photo tweets followers followings')
+      res.json({userToFollow: userToFollow})
     }
 
   ])

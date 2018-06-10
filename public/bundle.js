@@ -8380,7 +8380,8 @@ function newPost(text) {
   return function (dispatch) {
     var tweet = { owner: sessionStorage._id, content: text };
     return _axios2.default.post('/tweet/save', tweet).then(function (res) {
-      dispatch({ type: "NEW_POST", payload: { tweet: JSON.parse(res.data.tweet) } });
+      console.log(res.data);
+      dispatch({ type: "NEW_POST", payload: { tweet: res.data.tweet } });
     }).catch(function (err) {
       alert('fail');
       dispatch({ type: "FAIL_POST" });
@@ -13713,9 +13714,9 @@ var _reduxPersist = __webpack_require__(424);
 
 var _react3 = __webpack_require__(431);
 
-var _storage = __webpack_require__(432);
+var _session = __webpack_require__(507);
 
-var _storage2 = _interopRequireDefault(_storage);
+var _session2 = _interopRequireDefault(_session);
 
 var _index = __webpack_require__(435);
 
@@ -13733,7 +13734,7 @@ __webpack_require__(502);
 
 var persistConfig = {
   key: 'root',
-  storage: _storage2.default
+  storage: _session2.default
 };
 var persistedReducer = (0, _reduxPersist.persistReducer)(persistConfig, _index2.default);
 var middleware = (0, _redux.applyMiddleware)(_reduxThunk2.default, _reduxLogger2.default);
@@ -35136,23 +35137,7 @@ PersistGate.defaultProps = {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
 
 /***/ }),
-/* 432 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _createWebStorage = __webpack_require__(433);
-
-var _createWebStorage2 = _interopRequireDefault(_createWebStorage);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = (0, _createWebStorage2.default)('local');
-
-/***/ }),
+/* 432 */,
 /* 433 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -35288,9 +35273,9 @@ function userReducers() {
     case 'SIGNIN_ERROR':
       return { status: action.payload.status, user: null, message: action.payload.data.message };
     case 'FOLLOW':
-      return { user: action.payload.user };
+      return { userToFollow: action.payload.userToFollow };
     case 'UNFOLLOW':
-      return { user: action.payload.user };
+      return { userToFollow: action.payload.userToFollow };
   }
 
   return state;
@@ -35306,6 +35291,9 @@ function userReducers() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 exports.modalReducers = modalReducers;
 
 var _tweet = __webpack_require__(114);
@@ -35315,19 +35303,19 @@ var _tweet2 = _interopRequireDefault(_tweet);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function modalReducers() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { visibility: false };
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { visibility: false, tweet: [] };
   var action = arguments[1];
 
 
   switch (action.type) {
     case 'SHOW_MODAL':
-      return { visibility: true };
+      return _extends({}, state, { visibility: true });
     case 'CLOSE_MODAL':
-      return { visibility: false };
+      return _extends({}, state, { visibility: false });
     case 'NEW_POST':
       return { visibility: false, tweet: action.payload.tweet };
     case 'FAIL_POST':
-      return { visibility: true };
+      return _extends({}, state, { visibility: true });
   }
 
   return state;
@@ -45575,7 +45563,6 @@ var Profile = function (_React$Component) {
 
       // let empty_user = {_id: '', name: '', email: '', photo: '', tweets: [], followering: [], followers: []}
       var user = this.props.user; // === null ? empty_user : this.state.user
-      console.log(this.props);
       var isFollowed = _tweet2.default.isFollowed(user);
       return _react2.default.createElement(
         'section',
@@ -45708,15 +45695,21 @@ var _axios = __webpack_require__(36);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _reactRedux = __webpack_require__(41);
+
 var _ui = __webpack_require__(55);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+// import { bindActionCreators } from 'redux'
+
 
 var PostList = function (_React$Component) {
   _inherits(PostList, _React$Component);
@@ -45728,34 +45721,75 @@ var PostList = function (_React$Component) {
 
     _this.state = {
       user: null,
-      tweets: []
+      tweets: [],
+      matched: []
     };
 
+    _this.filter = _this.filter.bind(_this);
     _this.renderPost = _this.renderPost.bind(_this);
     return _this;
   }
 
   _createClass(PostList, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(props) {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
       var _this2 = this;
 
-      var user = props.user;
-      if (!user) return;
-
-      _axios2.default.get('tweet/' + user._id).then(function (res) {
+      var user = this.props.user;
+      _axios2.default.get('tweet/').then(function (res) {
         var tweets = res.data.tweets;
-        _this2.setState({ user: user, tweets: tweets });
+        var matched = tweets;
+
+        _this2.setState({ user: user, tweets: tweets, matched: matched });
       }).catch(function (err) {
         console.log(err.response);
       });
     }
   }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(props) {
+
+      var tweets = [props.tweet].concat(_toConsumableArray(this.state.tweets));
+      var matched = tweets;
+      this.setState({ tweets: tweets, matched: matched });
+    }
+  }, {
+    key: 'filter',
+    value: function filter(e) {
+      var _this3 = this;
+
+      Array.from(document.getElementsByClassName("btn-filter")).forEach(function (ele, i) {
+        ele.classList.remove("filter-active");
+      });
+      e.target.classList.add("filter-active");
+
+      var filter = e.target.innerText;
+      var tweets = this.state.tweets;
+      var matched = tweets.reduce(function (accumulator, tweet, currIndex) {
+        if (filter === 'All') {
+          accumulator.push(tweet);
+        } else if (filter === 'Following') {
+          var isFollowed = _this3.state.user.followings.find(function (following, i) {
+            return following._id === tweet.owner._id;
+          });
+          if (isFollowed) {
+            accumulator.push(tweet);
+          }
+        } else if (filter === 'My') {
+          if (tweet.owner._id === _this3.state.user._id) {
+            accumulator.push(tweet);
+          }
+        }
+        return accumulator;
+      }, []);
+      this.setState({ matched: matched });
+    }
+  }, {
     key: 'renderPost',
     value: function renderPost() {
-      var tweets = this.state.tweets;
+      var matched = this.state.matched;
       var user = this.state.user;
-      var posts = tweets.map(function (tweet, i) {
+      var posts = matched.map(function (tweet, i) {
         return _react2.default.createElement(_ui.Post, { tweet: tweet, user: user, key: tweet._id });
       });
       return posts;
@@ -45767,7 +45801,30 @@ var PostList = function (_React$Component) {
       return _react2.default.createElement(
         'section',
         { id: 'postList' },
-        this.renderPost()
+        _react2.default.createElement(
+          'div',
+          { className: 'postList-header' },
+          _react2.default.createElement(
+            'button',
+            { className: 'btn-filter filter-active', onClick: this.filter },
+            'All'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'btn-filter', onClick: this.filter },
+            'Following'
+          ),
+          _react2.default.createElement(
+            'button',
+            { className: 'btn-filter', onClick: this.filter },
+            'My'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'postList-body' },
+          this.renderPost()
+        )
       );
     }
   }]);
@@ -45775,11 +45832,13 @@ var PostList = function (_React$Component) {
   return PostList;
 }(_react2.default.Component);
 
-// function mapStateToProps(state){
-//   return
-// }
+function mapStateToProps(state) {
+  return {
+    tweet: state.modal.tweet
+  };
+}
 
-exports.default = PostList;
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(PostList);
 
 /***/ }),
 /* 494 */
@@ -45824,19 +45883,15 @@ var Post = function (_React$Component) {
   _createClass(Post, [{
     key: "componentWillMount",
     value: function componentWillMount() {
-      var _props = this.props,
-          user = _props.user,
-          tweet = _props.tweet;
-
-      this.setState({ tweet: tweet, user: user });
+      // let {user, tweet} = this.props
+      // this.setState({tweet, user})
     }
   }, {
     key: "render",
     value: function render() {
-      var _state = this.state,
-          user = _state.user,
-          tweet = _state.tweet;
 
+      // let {user, tweet} = this.state
+      var tweet = this.props.tweet;
       return _react2.default.createElement(
         "section",
         { id: "post" },
@@ -45847,7 +45902,7 @@ var Post = function (_React$Component) {
           _react2.default.createElement(
             "span",
             null,
-            user.name
+            tweet.owner.name
           )
         ),
         _react2.default.createElement(
@@ -46070,7 +46125,7 @@ var Followings = function (_React$Component) {
 
       _axios2.default.get('user/followings/' + user._id).then(function (res) {
         var followings = res.data.followings;
-        console.log('followings res.data', res.data);
+        // console.log('followings res.data', res.data)
         _this2.setState({ user: user, followings: followings });
       }).catch(function (err) {
         console.log(err.response);
@@ -46493,7 +46548,7 @@ exports = module.exports = __webpack_require__(504)(false);
 
 
 // module
-exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box; }\n\nbody {\n  font-family: 'Roboto', sans-serif;\n  background: #F5F5F5;\n  width: 100vw;\n  height: 100vh; }\n\n.container {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#nav-container {\n  background-color: #191919;\n  flex: 0 0 8%; }\n\n#links {\n  list-style-type: none;\n  display: none;\n  align-self: center; }\n\n#links a,\n#links span {\n  display: block;\n  color: #2b98f0;\n  background: transparent;\n  text-decoration: none;\n  padding: 10px;\n  font-size: 20px;\n  cursor: pointer;\n  transition: color 1s ease, \r background 1s ease,\r padding 1s ease; }\n\n#links a:hover,\n#links span:hover {\n  color: #F5F5F5;\n  padding-left: 60px;\n  background: #2b98f0; }\n\n#nav-top {\n  display: flex;\n  justify-content: space-between;\n  padding: 20px 20px 20px 10px;\n  align-self: center; }\n\n#logo {\n  font-size: 25px;\n  padding: 5px;\n  color: #2b98f0;\n  transition: color 1s ease; }\n\n#logo {\n  color: #2b98f0;\n  border: 3px solid;\n  transition: color 1s ease,\r background 1s ease; }\n\n#logo:hover {\n  background: #2b98f0; }\n  #logo:hover span, #logo:hover i {\n    color: #F5F5F5; }\n\n#menu-btn {\n  padding: 5px;\n  border: 2px solid #2b98f0;\n  cursor: pointer;\n  align-self: center; }\n\n.bar1,\n.bar2,\n.bar3 {\n  height: 5px;\n  width: 35px;\n  background-color: #2b98f0;\n  margin: 5px 0;\n  transition: transform 1s ease; }\n\n.turn .bar1 {\n  transform: rotate(-45deg) translate(-7px, 6px); }\n\n.turn .bar2 {\n  opacity: 0; }\n\n.turn .bar3 {\n  transform: rotate(45deg) translate(-7px, -8px); }\n\n@media screen and (min-width: 690px) {\n  #nav-container {\n    display: flex;\n    align-items: baseline;\n    flex-wrap: wrap;\n    padding: 0 20px; }\n  #menu-btn {\n    display: none; }\n  #links {\n    flex: 1 1 auto;\n    justify-content: flex-end;\n    display: flex !important;\n    flex-wrap: wrap; }\n  #links a,\n  #links span {\n    text-align: center; }\n  #links a:hover,\n  #links span:hover {\n    padding: 10px !important; }\n  #nav-top {\n    padding: 10px; } }\n\n#banner {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex: 1 0 auto;\n  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(\"/images/banner.jpg\") center/cover fixed no-repeat; }\n\n#banner-box {\n  color: #F5F5F5;\n  text-align: center; }\n\n#banner-title {\n  text-transform: capitalize;\n  font-size: 60px; }\n\n.banner-underline {\n  width: 200px;\n  margin: 10px auto;\n  border: 3px solid #2b98f0; }\n\n.banner-subtitle {\n  margin: 20px 0 40px 0;\n  text-transform: capitalize;\n  font-size: 25px; }\n\n#link-signup,\n#link-signin {\n  display: inline-block;\n  padding: 10px;\n  font-size: 40px;\n  color: #F5F5F5;\n  background: #2b98f0;\n  border: 3px solid #2b98f0;\n  border-radius: 5px;\n  margin: 0px 5px;\n  cursor: pointer;\n  text-decoration: none;\n  transition: background 1s ease,\r border 1s ease; }\n\n#link-signup:hover,\n#link-signin:hover {\n  background: transparent;\n  color: #2b98f0; }\n\n#signup {\n  display: flex;\n  flex: 1 0 auto;\n  justify-content: center;\n  align-items: center; }\n\n.signup-form li {\n  display: flex;\n  list-style-type: none;\n  margin: 20px auto;\n  justify-content: flex-end; }\n\n.signup-form h3 {\n  font-size: 40px;\n  color: #2b98f0;\n  text-align: center; }\n\n.signup-form {\n  display: flex;\n  flex-direction: column; }\n\n.signup-form i {\n  font-size: 30px;\n  margin-right: 5px;\n  color: #456990;\n  align-self: center;\n  justify-content: center; }\n\n.signup-form input {\n  font-size: 25px;\n  border-radius: 5px; }\n\n.signup-form input::placeholder {\n  color: #BBB; }\n\n.signup-form input:focus {\n  border-radius: 5px; }\n\n.signup-form button {\n  font-size: 20px;\n  color: #F5F5F5;\n  background: #2EC4B6;\n  padding: 10px;\n  border: 2px solid #2EC4B6;\n  border-radius: 5px;\n  margin: 0px 10px;\n  cursor: pointer;\n  justify-content: flex-end;\n  transition: background-color 1s ease,\r border 1s ease; }\n\n.signup-form button:hover {\n  background: transparent;\n  color: #2EC4B6; }\n\n.signup-form a {\n  text-decoration: none;\n  align-self: flex-end;\n  justify-content: flex-end;\n  font-style: italic; }\n\n.message {\n  text-align: center;\n  padding: 10px;\n  margin: 10px 0px;\n  font-weight: bold; }\n\n.message-success {\n  background: #61FF7E; }\n\n.message-error {\n  background: #F8C0C8; }\n\n#signin {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex: 1 0 auto; }\n\n#signin h3 {\n  font-size: 40px;\n  color: #2b98f0;\n  text-align: center; }\n\n.input-field, .submit-field {\n  display: flex;\n  justify-content: flex-end;\n  margin: 20px auto; }\n\n.input-field i {\n  font-size: 30px;\n  margin-right: 5px;\n  color: #456990; }\n\n.input-field input {\n  font-size: 25px;\n  border-radius: 5px; }\n\n.input-field input::placeholder {\n  color: #BBB; }\n\n.input-field input:focus {\n  border-radius: 5px; }\n\n.submit-field button {\n  font-size: 20px;\n  color: #F5F5F5;\n  background: #2EC4B6;\n  padding: 10px;\n  border: 2px solid #2EC4B6;\n  border-radius: 5px;\n  margin: 0px 10px;\n  cursor: pointer;\n  transition: background-color 1s ease, border 1s ease; }\n\n.submit-field button:hover {\n  background: transparent;\n  color: #2EC4B6; }\n\n.submit-field a {\n  text-decoration: none;\n  align-self: flex-end;\n  font-style: italic; }\n\n#start {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#profile {\n  border: 3px solid blue;\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n  padding: 20px;\n  flex: 0 0 20%; }\n\n#profile hr {\n  width: 100%;\n  margin: 5px; }\n\n.profile-image img {\n  display: inline-block;\n  width: 200px;\n  height: 200px; }\n\n.profile-name span {\n  font-size: 20px;\n  color: #2b98f0;\n  margin: 0px 3px;\n  cursor: pointer; }\n\n.profile-name a {\n  text-decoration: none;\n  color: #2b98f0; }\n\n.profile-email {\n  display: flex;\n  align-self: flex-start;\n  align-items: center;\n  padding: 5px; }\n\n.profile-email span {\n  display: inline-block;\n  margin-left: 5px;\n  overflow: hidden;\n  width: 200px;\n  text-overflow: ellipsis; }\n\n.profile-activity {\n  margin-top: 5px;\n  border: 2px solid #BBB;\n  flex: 1 0 auto;\n  width: 100%; }\n\n#tab-container {\n  width: 100%; }\n\n#tab-container > ul {\n  overflow: hidden;\n  border-bottom: 2px solid #BBB; }\n\n#tab-container > ul > li {\n  list-style-type: none; }\n\n.tab-item {\n  text-decoration: none;\n  font-size: 17px;\n  color: #333;\n  float: left;\n  padding: 10px;\n  transition: font-style 0.5s ease, font-weight 0.5s ease, transform 0.5s ease; }\n\n.tab-content {\n  overflow: hidden;\n  display: none;\n  transition: all 1s ease-in-out; }\n\n#tab-following:target ~ #tab-container .tab-item-following,\n#tab-follower:target ~ #tab-container .tab-item-follower {\n  color: #456990;\n  font-style: italic;\n  font-weight: bold;\n  transform: scale(1.1); }\n\n#tab-following:target ~ #tab-container > .tab-content-following,\n#tab-follower:target ~ #tab-container > .tab-content-follower {\n  display: flex;\n  flex-direction: column; }\n\n#tab-following,\n#tab-follower {\n  display: none; }\n\n.following-user {\n  display: flex;\n  align-items: center;\n  color: #2b98f0;\n  cursor: pointer;\n  padding: 5px;\n  transition: background .5s ease,\r transform .5s ease,\r font-style .5s ease,\r padding .5s ease,\r opacity .5s ease; }\n\n.following-user:hover {\n  background: rgba(0, 0, 0, 0.3);\n  transform: scale(1.1);\n  font-style: italic;\n  padding-left: 10px; }\n\n.following-user img {\n  width: 30px;\n  height: 30px;\n  margin-right: 5px; }\n\n.following-user span {\n  font-size: 20px; }\n\n.follower-user {\n  display: flex;\n  align-items: center;\n  color: #2b98f0;\n  cursor: pointer;\n  padding: 5px;\n  transition: background .5s ease,\r transform .5s ease,\r font-style .5s ease,\r padding .5s ease,\r opacity .5s ease; }\n\n.follower-user:hover {\n  background: rgba(0, 0, 0, 0.3);\n  transform: scale(1.1);\n  font-style: italic;\n  padding-left: 10px; }\n\n.follower-user img {\n  width: 30px;\n  height: 30px;\n  margin-right: 5px; }\n\n.follower-user span {\n  font-size: 20px; }\n\n#postList {\n  display: flex;\n  flex-direction: column;\n  flex: 1 0 80%;\n  border: 3px solid black;\n  overflow-y: scroll;\n  padding: 40px 50px; }\n\n#post {\n  display: flex;\n  flex-direction: column;\n  flex: 0 0 calc(70%);\n  padding: 10px 20px;\n  margin: 10px 0px;\n  border: 2px solid #BBB;\n  border-radius: 3px;\n  background: white; }\n\n.poster {\n  flex: 0 0 calc(25% - 1em);\n  display: flex;\n  align-items: center; }\n\n.poster img {\n  width: 40px;\n  height: 40px;\n  margin-right: 5px;\n  border-radius: 50%; }\n\n.poster span {\n  cursor: pointer;\n  font-size: 30px;\n  color: #2b98f0; }\n\n.post-content {\n  flex: 1 0 auto;\n  border: 2px solid #BBB;\n  padding: 5px;\n  margin: 5px 0px; }\n\n.post-footer {\n  flex: 0 0 calc(15% - 1em);\n  display: flex;\n  align-items: center;\n  border: 2px solid #BBB;\n  padding: 5px; }\n\n.post-footer .comment,\n.post-footer .like {\n  font-size: 20px;\n  margin: 0 2px 0 2px;\n  cursor: pointer; }\n\n#home {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#content {\n  display: flex;\n  flex-grow: 1; }\n\n.modal {\n  position: fixed;\n  z-index: 1;\n  padding-top: 100px;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  background-color: rgba(0, 0, 0, 0.3); }\n\n.hidden {\n  display: none !important; }\n\n.modal-content {\n  display: flex;\n  flex-direction: column;\n  background-color: white;\n  margin: auto;\n  border: 1px solid #888888;\n  border-radius: 5px;\n  width: 70%;\n  height: 50vh; }\n\n.modal-header {\n  background-color: #F6F7F9;\n  border-bottom: 1px solid #DDDFE2;\n  border-radius: 5px;\n  display: flex;\n  justify-content: space-between; }\n\n.modal-close {\n  color: #AAAAAA;\n  font-size: 30px;\n  font-weight: bold;\n  margin-right: 10px; }\n\n.modal-title {\n  font-size: 20px;\n  font-weight: bold;\n  padding: 10px; }\n\n.modal-title i {\n  margin-right: 8px; }\n\n.modal-close:hover {\n  color: black;\n  text-decoration: none;\n  cursor: pointer; }\n\n.modal-body {\n  flex: 1 0;\n  padding: 15px; }\n\n.modal-body textarea {\n  width: 100%;\n  height: 100%;\n  font-size: 30px; }\n\n.modal-footer {\n  display: flex;\n  justify-content: flex-end;\n  flex: 0 0 15%;\n  padding: 10px; }\n\n.modal-footer button {\n  border-radius: 5px;\n  color: white;\n  background-color: #337ab7;\n  border: #337ab7;\n  padding: 6px 12px;\n  font-size: 15px; }\n", ""]);
+exports.push([module.i, "* {\n  padding: 0;\n  margin: 0;\n  box-sizing: border-box; }\n\nbody {\n  font-family: 'Roboto', sans-serif;\n  background: #F5F5F5;\n  width: 100vw;\n  height: 100vh; }\n\n.container {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\nbutton:focus {\n  outline: 0; }\n\n#nav-container {\n  background-color: #191919;\n  flex: 0 0 8%; }\n\n#links {\n  list-style-type: none;\n  display: none;\n  align-self: center; }\n\n#links a,\n#links span {\n  display: block;\n  color: #2b98f0;\n  background: transparent;\n  text-decoration: none;\n  padding: 10px;\n  font-size: 20px;\n  cursor: pointer;\n  transition: color 1s ease, \r background 1s ease,\r padding 1s ease; }\n\n#links a:hover,\n#links span:hover {\n  color: #F5F5F5;\n  padding-left: 60px;\n  background: #2b98f0; }\n\n#nav-top {\n  display: flex;\n  justify-content: space-between;\n  padding: 20px 20px 20px 10px;\n  align-self: center; }\n\n#logo {\n  font-size: 25px;\n  padding: 5px;\n  color: #2b98f0;\n  transition: color 1s ease; }\n\n#logo {\n  color: #2b98f0;\n  border: 3px solid;\n  transition: color 1s ease,\r background 1s ease; }\n\n#logo:hover {\n  background: #2b98f0; }\n  #logo:hover span, #logo:hover i {\n    color: #F5F5F5; }\n\n#menu-btn {\n  padding: 5px;\n  border: 2px solid #2b98f0;\n  cursor: pointer;\n  align-self: center; }\n\n.bar1,\n.bar2,\n.bar3 {\n  height: 5px;\n  width: 35px;\n  background-color: #2b98f0;\n  margin: 5px 0;\n  transition: transform 1s ease; }\n\n.turn .bar1 {\n  transform: rotate(-45deg) translate(-7px, 6px); }\n\n.turn .bar2 {\n  opacity: 0; }\n\n.turn .bar3 {\n  transform: rotate(45deg) translate(-7px, -8px); }\n\n@media screen and (min-width: 690px) {\n  #nav-container {\n    display: flex;\n    align-items: baseline;\n    flex-wrap: wrap;\n    padding: 0 20px; }\n  #menu-btn {\n    display: none; }\n  #links {\n    flex: 1 1 auto;\n    justify-content: flex-end;\n    display: flex !important;\n    flex-wrap: wrap; }\n  #links a,\n  #links span {\n    text-align: center; }\n  #links a:hover,\n  #links span:hover {\n    padding: 10px !important; }\n  #nav-top {\n    padding: 10px; } }\n\n#banner {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  flex: 1 0 auto;\n  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(\"/images/banner.jpg\") center/cover fixed no-repeat; }\n\n#banner-box {\n  color: #F5F5F5;\n  text-align: center; }\n\n#banner-title {\n  text-transform: capitalize;\n  font-size: 60px; }\n\n.banner-underline {\n  width: 200px;\n  margin: 10px auto;\n  border: 3px solid #2b98f0; }\n\n.banner-subtitle {\n  margin: 20px 0 40px 0;\n  text-transform: capitalize;\n  font-size: 25px; }\n\n#link-signup,\n#link-signin {\n  display: inline-block;\n  padding: 10px;\n  font-size: 40px;\n  color: #F5F5F5;\n  background: #2b98f0;\n  border: 3px solid #2b98f0;\n  border-radius: 5px;\n  margin: 0px 5px;\n  cursor: pointer;\n  text-decoration: none;\n  transition: background 1s ease,\r border 1s ease; }\n\n#link-signup:hover,\n#link-signin:hover {\n  background: transparent;\n  color: #2b98f0; }\n\n#signup {\n  display: flex;\n  flex: 1 0 auto;\n  justify-content: center;\n  align-items: center; }\n\n.signup-form li {\n  display: flex;\n  list-style-type: none;\n  margin: 20px auto;\n  justify-content: flex-end; }\n\n.signup-form h3 {\n  font-size: 40px;\n  color: #2b98f0;\n  text-align: center; }\n\n.signup-form {\n  display: flex;\n  flex-direction: column; }\n\n.signup-form i {\n  font-size: 30px;\n  margin-right: 5px;\n  color: #456990;\n  align-self: center;\n  justify-content: center; }\n\n.signup-form input {\n  font-size: 25px;\n  border-radius: 5px; }\n\n.signup-form input::placeholder {\n  color: #BBB; }\n\n.signup-form input:focus {\n  border-radius: 5px; }\n\n.signup-form button {\n  font-size: 20px;\n  color: #F5F5F5;\n  background: #2EC4B6;\n  padding: 10px;\n  border: 2px solid #2EC4B6;\n  border-radius: 5px;\n  margin: 0px 10px;\n  cursor: pointer;\n  justify-content: flex-end;\n  transition: background-color 1s ease,\r border 1s ease; }\n\n.signup-form button:hover {\n  background: transparent;\n  color: #2EC4B6; }\n\n.signup-form a {\n  text-decoration: none;\n  align-self: flex-end;\n  justify-content: flex-end;\n  font-style: italic; }\n\n.message {\n  text-align: center;\n  padding: 10px;\n  margin: 10px 0px;\n  font-weight: bold; }\n\n.message-success {\n  background: #61FF7E; }\n\n.message-error {\n  background: #F8C0C8; }\n\n#signin {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  flex: 1 0 auto; }\n\n#signin h3 {\n  font-size: 40px;\n  color: #2b98f0;\n  text-align: center; }\n\n.input-field, .submit-field {\n  display: flex;\n  justify-content: flex-end;\n  margin: 20px auto; }\n\n.input-field i {\n  font-size: 30px;\n  margin-right: 5px;\n  color: #456990; }\n\n.input-field input {\n  font-size: 25px;\n  border-radius: 5px; }\n\n.input-field input::placeholder {\n  color: #BBB; }\n\n.input-field input:focus {\n  border-radius: 5px; }\n\n.submit-field button {\n  font-size: 20px;\n  color: #F5F5F5;\n  background: #2EC4B6;\n  padding: 10px;\n  border: 2px solid #2EC4B6;\n  border-radius: 5px;\n  margin: 0px 10px;\n  cursor: pointer;\n  transition: background-color 1s ease, border 1s ease; }\n\n.submit-field button:hover {\n  background: transparent;\n  color: #2EC4B6; }\n\n.submit-field a {\n  text-decoration: none;\n  align-self: flex-end;\n  font-style: italic; }\n\n#start {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#profile {\n  border: 3px solid blue;\n  display: flex;\n  align-items: center;\n  flex-direction: column;\n  padding: 20px;\n  flex: 0 0 20%; }\n\n#profile hr {\n  width: 100%;\n  margin: 5px; }\n\n.profile-image img {\n  display: inline-block;\n  width: 200px;\n  height: 200px; }\n\n.profile-name span {\n  font-size: 20px;\n  color: #2b98f0;\n  margin: 0px 3px;\n  cursor: pointer; }\n\n.profile-name a {\n  text-decoration: none;\n  color: #2b98f0; }\n\n.profile-email {\n  display: flex;\n  align-self: flex-start;\n  align-items: center;\n  padding: 5px; }\n\n.profile-email span {\n  display: inline-block;\n  margin-left: 5px;\n  overflow: hidden;\n  width: 200px;\n  text-overflow: ellipsis; }\n\n.profile-activity {\n  margin-top: 5px;\n  border: 2px solid #BBB;\n  flex: 1 0 auto;\n  width: 100%; }\n\n#tab-container {\n  width: 100%; }\n\n#tab-container > ul {\n  overflow: hidden;\n  border-bottom: 2px solid #BBB; }\n\n#tab-container > ul > li {\n  list-style-type: none; }\n\n.tab-item {\n  text-decoration: none;\n  font-size: 17px;\n  color: #333;\n  float: left;\n  padding: 10px;\n  transition: font-style 0.5s ease, font-weight 0.5s ease, transform 0.5s ease; }\n\n.tab-content {\n  overflow: hidden;\n  display: none;\n  transition: all 1s ease-in-out; }\n\n#tab-following:target ~ #tab-container .tab-item-following,\n#tab-follower:target ~ #tab-container .tab-item-follower {\n  color: #456990;\n  font-style: italic;\n  font-weight: bold;\n  transform: scale(1.1); }\n\n#tab-following:target ~ #tab-container > .tab-content-following,\n#tab-follower:target ~ #tab-container > .tab-content-follower {\n  display: flex;\n  flex-direction: column; }\n\n#tab-following,\n#tab-follower {\n  display: none; }\n\n.following-user {\n  display: flex;\n  align-items: center;\n  color: #2b98f0;\n  cursor: pointer;\n  padding: 5px;\n  transition: background .5s ease,\r transform .5s ease,\r font-style .5s ease,\r padding .5s ease,\r opacity .5s ease; }\n\n.following-user:hover {\n  background: rgba(0, 0, 0, 0.3);\n  transform: scale(1.1);\n  font-style: italic;\n  padding-left: 10px; }\n\n.following-user img {\n  width: 30px;\n  height: 30px;\n  margin-right: 5px; }\n\n.following-user span {\n  font-size: 20px; }\n\n.follower-user {\n  display: flex;\n  align-items: center;\n  color: #2b98f0;\n  cursor: pointer;\n  padding: 5px;\n  transition: background .5s ease,\r transform .5s ease,\r font-style .5s ease,\r padding .5s ease,\r opacity .5s ease; }\n\n.follower-user:hover {\n  background: rgba(0, 0, 0, 0.3);\n  transform: scale(1.1);\n  font-style: italic;\n  padding-left: 10px; }\n\n.follower-user img {\n  width: 30px;\n  height: 30px;\n  margin-right: 5px; }\n\n.follower-user span {\n  font-size: 20px; }\n\n#postList {\n  display: flex;\n  flex-direction: column;\n  flex: 1 0 80%;\n  border: 3px solid black;\n  overflow-y: scroll;\n  padding: 40px 50px; }\n\n.postList-header {\n  display: flex;\n  justify-content: flex-start;\n  flex: 0 0 10%; }\n\n.postList-body {\n  display: flex;\n  flex-direction: column;\n  flex: 1 0; }\n\n.btn-filter {\n  background-color: #B9E3C6;\n  border-radius: 50%;\n  font-size: 20px;\n  flex: 0 0 15%;\n  margin: 0px 10px;\n  border: 0px;\n  cursor: pointer;\n  transition: background-color .5s ease,\r opacity .5s ease; }\n\n.btn-filter:hover {\n  opacity: 0.6; }\n\n.filter-active {\n  background-color: #2EC4B6; }\n\n#post {\n  display: flex;\n  flex-direction: column;\n  flex: 0 0 calc(70%);\n  padding: 10px 20px;\n  margin: 10px 0px;\n  border: 2px solid #BBB;\n  border-radius: 3px;\n  background: white; }\n\n.poster {\n  flex: 0 0 calc(25% - 1em);\n  display: flex;\n  align-items: center; }\n\n.poster img {\n  width: 40px;\n  height: 40px;\n  margin-right: 5px;\n  border-radius: 50%; }\n\n.poster span {\n  cursor: pointer;\n  font-size: 30px;\n  color: #2b98f0; }\n\n.post-content {\n  flex: 1 0 auto;\n  border: 2px solid #BBB;\n  padding: 5px;\n  margin: 5px 0px; }\n\n.post-footer {\n  flex: 0 0 calc(15% - 1em);\n  display: flex;\n  align-items: center;\n  border: 2px solid #BBB;\n  padding: 5px; }\n\n.post-footer .comment,\n.post-footer .like {\n  font-size: 20px;\n  margin: 0 2px 0 2px;\n  cursor: pointer; }\n\n#home {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n  width: 100vw; }\n\n#content {\n  display: flex;\n  flex-grow: 1; }\n\n.modal {\n  position: fixed;\n  z-index: 1;\n  padding-top: 100px;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  overflow: auto;\n  background-color: rgba(0, 0, 0, 0.3); }\n\n.hidden {\n  display: none !important; }\n\n.modal-content {\n  display: flex;\n  flex-direction: column;\n  background-color: white;\n  margin: auto;\n  border: 1px solid #888888;\n  border-radius: 5px;\n  width: 70%;\n  height: 50vh; }\n\n.modal-header {\n  background-color: #F6F7F9;\n  border-bottom: 1px solid #DDDFE2;\n  border-radius: 5px;\n  display: flex;\n  justify-content: space-between; }\n\n.modal-close {\n  color: #AAAAAA;\n  font-size: 30px;\n  font-weight: bold;\n  margin-right: 10px; }\n\n.modal-title {\n  font-size: 20px;\n  font-weight: bold;\n  padding: 10px; }\n\n.modal-title i {\n  margin-right: 8px; }\n\n.modal-close:hover {\n  color: black;\n  text-decoration: none;\n  cursor: pointer; }\n\n.modal-body {\n  flex: 1 0;\n  padding: 15px; }\n\n.modal-body textarea {\n  width: 100%;\n  height: 100%;\n  font-size: 30px; }\n\n.modal-footer {\n  display: flex;\n  justify-content: flex-end;\n  flex: 0 0 15%;\n  padding: 10px; }\n\n.modal-footer button {\n  border-radius: 5px;\n  color: white;\n  background-color: #337ab7;\n  border: #337ab7;\n  padding: 6px 12px;\n  font-size: 15px; }\n", ""]);
 
 // exports
 
@@ -47060,6 +47115,23 @@ module.exports = function (css) {
 	return fixedCss;
 };
 
+
+/***/ }),
+/* 507 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _createWebStorage = __webpack_require__(433);
+
+var _createWebStorage2 = _interopRequireDefault(_createWebStorage);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = (0, _createWebStorage2.default)('session');
 
 /***/ })
 /******/ ]);

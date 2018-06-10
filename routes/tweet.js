@@ -3,12 +3,22 @@ const async  = require('async')
 const User   = require('../models/user')
 const Tweet  = require('../models/tweet')
 
+
+router.get('/tweet/', (req, res, next) => {
+  Tweet.find({})
+  .sort('-created')
+  .populate('owner', '_id name')
+  // .populate('comment')
+  .exec(function(err, tweets){
+    // console.log(tweets)
+    res.json({tweets})
+  })
+})
 router.get('/tweet/:id', (req, res, next) => {
   let id = req.params.id
   Tweet.find({owner: id}, function(err, tweets){
     res.json({tweets})
   })
-
 })
 
 
@@ -25,7 +35,7 @@ router.route('/tweet/save')
         tweet.comment = []
         tweet.like    = 0
         tweet.save(function(err){
-          console.log('successfully save tweet to mongodb', tweet)
+          // console.log('successfully save tweet to mongodb', tweet)
           callback(err, tweet)
         })
       },
@@ -42,7 +52,13 @@ router.route('/tweet/save')
       // response
       function(tweet, callback){
         res.status(200)
-        res.json({tweet: JSON.stringify(tweet)})
+        Tweet.findById(tweet._id)
+          .populate('owner', '_id name')
+          .exec(function(err, tweet){
+            // console.log(tweets)
+            res.json({tweet})
+          })
+        // res.json({tweet: JSON.stringify(tweet)})
       }
     ])
   })
