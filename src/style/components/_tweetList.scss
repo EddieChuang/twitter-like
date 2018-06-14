@@ -1,8 +1,8 @@
-#postList{
-	// max-width: $postList-width;
-	// max-height: $postList-height;
-	// min-width: $postList-width;
-	// min-height: $postList-height;
+#tweetList{
+	// max-width: $tweetList-width;
+	// max-height: $tweetList-height;
+	// min-width: $tweetList-width;
+	// min-height: $tweetList-height;
 	
   display: flex;
   flex-direction: column;
@@ -11,12 +11,12 @@
   overflow-y: scroll;
   padding: 40px 50px;
 }
-.postList-header{
+.tweetList-header{
   display: flex;
   justify-content: flex-start;
   flex: 0 0 10%;
 }
-.postList-body{
+.tweetList-body{
   display: flex;
   flex-direction: column;
   flex: 1 0;

@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { auth } from '../../utils/auth'
 import axios from 'axios'
-import { NewPostModal } from './'
+import { NewTweetModal } from './'
 import { show } from '../../actions/modalActions'
 
 class Header extends React.Component{
@@ -77,7 +77,7 @@ class Header extends React.Component{
           </div>
         </div>
         {this.renderNav()}
-        <NewPostModal visibility={false}/>
+        <NewTweetModal visibility={false}/>
       </nav>
     )
     

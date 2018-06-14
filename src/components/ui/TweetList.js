@@ -3,9 +3,9 @@ import React from 'react'
 import axios from 'axios'
 // import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Post } from '../ui'
+import { Tweet } from '../ui'
 
-class PostList extends React.Component{
+class TweetList extends React.Component{
 	
 	constructor(){
     super()
@@ -16,7 +16,7 @@ class PostList extends React.Component{
     }
 
     this.filter = this.filter.bind(this)
-    this.renderPost = this.renderPost.bind(this)
+    this.renderTweet = this.renderTweet.bind(this)
   }
 
   componentDidMount(){
@@ -38,7 +38,14 @@ class PostList extends React.Component{
 
   componentWillReceiveProps(props){
 
-    let tweets  = [props.tweet, ...this.state.tweets]
+    let tweets  = this.state.tweets
+    let tweetToUpdate = props.tweet
+    let indexToUpdate = tweets.indexOf((tweet) => (tweet._id === tweetToUpdate._id))
+    if(indexToUpdate === -1){
+      tweets = [tweetToUpdate, ...tweets]
+    } else{
+      tweets = [tweets.slice(0, indexToUpdate), tweetToUpdate, tweets.slice(indexToUpdate + 1)]
+    }
     let matched = tweets 
     this.setState({tweets, matched})
   }
@@ -49,7 +56,6 @@ class PostList extends React.Component{
       ele.classList.remove("filter-active")
     })
     e.target.classList.add("filter-active")
-    
     let filter  = e.target.innerText
     let tweets  = this.state.tweets
     let matched = tweets.reduce((accumulator, tweet, currIndex) => {
@@ -73,26 +79,26 @@ class PostList extends React.Component{
     this.setState({matched})
   }
 
-  renderPost(){
+  renderTweet(){
     let matched = this.state.matched
     let user    = this.state.user
-    let posts   = matched.map((tweet, i) => {
-      return <Post tweet={tweet} user={user} key={tweet._id}/>
+    let tweets   = matched.map((tweet, i) => {
+      return <Tweet tweet={tweet} user={user} key={tweet._id}/>
     })
-    return posts
+    return tweets
   }
 
 	render(){
 
 		return(
-			<section id="postList">
-        <div className="postList-header">
+			<section id="tweetList">
+        <div className="tweetList-header">
           <button className="btn-filter filter-active" onClick={this.filter}>All</button>
           <button className="btn-filter" onClick={this.filter}>Following</button>
           <button className="btn-filter" onClick={this.filter}>My</button>
         </div >
-        <div className="postList-body">
-          {this.renderPost()}
+        <div className="tweetList-body">
+          {this.renderTweet()}
         </div>
 			</section>
 		)
@@ -102,8 +108,8 @@ class PostList extends React.Component{
 
 function mapStateToProps(state){
   return {
-    tweet: state.modal.tweet
+    tweet: state.tweet.tweet
   }
 }
  
-export default connect(mapStateToProps)(PostList)
+export default connect(mapStateToProps)(TweetList)

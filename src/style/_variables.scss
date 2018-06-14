@@ -36,8 +36,8 @@ $profile-width: 25vw;
 // $profile-height: calc(100vh - #{$header-height} - 1em);
 // $profile-width: calc(20vw - 1em);
 
-// postList
-$postList-height: calc(100vh - #{$header-height});
-$postList-width: calc(100vw - #{$profile-width});
-// $postList-height: calc(100vh - #{$header-height} - 1em);
-// $postList-width: calc(100vw - #{$profile-width} - 1em);
+// tweetList
+$tweetList-height: calc(100vh - #{$header-height});
+$tweetList-width: calc(100vw - #{$profile-width});
+// $tweetList-height: calc(100vh - #{$header-height} - 1em);
+// $tweetList-width: calc(100vw - #{$profile-width} - 1em);

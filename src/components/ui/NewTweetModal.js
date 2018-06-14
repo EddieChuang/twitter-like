@@ -1,21 +1,22 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { close, newPost } from '../../actions/modalActions'
+import { close } from '../../actions/modalActions'
+import { newTweet } from '../../actions/tweetActions'
 
-class NewPostModal extends React.Component{
+class NewTweetModal extends React.Component{
 
   constructor(){
     super()
 
-    this.onNewPost = this.onNewPost.bind(this)
+    this.onNewTweet = this.onNewTweet.bind(this)
   }
 
-  onNewPost(){
+  onNewTweet(){
 
     let text = this.refs.text.value
 
-    this.props.newPost(text)
+    this.props.newTweet(text)
 
   }
 
@@ -30,7 +31,7 @@ class NewPostModal extends React.Component{
         <div className="modal-content">
           {/* <form> */}
             <div className="modal-header">
-              <span className="modal-title"><i className="fas fa-edit"/>Net Post</span>
+              <span className="modal-title"><i className="fas fa-edit"/>New Tweet</span>
               <span className="modal-close" onClick={this.props.close}>&times;</span>
             </div>
             <div className="modal-body">
@@ -39,7 +40,7 @@ class NewPostModal extends React.Component{
               </textarea>
             </div>
             <div className="modal-footer">
-              <button type="submit" onClick={this.onNewPost}>POST</button>
+              <button type="submit" onClick={this.onNewTweet}>TWEET</button>
             </div>
           {/* </form> */}
         </div>
@@ -58,12 +59,12 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-  // console.log('mapDispatchToProps NewPostModal')
+  // console.log('mapDispatchToProps NewTweetModal')
   return bindActionCreators({
     close: close,
-    newPost: newPost
+    newTweet: newTweet
   }, dispatch)
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewPostModal)
+export default connect(mapStateToProps, mapDispatchToProps)(NewTweetModal)

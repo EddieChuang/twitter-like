@@ -63,4 +63,21 @@ router.route('/tweet/save')
     ])
   })
 
+router.post('/tweet/like', (req, res, next) => {
+
+  console.log('/tweet/like req.body', req.body)
+  let {id, idToLike} = req.body
+  User.findById(id, '_id', function(err, user){
+    Tweet.update(
+      {_id: idToLike},
+      {$push: {like: user._id}},
+      function(err, count){
+        console.log(err)
+        Tweet.findById(idToLike, function(err, tweet){
+          res.json({tweet})
+        })
+      }
+    )
+  })
+})
   module.exports = router

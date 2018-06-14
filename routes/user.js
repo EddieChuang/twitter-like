@@ -91,15 +91,9 @@ router.get('/user/followers/:id', (req, res, next) => {
     .exec(function(err, user){
       res.json({followers: user.followers})
     })
-  // User.findOne({_id: id}, function(err, user){
-  //   let followers = user.followers.map((followerId, i) => {
-  //     User.findOne({_id: followerId})
-  //   })
-  //   res.json({followers})
-  // })
 })
 router.post('/user/follow', (req, res, next) => {
-  let {id, idToFollow} = req.params
+  let {id, idToFollow} = req.body
 
   async.waterfall([
     function(callback){
@@ -124,9 +118,7 @@ router.post('/user/follow', (req, res, next) => {
       let userToFollow = User.findById(idToFollow, '_id name email photo tweets followers followings')
       res.json({userToFollow: userToFollow})
     }
-
   ])
-  
 })
 
 

@@ -1,7 +1,7 @@
 "use strict"
 import React from 'react'
 import axios from 'axios'
-import { Header, Profile, PostList } from '../ui'
+import { Header, Profile, TweetList } from '../ui'
 import parser from '../../utils/parser'
 
 class Home extends React.Component{
@@ -35,7 +35,7 @@ class Home extends React.Component{
         {user ? (<Header user={user}/>) : ''}
         <div id="content">
           {user ? (<Profile user={user}/>) : ''}
-          {user ? (<PostList user={user}/>) : ''}
+          {user ? (<TweetList user={user}/>) : ''}
 				</div>
       </div>
     )
