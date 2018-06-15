@@ -18,7 +18,7 @@ class Header extends React.Component{
 
     this.onLogout  = this.onLogout.bind(this) 
     this.renderNav = this.renderNav.bind(this)   
-    console.log('constructor Header')
+    // console.log('constructor Header')
   }
 
   // componentWillReceiveProps(props){
@@ -27,11 +27,11 @@ class Header extends React.Component{
   // }
 
   componentWillMount(){
-    console.log('componentWillMount Header')
+    // console.log('componentWillMount Header')
   }
 
   componentDidMount(){
-    console.log('componentDidMount Header')
+    // console.log('componentDidMount Header')
   }
 
   renderNav(){
@@ -62,7 +62,7 @@ class Header extends React.Component{
   }
 
   render(){
-    console.log('render Header')
+    // console.log('render Header')
     return(
       <nav id="nav-container">
         <div id="nav-top">
@@ -87,14 +87,14 @@ class Header extends React.Component{
 }
 
 function mapStateToProps(state){
-  console.log('mapStateToProps Header')
+  // console.log('mapStateToProps Header')
   return {
     visibility: state.modal.visibility
   }
 }
 
 function mapDispatchToProps(dispatch){
-  console.log('mapDispatchToProps Header')
+  // console.log('mapDispatchToProps Header')
   
   return bindActionCreators({
     show: show

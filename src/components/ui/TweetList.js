@@ -38,13 +38,15 @@ class TweetList extends React.Component{
 
   componentWillReceiveProps(props){
 
+    console.log('TweetList componentWillReceiveProps', props)
     let tweets  = this.state.tweets
     let tweetToUpdate = props.tweet
-    let indexToUpdate = tweets.indexOf((tweet) => (tweet._id === tweetToUpdate._id))
+    let indexToUpdate = tweets.findIndex((tweet) => (tweet._id === tweetToUpdate._id))
+
     if(indexToUpdate === -1){
       tweets = [tweetToUpdate, ...tweets]
     } else{
-      tweets = [tweets.slice(0, indexToUpdate), tweetToUpdate, tweets.slice(indexToUpdate + 1)]
+      tweets = [...tweets.slice(0, indexToUpdate), tweetToUpdate, ...tweets.slice(indexToUpdate + 1)]
     }
     let matched = tweets 
     this.setState({tweets, matched})

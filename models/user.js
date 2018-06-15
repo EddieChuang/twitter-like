@@ -7,7 +7,7 @@ const UserSchema = new Schema({
   name: String,
   password: String,
   photo: String,
-  tweets:[{
+  tweets: [{
     tweet: {type: Schema.Types.ObjectId, ref: 'Tweet'}
   }],
   followers: [{type: Schema.Types.ObjectId, ref: 'User'}],

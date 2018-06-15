@@ -3,10 +3,12 @@ export function tweetReducers(state={tweet:{}}, action){
   
   switch(action.type){
     case 'NEW_POST':
-      return {visibility: false, tweet: action.payload.tweet}
+      return {tweet: action.payload.tweet}
     case 'FAIL_NEW_TWEET':
-      return {...state, visibility: true}
+      return {...state}
     case 'LIKE_TWEET':
+      return {tweet: action.payload.tweet}
+    case 'UNLIKE_TWEET':
       return {tweet: action.payload.tweet}
   }
 

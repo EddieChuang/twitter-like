@@ -8367,6 +8367,7 @@ function newTweet(text) {
     return _axios2.default.post('/tweet/save', tweet).then(function (res) {
       console.log(res.data);
       dispatch({ type: "NEW_TWEET", payload: { tweet: res.data.tweet } });
+      dispatch({ type: "CLOSE_MODAL" });
     }).catch(function (err) {
       alert('fail');
       dispatch({ type: "FAIL_NEW_TWEET" });
@@ -8376,9 +8377,9 @@ function newTweet(text) {
 
 function likeTweet(idToLike) {
   return function (dispatch) {
-    var params = { id: sessionStorage._id, idToLike: idToLike };
-    console.log('likeTweet params', params);
-    _axios2.default.post('/tweet/like', params).then(function (res) {
+    var params = { id: sessionStorage._id, idToLike: idToLike
+      // console.log('likeTweet params', params)
+    };_axios2.default.post('/tweet/like', params).then(function (res) {
       console.log('like res', res);
       dispatch({ type: "LIKE_TWEET", payload: { tweet: res.data.tweet } });
     }).catch(function (err) {
@@ -35335,6 +35336,7 @@ function modalReducers() {
     case 'SHOW_MODAL':
       return _extends({}, state, { visibility: true });
     case 'CLOSE_MODAL':
+      console.log('CLOSE_MODAL');
       return _extends({}, state, { visibility: false });
 
   }
@@ -35363,10 +35365,12 @@ function tweetReducers() {
 
   switch (action.type) {
     case 'NEW_POST':
-      return { visibility: false, tweet: action.payload.tweet };
+      return { tweet: action.payload.tweet };
     case 'FAIL_NEW_TWEET':
-      return _extends({}, state, { visibility: true });
+      return _extends({}, state);
     case 'LIKE_TWEET':
+      return { tweet: action.payload.tweet };
+    case 'UNLIKE_TWEET':
       return { tweet: action.payload.tweet };
   }
 
@@ -38562,7 +38566,7 @@ var Header = function (_React$Component) {
 
     _this.onLogout = _this.onLogout.bind(_this);
     _this.renderNav = _this.renderNav.bind(_this);
-    console.log('constructor Header');
+    // console.log('constructor Header')
     return _this;
   }
 
@@ -38574,12 +38578,12 @@ var Header = function (_React$Component) {
   _createClass(Header, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      console.log('componentWillMount Header');
+      // console.log('componentWillMount Header')
     }
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      console.log('componentDidMount Header');
+      // console.log('componentDidMount Header')
     }
   }, {
     key: 'renderNav',
@@ -38635,7 +38639,7 @@ var Header = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      console.log('render Header');
+      // console.log('render Header')
       return _react2.default.createElement(
         'nav',
         { id: 'nav-container' },
@@ -38670,14 +38674,14 @@ var Header = function (_React$Component) {
 }(_react2.default.Component);
 
 function mapStateToProps(state) {
-  console.log('mapStateToProps Header');
+  // console.log('mapStateToProps Header')
   return {
     visibility: state.modal.visibility
   };
 }
 
 function mapDispatchToProps(dispatch) {
-  console.log('mapDispatchToProps Header');
+  // console.log('mapDispatchToProps Header')
 
   return (0, _redux.bindActionCreators)({
     show: _modalActions.show
@@ -45831,15 +45835,17 @@ var TweetList = function (_React$Component) {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(props) {
 
+      console.log('TweetList componentWillReceiveProps', props);
       var tweets = this.state.tweets;
       var tweetToUpdate = props.tweet;
-      var indexToUpdate = tweets.indexOf(function (tweet) {
+      var indexToUpdate = tweets.findIndex(function (tweet) {
         return tweet._id === tweetToUpdate._id;
       });
+
       if (indexToUpdate === -1) {
         tweets = [tweetToUpdate].concat(_toConsumableArray(tweets));
       } else {
-        tweets = [tweets.slice(0, indexToUpdate), tweetToUpdate, tweets.slice(indexToUpdate + 1)];
+        tweets = [].concat(_toConsumableArray(tweets.slice(0, indexToUpdate)), [tweetToUpdate], _toConsumableArray(tweets.slice(indexToUpdate + 1)));
       }
       var matched = tweets;
       this.setState({ tweets: tweets, matched: matched });
@@ -45979,8 +45985,8 @@ var Tweet = function (_React$Component) {
       var _this2 = this;
 
       // console.log(this.props)
-      var liked = tweet.like.indexOf(function (id) {
-        return id === sessionStorage._id;
+      var liked = tweet.like.findIndex(function (user) {
+        return user.user === sessionStorage._id;
       }) !== -1;
       if (liked) {
         return _react2.default.createElement('i', { className: 'fas fa-heart', onClick: function onClick() {
@@ -45997,6 +46003,7 @@ var Tweet = function (_React$Component) {
     value: function render() {
 
       var tweet = this.props.tweet;
+      // console.log(tweet)
       return _react2.default.createElement(
         'section',
         { id: 'tweet' },

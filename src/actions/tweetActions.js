@@ -8,6 +8,7 @@ export function newTweet(text){
       .then((res) => {
         console.log(res.data)
         dispatch({type: "NEW_TWEET", payload: {tweet: res.data.tweet}})
+        dispatch({type: "CLOSE_MODAL"})        
       })
       .catch((err) => {
         alert('fail')
@@ -19,11 +20,12 @@ export function newTweet(text){
 export function likeTweet(idToLike){
   return (dispatch) => {
     let params = {id: sessionStorage._id, idToLike}
-    console.log('likeTweet params', params)
+    // console.log('likeTweet params', params)
     axios.post('/tweet/like', params)
       .then((res) => {
         console.log('like res', res)
         dispatch({type: "LIKE_TWEET", payload: {tweet: res.data.tweet}})
+        
       })
       .catch((err) => {
         console.log('like err', err.response)

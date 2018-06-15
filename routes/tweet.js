@@ -33,7 +33,7 @@ router.route('/tweet/save')
         tweet.owner   = owner
         tweet.content = content
         tweet.comment = []
-        tweet.like    = 0
+        tweet.like    = []
         tweet.save(function(err){
           // console.log('successfully save tweet to mongodb', tweet)
           callback(err, tweet)
@@ -67,17 +67,29 @@ router.post('/tweet/like', (req, res, next) => {
 
   console.log('/tweet/like req.body', req.body)
   let {id, idToLike} = req.body
-  User.findById(id, '_id', function(err, user){
-    Tweet.update(
-      {_id: idToLike},
-      {$push: {like: user._id}},
-      function(err, count){
-        console.log(err)
-        Tweet.findById(idToLike, function(err, tweet){
-          res.json({tweet})
-        })
-      }
-    )
-  })
+  Tweet.findByIdAndUpdate(
+    idToLike, 
+    {$push: {like: {user: id}}},
+    function(err, count){
+      Tweet.findById(idToLike, function(err, tweet){
+        res.json({tweet})
+      })
+    }
+  )
 })
-  module.exports = router
+
+router.post('/tweet/unlike', (req, res, next) => {
+  
+  console.log('/tweet/unlike req.body', req.body)
+  let {id, idToUnlike} = req.body
+  Tweet.findByIdAndUpdate(
+    idToUnlike,
+    {$pull: {like: {user: id}}},
+    function(err, count){
+      Tweet.findById(idToUnlike, function(err, tweet){
+        res.json({tweet})
+      })
+    }
+    )
+})
+module.exports = router

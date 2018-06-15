@@ -14,7 +14,7 @@ class Tweet extends React.Component{
   renderLike(tweet){
 
     // console.log(this.props)
-    let liked = tweet.like.indexOf((id) => (id === sessionStorage._id)) !== -1
+    let liked = tweet.like.findIndex((user) => (user.user === sessionStorage._id)) !== -1
     if(liked){
       return <i className="fas fa-heart" onClick={() => this.props.unlikeTweet(tweet._id)}/>
     } else{
@@ -26,6 +26,7 @@ class Tweet extends React.Component{
 	render(){
 
     let tweet = this.props.tweet
+    // console.log(tweet)
 		return(
 			<section id="tweet">
 				<div className="tweeter">
@@ -42,7 +43,6 @@ class Tweet extends React.Component{
           </div>
           <div className="like">
             {this.renderLike(tweet)}
-            {/* <i className="far fa-heart" onClick={this.props.likeTweet}/> */}
             <span>{tweet.like.length}</span>
           </div>
         </div>
