@@ -39866,7 +39866,6 @@ var SigninForm = function (_React$Component) {
   }, {
     key: 'renderMessage',
     value: function renderMessage() {
-
       if (this.props.status === 0) return;
 
       var success = this.props.status === 200;
@@ -39874,9 +39873,11 @@ var SigninForm = function (_React$Component) {
           user = _props.user,
           message = _props.message;
 
-      if (success) window.setTimeout(function () {
-        window.location = 'http://127.0.0.1:3030/home?id=' + user._id;
-      }, 3000);
+      if (success) {
+        window.setTimeout(function () {
+          window.location = 'http://127.0.0.1:3030/home?id=' + user._id;
+        }, 3000);
+      }
 
       return success ? _react2.default.createElement(
         'div',
@@ -39913,7 +39914,12 @@ var SigninForm = function (_React$Component) {
             'div',
             { className: 'input-field' },
             _react2.default.createElement('i', { className: 'fa fa-lock' }),
-            _react2.default.createElement('input', { type: 'password', ref: 'password', name: 'password', placeholder: 'Password' })
+            _react2.default.createElement('input', {
+              type: 'password',
+              ref: 'password',
+              name: 'password',
+              placeholder: 'Password'
+            })
           ),
           _react2.default.createElement(
             'div',
@@ -45989,21 +45995,26 @@ var Tweet = function (_React$Component) {
         return user.user === sessionStorage._id;
       }) !== -1;
       if (liked) {
-        return _react2.default.createElement('i', { className: 'fas fa-heart', onClick: function onClick() {
+        return _react2.default.createElement('i', {
+          className: 'fas fa-heart',
+          onClick: function onClick() {
             return _this2.props.unlikeTweet(tweet._id);
-          } });
+          }
+        });
       } else {
-        return _react2.default.createElement('i', { className: 'far fa-heart', onClick: function onClick() {
+        return _react2.default.createElement('i', {
+          className: 'far fa-heart',
+          onClick: function onClick() {
             return _this2.props.likeTweet(tweet._id);
-          } });
+          }
+        });
       }
     }
   }, {
     key: 'render',
     value: function render() {
-
       var tweet = this.props.tweet;
-      // console.log(tweet)
+      console.log(tweet);
       return _react2.default.createElement(
         'section',
         { id: 'tweet' },

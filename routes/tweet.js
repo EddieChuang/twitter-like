@@ -1,95 +1,94 @@
 const router = require('express').Router()
-const async  = require('async')
-const User   = require('../models/user')
-const Tweet  = require('../models/tweet')
-
+const async = require('async')
+const User = require('../models/user')
+const Tweet = require('../models/tweet')
 
 router.get('/tweet/', (req, res, next) => {
   Tweet.find({})
-  .sort('-created')
-  .populate('owner', '_id name')
-  // .populate('comment')
-  .exec(function(err, tweets){
-    // console.log(tweets)
-    res.json({tweets})
-  })
+    .sort('-created')
+    .populate('owner', '_id name')
+    // .populate('comment')
+    .exec(function(err, tweets) {
+      // console.log(tweets)
+      res.json({ tweets })
+    })
 })
 router.get('/tweet/:id', (req, res, next) => {
   let id = req.params.id
-  Tweet.find({owner: id}, function(err, tweets){
-    res.json({tweets})
+  Tweet.find({ owner: id }, function(err, tweets) {
+    res.json({ tweets })
   })
 })
 
-
-router.route('/tweet/save')
-  .post((req, res, next) => {
-    let owner   = req.body.owner
-    let content = req.body.content
-    async.waterfall([
-      // save tweet 
-      function(callback){
-        let tweet = new Tweet()
-        tweet.owner   = owner
-        tweet.content = content
-        tweet.comment = []
-        tweet.like    = []
-        tweet.save(function(err){
-          // console.log('successfully save tweet to mongodb', tweet)
+router.route('/tweet/save').post((req, res, next) => {
+  let owner = req.body.owner
+  let content = req.body.content
+  async.waterfall([
+    // save tweet
+    function(callback) {
+      let tweet = new Tweet()
+      tweet.owner = owner
+      tweet.content = content
+      tweet.comment = []
+      tweet.like = []
+      tweet.save(function(err) {
+        // console.log('successfully save tweet to mongodb', tweet)
+        callback(err, tweet)
+      })
+    },
+    // update user.tweets
+    function(tweet, callback) {
+      User.update(
+        { _id: owner },
+        { $push: { tweets: { tweet: tweet._id } } },
+        function(err, count) {
+          // count is the number of updated documents
           callback(err, tweet)
+        }
+      )
+    },
+    // response
+    function(tweet, callback) {
+      res.status(200)
+      Tweet.findById(tweet._id)
+        .populate('owner', '_id name')
+        .exec(function(err, tweet) {
+          // console.log(tweets)
+          res.json({ tweet })
         })
-      },
-      // update user.tweets
-      function(tweet, callback){
-        User.update(
-          {_id: owner},
-          {$push: {tweets: {tweet: tweet._id}}},
-          function(err, count){ // count is the number of updated documents
-            callback(err, tweet)
-          }
-        )
-      },
-      // response
-      function(tweet, callback){
-        res.status(200)
-        Tweet.findById(tweet._id)
-          .populate('owner', '_id name')
-          .exec(function(err, tweet){
-            // console.log(tweets)
-            res.json({tweet})
-          })
-        // res.json({tweet: JSON.stringify(tweet)})
-      }
-    ])
-  })
+      // res.json({tweet: JSON.stringify(tweet)})
+    }
+  ])
+})
 
 router.post('/tweet/like', (req, res, next) => {
-
   console.log('/tweet/like req.body', req.body)
-  let {id, idToLike} = req.body
-  Tweet.findByIdAndUpdate(
-    idToLike, 
-    {$push: {like: {user: id}}},
-    function(err, count){
-      Tweet.findById(idToLike, function(err, tweet){
-        res.json({tweet})
+  let { id, idToLike } = req.body
+  Tweet.findByIdAndUpdate(idToLike, { $push: { like: { user: id } } }, function(
+    err,
+    count
+  ) {
+    Tweet.findById(idToLike)
+      .populate('owner', '_id name')
+      .exec(function(err, tweet) {
+        res.json({ tweet })
       })
-    }
-  )
+  })
 })
 
 router.post('/tweet/unlike', (req, res, next) => {
-  
   console.log('/tweet/unlike req.body', req.body)
-  let {id, idToUnlike} = req.body
+  let { id, idToUnlike } = req.body
   Tweet.findByIdAndUpdate(
     idToUnlike,
-    {$pull: {like: {user: id}}},
-    function(err, count){
-      Tweet.findById(idToUnlike, function(err, tweet){
-        res.json({tweet})
-      })
+    { $pull: { like: { user: id } } },
+    function(err, count) {
+      Tweet.findById(idToUnlike)
+        .populate('owner', '_id name')
+        .exec(function(err, tweet) {
+          res.json({ tweet })
+        })
     }
-    )
+  )
 })
 module.exports = router
