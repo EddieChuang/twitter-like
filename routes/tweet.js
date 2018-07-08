@@ -77,7 +77,6 @@ router.post('/tweet/like', (req, res, next) => {
 })
 
 router.post('/tweet/unlike', (req, res, next) => {
-  console.log('/tweet/unlike req.body', req.body)
   let { id, idToUnlike } = req.body
   Tweet.findByIdAndUpdate(
     idToUnlike,

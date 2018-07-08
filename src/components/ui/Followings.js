@@ -1,57 +1,51 @@
-"use strict"
+'use strict'
 import React from 'react'
 import axios from 'axios'
 
-class Followings extends React.Component{
-  
-  constructor(){
+class Followings extends React.Component {
+  constructor() {
     super()
     this.state = {
       followings: []
     }
-
-    this.renderFollowings = this.renderFollowings.bind(this)    
-    this.getFollowings = this.getFollowings.bind(this)
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getFollowings(this.props.user)
   }
 
-  componentWillReceiveProps(props){
+  componentWillReceiveProps(props) {
     // let user = props.user
     // if(!user)
-    //     return  
+    //     return
     this.getFollowings(props.user)
   }
 
-  getFollowings(user){
-    axios.get(`user/followings/${user._id}`)
-      .then((res) => {
-        let followings = res.data.followings
-        // console.log('followings res.data', res.data)
-        this.setState({user, followings})
+  getFollowings = user => {
+    console.log('Followings getFollowings', user)
+    axios
+      .get(`/user/followings/${user._id}`)
+      .then(res => {
+        const followings = res.data.followings
+        this.setState({ user, followings })
       })
-      .catch((err) => {
-        console.log(err.response)
+      .catch(err => {
+        console.log(err)
       })
   }
 
-  renderFollowings(){
-
+  renderFollowings = () => {
     let followings = this.state.followings
     return followings.map((following, i) => (
       <div className="following-user">
-        <img src={following.photo}/>
+        <img src={following.photo} />
         <span>{following.name}</span>
       </div>
     ))
-    
   }
 
-  render(){
-
-    return(
+  render() {
+    return (
       <div className="tab-content tab-content-following">
         {this.renderFollowings()}
       </div>

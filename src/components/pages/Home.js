@@ -1,45 +1,39 @@
-"use strict"
+'use strict'
 import React from 'react'
 import axios from 'axios'
 import { Header, Profile, TweetList } from '../ui'
 import parser from '../../utils/parser'
 
-class Home extends React.Component{
-  
-  constructor(){
+class Home extends React.Component {
+  constructor() {
     super()
     this.state = {
       user: null
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     // let id = sessionStorage._id
-    let id = parser.getUrlParams().id
-    if(!id){
-      id = sessionStorage._id
-      window.location.href = `/home?id=${id}`
-    }
-    axios.get('/user/' + id)
-      .then((res) => {
-        this.setState({user: res.data.user})
-      })
+    // let id = parser.getUrlParams().id
+    const userId = this.props.userId
+    console.log('componentDidMount')
+    axios.get(`/user/${userId}`).then(res => {
+      this.setState({ user: res.data.user })
+    })
   }
 
-  render(){
-
-    let user = this.state.user
-    
-    return(
+  render() {
+    console.log('Home render')
+    const user = this.state.user
+    return (
       <div className="container">
-        {user ? (<Header user={user}/>) : ''}
+        {user ? <Header user={user} /> : ''}
         <div id="content">
-          {user ? (<Profile user={user}/>) : ''}
-          {user ? (<TweetList user={user}/>) : ''}
-				</div>
+          {user ? <Profile user={user} /> : ''}
+          {user ? <TweetList user={user} /> : ''}
+        </div>
       </div>
     )
-
   }
 }
 

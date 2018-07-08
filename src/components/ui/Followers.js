@@ -1,53 +1,48 @@
-"use strict"
+'use strict'
 import React from 'react'
 import axios from 'axios'
 
-class Followers extends React.Component{
-  
-  constructor(){
+class Followers extends React.Component {
+  constructor() {
     super()
     this.state = {
       followers: []
     }
-
-    this.renderFollowers = this.renderFollowers.bind(this)    
-    this.getFollowers = this.getFollowers.bind(this)
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getFollowers(this.props.user)
   }
 
-  componentWillReceiveProps(props){
-    this.getFollowers(props.user) 
+  componentWillReceiveProps(props) {
+    this.getFollowers(props.user)
   }
 
-  getFollowers(user){
-    axios.get(`user/followers/${user._id}`)
-      .then((res) => {
+  getFollowers = user => {
+    axios
+      .get(`/user/followers/${user._id}`)
+      .then(res => {
         let followers = res.data.followers
-        this.setState({user, followers})
+        console.log(res)
+        this.setState({ user, followers })
       })
-      .catch((err) => {
-        console.log(err.response)
+      .catch(err => {
+        console.log(err)
       })
   }
 
-  renderFollowers(){
-
+  renderFollowers = () => {
     let followers = this.state.followers
     return followers.map((follower, i) => (
       <div className="follower-user">
-        <img src={follower.photo}/>
+        <img src={follower.photo} />
         <span>{follower.name}</span>
       </div>
     ))
-    
   }
 
-  render(){
-
-    return(
+  render() {
+    return (
       <div className="tab-content tab-content-follower">
         {this.renderFollowers()}
       </div>

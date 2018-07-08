@@ -28,7 +28,7 @@ class SigninForm extends React.Component {
     let { user, message } = this.props
     if (success) {
       window.setTimeout(() => {
-        window.location = `http://127.0.0.1:3030/home?id=${user._id}`
+        window.location = `http://127.0.0.1:3030/home/${user._id}`
       }, 3000)
     }
 
