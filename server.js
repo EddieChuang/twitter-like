@@ -54,7 +54,7 @@ app.use(
 app.use(flash())
 app.use(passport.initialize()) // init passport strategies
 app.use(passport.session())
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.locals.user = req.user
   next()
 })
@@ -87,7 +87,8 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
 })
 
-http.listen(3030, err => {
+const port = process.env.PORT || 3030
+http.listen(port, err => {
   if (err) console.log(err)
   console.log('Server is listening on port 3030 ...')
 })
