@@ -7,30 +7,27 @@ import { signin } from '../../actions/userActions'
 class SigninForm extends React.Component {
   constructor() {
     super()
-
-    this.onSignin = this.onSignin.bind(this)
   }
 
-  onSignin(e) {
+  onSignin = e => {
     e.preventDefault()
     const user = {
       email: this.refs.email.value,
       password: this.refs.password.value
     }
     this.props.signin(user)
-    this.renderMessage = this.renderMessage.bind(this)
   }
 
-  renderMessage() {
+  renderMessage = () => {
     if (this.props.status === 0) return
 
     let success = this.props.status === 200
     let { user, message } = this.props
-    if (success) {
-      window.setTimeout(() => {
-        window.location = `http://127.0.0.1:3030/home/${user._id}`
-      }, 3000)
-    }
+    // if (success) {
+    //   window.setTimeout(() => {
+    //     window.location = `http://127.0.0.1:3030/home/${user._id}`
+    //   }, 3000)
+    // }
 
     return success ? (
       <div className="message message-success">
@@ -71,8 +68,6 @@ class SigninForm extends React.Component {
 }
 
 function mapStateToProps(state) {
-  console.log('mapStateToProps', state)
-
   return {
     status: state.user.status,
     message: state.user.message,

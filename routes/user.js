@@ -3,16 +3,16 @@ const User = require('../models/user')
 const passport = require('passport')
 const passportConfig = require('../config/passport')
 const async = require('async')
+const secretConfig = require('../config/secret')
+const jwt = require('jsonwebtoken')
 
 router.route('/user/signup').post((req, res, next) => {
   User.findOne({ email: req.body.email }, (err, existingUser) => {
     if (existingUser) {
-      // req.flash('errors', 'Account with that email address already exist.')
       res.status(500)
       res.json({
         message: 'Account with that email address already exist.'
       })
-      // res.redirect('/signup')
     } else {
       let user = User()
       user.name = req.body.name
@@ -49,11 +49,12 @@ router.route('/user/signin').post((req, res, next) => {
         res.status(404)
         res.json({ message: err })
       } else {
-        let { _id, name, email, photo, tweets, followers, followings } = user
+        const expiresIn = 60 * 60 * 24
+        const token = jwt.sign(user, secretConfig.secret, { expiresIn })
+        console.log('token', token)
+        console.log('decoded', jwt.decode(token))
         res.status(200)
-        res.json({
-          user: { _id, name, email, photo, tweets, followers, followings }
-        })
+        res.json({ user, token })
       }
     }
   )(req, res, next)

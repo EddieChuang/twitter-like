@@ -9,7 +9,7 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const flash = require('express-flash')
 const passport = require('passport')
-const config = require('./config/secret')
+const secretConfig = require('./config/secret')
 const cookieParser = require('cookie-parser')
 const passportSocketIo = require('passport.socketio')
 
@@ -20,13 +20,16 @@ const app = express()
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const sessionStore = new MongoStore({
-  url: config.database,
+  url: secretConfig.database,
   autoReconnect: true
 })
 mongoose.connect(
-  config.database,
+  secretConfig.database,
   err => {
-    if (err) return console.log(err)
+    if (err) {
+      console.log(err)
+      return
+    }
     console.log('Connected to the mongo database')
   }
 )
@@ -47,14 +50,14 @@ app.use(
   session({
     resave: true,
     saveUninitialized: true,
-    secret: config.secret,
+    secret: secretConfig.secret,
     store: sessionStore
   })
 )
 app.use(flash())
 app.use(passport.initialize()) // init passport strategies
 app.use(passport.session())
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   res.locals.user = req.user
   next()
 })
@@ -62,25 +65,26 @@ io.use(
   passportSocketIo.authorize({
     cookieParser: cookieParser,
     key: 'connect.sid',
-    secret: config.secret,
+    secret: secretConfig.secret,
     store: sessionStore,
     success: onAuthorizeSuccess,
     fail: onAuthorizeFail
   })
 )
 function onAuthorizeSuccess(data, accept) {
-  console.log('Successful connection')
+  console.log('SocketIO Connection Success ')
   accept()
 }
 function onAuthorizeFail(data, message, error, accept) {
-  console.log('Failed connection', message)
+  console.log('SocketIO Connection Fail ', message)
   if (error) accept(new Error(message))
 }
 
 require('./realtime/io')(io)
-
+// const autoJWT = require('./middleware/auth-jwt')
 const userRoutes = require('./routes/user')
 const tweetRoutes = require('./routes/tweet')
+// app.use(autoJWT)
 app.use(userRoutes)
 app.use(tweetRoutes)
 app.get('*', (req, res) => {

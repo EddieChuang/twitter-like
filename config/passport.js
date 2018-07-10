@@ -9,26 +9,31 @@ passport.serializeUser((user, done) => {
 
 // retreive the stored user.id in the session
 passport.deserializeUser((id, done) => {
-  User.findById(id, function(err, user){
+  User.findById(id, function(err, user) {
     done(err, user)
   })
 })
 
-passport.use('local-login', new LocalStrategy({
-  usernameField: 'email',
-  passwordField: 'password',
-  passReqToCallback: true
-}, function(req, email, password, done){
-  User.findOne({email: email}, function(err, user){
-    if(err) 
-        return done(err)
-    if(!user)
-        return done('No user found.', false)
-    if(!user.comparePassword(password))
-        return done('Oops! Wrong Password.', false)
-    
-    
-        
-    return done(null, user)
-  })
-}))
+passport.use(
+  'local-login',
+  new LocalStrategy(
+    {
+      usernameField: 'email',
+      passwordField: 'password',
+      passReqToCallback: true
+    },
+    function(req, email, password, done) {
+      User.findOne({ email: email }, function(err, user) {
+        if (err) return done(err)
+        if (!user) return done('No user found.', false)
+        if (!user.comparePassword(password))
+          return done('Oops! Wrong Password.', false)
+
+        let userNoPassword = Object.assign({}, user)
+        delete userNoPassword.password
+
+        return done(null, userNoPassword)
+      })
+    }
+  )
+)
