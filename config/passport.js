@@ -29,10 +29,17 @@ passport.use(
         if (!user.comparePassword(password))
           return done('Oops! Wrong Password.', false)
 
-        let userNoPassword = Object.assign({}, user)
-        delete userNoPassword.password
-
-        return done(null, userNoPassword)
+        let { _id, name, email, photo, tweets, followers, followings } = user
+        let res_user = {
+          _id,
+          name,
+          email,
+          photo,
+          tweets,
+          followers,
+          followings
+        }
+        return done(null, res_user)
       })
     }
   )

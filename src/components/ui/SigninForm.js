@@ -3,6 +3,8 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { signin } from '../../actions/userActions'
+import auth from '../../utils/auth'
+import { URL_HOME } from '../../constants/url'
 
 class SigninForm extends React.Component {
   constructor() {
@@ -19,15 +21,14 @@ class SigninForm extends React.Component {
   }
 
   renderMessage = () => {
-    if (this.props.status === 0) return
+    const { user, message, success } = this.props
+    if (success === null) return
 
-    let success = this.props.status === 200
-    let { user, message } = this.props
-    // if (success) {
-    //   window.setTimeout(() => {
-    //     window.location = `http://127.0.0.1:3030/home/${user._id}`
-    //   }, 3000)
-    // }
+    if (success) {
+      window.setTimeout(() => {
+        window.location = `${URL_HOME}/${user._id}`
+      }, 3000)
+    }
 
     return success ? (
       <div className="message message-success">
@@ -69,7 +70,7 @@ class SigninForm extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    status: state.user.status,
+    success: state.user.success,
     message: state.user.message,
     user: state.user.user
   }

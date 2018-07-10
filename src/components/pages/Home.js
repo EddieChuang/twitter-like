@@ -3,6 +3,8 @@ import React from 'react'
 import axios from 'axios'
 import { Header, Profile, TweetList } from '../ui'
 import parser from '../../utils/parser'
+import auth from '../../utils/auth'
+import { URL_USER_GET } from '../../constants/url'
 
 class Home extends React.Component {
   constructor() {
@@ -13,13 +15,17 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    // let id = sessionStorage._id
-    // let id = parser.getUrlParams().id
     const userId = this.props.userId
-    console.log('componentDidMount')
-    axios.get(`/user/${userId}`).then(res => {
-      this.setState({ user: res.data.user })
-    })
+    const headers = { token: auth.getToken() }
+    axios
+      .get(`${URL_USER_GET}/${userId}`, { headers })
+      .then(res => {
+        this.setState({ user: res.data.user })
+      })
+      .catch(err => {
+        console.log(err)
+        console.log(err.response)
+      })
   }
 
   render() {

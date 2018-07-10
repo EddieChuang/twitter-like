@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Followings, Followers } from '.'
 import { follow } from '../../actions/userActions'
 import tweet from '../../utils/tweet'
+import { URL_HOME } from '../../constants/url'
 
 class Profile extends React.Component {
   constructor() {
@@ -50,9 +51,8 @@ class Profile extends React.Component {
               <i className="fas fa-user" onClick={this.onFollow} />
             </span>
           )}
-          {/* <span><a href={`/home?id=${user._id}`}>{user.name}</a></span> */}
           <span>
-            <a href={`/home/${user._id}`}>{user.name}</a>
+            <a href={`${URL_HOME}/${user._id}`}>{user.name}</a>
           </span>
         </div>
         <hr />

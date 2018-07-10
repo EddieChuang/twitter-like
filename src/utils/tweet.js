@@ -1,12 +1,11 @@
 import axios from 'axios'
 import async from 'async'
+import auth from './auth'
 
 export default {
-
-  isFollowed: (user) => {
-    let self = sessionStorage._id === user // 自己
-    return !self && user.followers.indexOf(sessionStorage._id) !== -1
+  isFollowed: user => {
+    const self = auth.getUser()
+    const isSelf = self._id === user._id
+    return !isSelf && user.followers.indexOf(self._id) !== -1
   }
-  
-
 }

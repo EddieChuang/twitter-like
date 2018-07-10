@@ -81,13 +81,14 @@ function onAuthorizeFail(data, message, error, accept) {
 }
 
 require('./realtime/io')(io)
-// const autoJWT = require('./middleware/auth-jwt')
+const authJWT = require('./middleware/auth-jwt')
 const userRoutes = require('./routes/user')
 const tweetRoutes = require('./routes/tweet')
-// app.use(autoJWT)
+app.use('/api', authJWT)
 app.use(userRoutes)
 app.use(tweetRoutes)
 app.get('*', (req, res) => {
+  // console.log(req.get('host') + req.originalUrl)
   res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
 })
 

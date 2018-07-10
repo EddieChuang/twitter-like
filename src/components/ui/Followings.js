@@ -1,6 +1,9 @@
 'use strict'
 import React from 'react'
 import axios from 'axios'
+import auth from '../../utils/auth'
+
+import { URL_USER_GET_FOLLOING } from '../../constants/url'
 
 class Followings extends React.Component {
   constructor() {
@@ -22,10 +25,11 @@ class Followings extends React.Component {
   }
 
   getFollowings = user => {
-    console.log('Followings getFollowings', user)
+    const headers = {} //{ token: auth.getToken() }
     axios
-      .get(`/user/followings/${user._id}`)
+      .get(`${URL_USER_GET_FOLLOING}/${user._id}`, { headers })
       .then(res => {
+        console.log('Followings getFollowings', res)
         const followings = res.data.followings
         this.setState({ user, followings })
       })

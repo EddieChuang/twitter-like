@@ -1,51 +1,60 @@
 import axios from 'axios'
+import auth from '../utils/auth'
+import {
+  URL_TWEET_SAVE,
+  URL_TWEET_LIKE,
+  URL_TWEET_UNLIKE
+} from '../constants/url'
 
-export function newTweet(text){
-  
-  return (dispatch) => {
-    let tweet = {owner: sessionStorage._id, content: text}
-    return axios.post('/tweet/save', tweet)
-      .then((res) => {
+export function newTweet(text) {
+  return dispatch => {
+    let tweet = {
+      token: auth.getToken(),
+      content: text
+    }
+    return axios
+      .post(URL_TWEET_SAVE, tweet)
+      .then(res => {
         console.log(res.data)
-        dispatch({type: "NEW_TWEET", payload: {tweet: res.data.tweet}})
-        dispatch({type: "CLOSE_MODAL"})        
+        dispatch({ type: 'NEW_TWEET', payload: { tweet: res.data.tweet } })
+        dispatch({ type: 'CLOSE_MODAL' })
       })
-      .catch((err) => {
+      .catch(err => {
         alert('fail')
-        dispatch({type: "FAIL_NEW_TWEET"})
+        dispatch({ type: 'FAIL_NEW_TWEET' })
       })
   }
 }
 
-export function likeTweet(idToLike){
-  return (dispatch) => {
-    let params = {id: sessionStorage._id, idToLike}
+export function likeTweet(idToLike) {
+  return dispatch => {
+    let params = { token: auth.getToken(), idToLike }
     // console.log('likeTweet params', params)
-    axios.post('/tweet/like', params)
-      .then((res) => {
+    axios
+      .post(URL_TWEET_LIKE, params)
+      .then(res => {
         console.log('like res', res)
-        dispatch({type: "LIKE_TWEET", payload: {tweet: res.data.tweet}})
-        
+        dispatch({ type: 'LIKE_TWEET', payload: { tweet: res.data.tweet } })
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('like err', err.response)
-        dispatch({type: "FAIL_LIKE_TWEET"})
+        dispatch({ type: 'FAIL_LIKE_TWEET' })
       })
   }
 }
 
-export function unlikeTweet(idToUnlike){
-  return (dispatch) => {
-    let params = {id: sessionStorage._id, idToUnlike}
-    axios.post('/tweet/unlike', params)
-      .then((res) => {
+export function unlikeTweet(idToUnlike) {
+  return dispatch => {
+    let params = { token: auth.getToken(), idToUnlike }
+    axios
+      .post(URL_TWEET_UNLIKE, params)
+      .then(res => {
         console.log('unlike res', res)
-        dispatch({type: "UNLIKE_TWEET", payload: {tweet: res.data.tweet}})
+        dispatch({ type: 'UNLIKE_TWEET', payload: { tweet: res.data.tweet } })
       })
-      .catch((err) => {
+      .catch(err => {
         console.log('like err', err.response)
-        dispatch({type: "FAIL_UNLIKE_TWEET"})
+        dispatch({ type: 'FAIL_UNLIKE_TWEET' })
       })
   }
 }
-  

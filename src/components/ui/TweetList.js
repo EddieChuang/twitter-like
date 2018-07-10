@@ -4,7 +4,8 @@ import axios from 'axios'
 // import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Tweet } from '../ui'
-
+import { URL_TWEET_GET } from '../../constants/url'
+import auth from '../../utils/auth'
 class TweetList extends React.Component {
   constructor() {
     super()
@@ -20,8 +21,9 @@ class TweetList extends React.Component {
 
   componentDidMount() {
     let user = this.props.user
+    const headers = { token: auth.getToken() }
     axios
-      .get('/tweet/')
+      .get(URL_TWEET_GET, { headers })
       .then(res => {
         let tweets = res.data.tweets
         let matched = tweets

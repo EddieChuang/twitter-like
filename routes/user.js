@@ -25,12 +25,37 @@ router.route('/user/signup').post((req, res, next) => {
       user.save(err => {
         if (err) return next
 
-        req.login(user, function(err) {
-          if (err) return next(err)
-          let { _id, name, email, photo, tweets } = user
-          res.status(200)
-          res.json({ user: { _id, name, email, photo, tweets } })
-        })
+        passport.authenticate(
+          'local-login',
+          {
+            session: true,
+            successRedirect: '',
+            failureRedirect: '',
+            failureFlash: true
+          },
+          (err, user) => {
+            let success = true
+            if (err) {
+              res.status(404)
+              res.json({ success: !success, message: err })
+            } else {
+              const payload = Object.assign({}, user)
+              const expiresIn = 60 * 60 * 24
+              const token = jwt.sign(payload, secretConfig.secret, {
+                expiresIn
+              })
+              res.status(200)
+              res.json({ success, user, token })
+            }
+          }
+        )(req, res, next)
+
+        // req.login(user, function(err) {
+        //   if (err) return next(err)
+        //   let { _id, name, email, photo, tweets } = user
+        //   res.status(200)
+        //   res.json({ user: { _id, name, email, photo, tweets } })
+        // })
       })
     }
   })
@@ -45,26 +70,26 @@ router.route('/user/signin').post((req, res, next) => {
       failureFlash: true
     },
     (err, user) => {
+      let success = true
       if (err) {
         res.status(404)
-        res.json({ message: err })
+        res.json({ success: !success, message: err })
       } else {
+        const payload = Object.assign({}, user)
         const expiresIn = 60 * 60 * 24
-        const token = jwt.sign(user, secretConfig.secret, { expiresIn })
-        console.log('token', token)
-        console.log('decoded', jwt.decode(token))
+        const token = jwt.sign(payload, secretConfig.secret, { expiresIn })
         res.status(200)
-        res.json({ user, token })
+        res.json({ success, user, token })
       }
     }
   )(req, res, next)
 })
-router.get('/user/logout', (req, res, next) => {
+router.get('/api/user/logout', (req, res, next) => {
   req.logout()
   res.status(200)
   res.json({ message: 'Logout successfully' })
 })
-router.get('/user/:id', (req, res, next) => {
+router.get('/api/user/:id', (req, res, next) => {
   let id = req.params.id
   User.findOne({ _id: id }, '_id name email photo tweets followers followings')
     .populate('followers followings')
@@ -72,22 +97,15 @@ router.get('/user/:id', (req, res, next) => {
       res.json({ user })
     })
 })
-router.get('/user/followings/:id', (req, res, next) => {
+router.get('/api/user/followings/:id', (req, res, next) => {
   const id = req.params.id
-  console.log('id', id)
   User.findById(id)
     .populate('followings')
     .exec(function(err, user) {
       res.json({ followings: user.followings })
     })
-  // User.findOne({_id: id}, function(err, user){
-  //   let followings = user.followings.map((followingId, i) => {
-  //     User.findOne({_id: followingId})
-  //   })
-  //   res.json({followings})
-  // })
 })
-router.get('/user/followers/:id', (req, res, next) => {
+router.get('/api/user/followers/:id', (req, res, next) => {
   const id = req.params.id
   User.findById(id)
     .populate('followers')
@@ -95,7 +113,7 @@ router.get('/user/followers/:id', (req, res, next) => {
       res.json({ followers: user.followers })
     })
 })
-router.post('/user/follow', (req, res, next) => {
+router.post('/api/user/follow', (req, res, next) => {
   let { id, idToFollow } = req.body
 
   async.waterfall([

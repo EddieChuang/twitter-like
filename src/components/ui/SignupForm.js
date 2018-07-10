@@ -1,22 +1,22 @@
-"use strict"
+'use strict'
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { signup } from '../../actions/userActions'
+import { URL_HOME } from '../../constants/url'
 
-class SignupForm extends React.Component{
-
-  constructor(){
+class SignupForm extends React.Component {
+  constructor() {
     super()
     this.state = {
       second: null
     }
 
-    this.onSignup = this.onSignup.bind(this) 
+    this.onSignup = this.onSignup.bind(this)
     this.renderMessage = this.renderMessage.bind(this)
   }
 
-  onSignup(e){
+  onSignup(e) {
     e.preventDefault()
     const user = {
       name: this.refs.username.value,
@@ -26,48 +26,62 @@ class SignupForm extends React.Component{
     this.props.signup(user)
   }
 
-  renderMessage(){
+  renderMessage() {
+    const { user, message, success } = this.props
+    if (success === null) return
 
-    if(this.props.status === 0)
-        return
-        
-    let success = this.props.status === 200
-    let {user, message} = this.props
-    if(success)
-        window.setTimeout(() => {window.location = `http://127.0.0.1:3030/home?id=${user._id}`}, 3000)
+    if (success) {
+      window.setTimeout(() => {
+        window.location = `${URL_HOME}/${user._id}`
+      }, 3000)
+    }
 
-    return (
-      success ? (
-        <div className='message message-success'>Successfully. After 3s redirecting to home page...</div>
-      ) 
-      : (
-        <div className='message message-error'>{message}</div>
-      )
+    return success ? (
+      <div className="message message-success">
+        Successfully. After 3s redirecting to home page...
+      </div>
+    ) : (
+      <div className="message message-error">{message}</div>
     )
   }
 
-  render(){
+  render() {
     // console.log('SignupForm render')
-    return(
+    return (
       <section id="signup">
         <form className="signup-form" onSubmit={this.onSignup}>
           <h3>Sign Up</h3>
           {this.renderMessage()}
           <ul>
             <li>
-              <i className='fa fa-user' />
-              <input type='text' ref='username' name='name' placeholder='Username' />
+              <i className="fa fa-user" />
+              <input
+                type="text"
+                ref="username"
+                name="name"
+                placeholder="Username"
+              />
             </li>
             <li>
-              <i className='fa fa-envelope' />
-              <input type='email' ref='email' name='email' placeholder='Email' />
+              <i className="fa fa-envelope" />
+              <input
+                type="email"
+                ref="email"
+                name="email"
+                placeholder="Email"
+              />
             </li>
             <li>
-              <i className='fa fa-lock' />
-              <input type='password' ref='password' name='password' placeholder='Password' />
+              <i className="fa fa-lock" />
+              <input
+                type="password"
+                ref="password"
+                name="password"
+                placeholder="Password"
+              />
             </li>
             <li>
-              <button type='submit'>Submit</button>
+              <button type="submit">Submit</button>
               <a href="/signin">Have an account</a>
             </li>
           </ul>
@@ -75,10 +89,9 @@ class SignupForm extends React.Component{
       </section>
     )
   }
-
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
   // console.log('SignupForm mapStateToProps', state)
   return {
     status: state.user.status,
@@ -87,11 +100,17 @@ function mapStateToProps(state){
   }
 }
 
-function mapDispatchToProps(dispatch){
-  // console.log('SignupForm mapDispatchToProps', dispatch)  
-  return bindActionCreators({
-    signup: signup
-  }, dispatch)
+function mapDispatchToProps(dispatch) {
+  // console.log('SignupForm mapDispatchToProps', dispatch)
+  return bindActionCreators(
+    {
+      signup: signup
+    },
+    dispatch
+  )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignupForm)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignupForm)

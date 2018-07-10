@@ -1,11 +1,12 @@
-import axios from 'axios';
-
 export default {
-
   signined: () => {
-    
-    return !!sessionStorage._id
-  }
-  
+    return !!sessionStorage.token
+  },
 
+  getUser: () => {
+    const state = JSON.parse(sessionStorage['persist:root'])
+    const self = JSON.parse(state.user)
+    return self
+  },
+  getToken: () => sessionStorage.token
 }

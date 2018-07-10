@@ -7,6 +7,7 @@ import axios from 'axios'
 import { NewTweetModal } from './'
 import { show } from '../../actions/modalActions'
 import { logout } from '../../actions/userActions'
+import { URL_HOME } from '../../constants/url'
 
 class Header extends React.Component {
   constructor() {
@@ -37,7 +38,7 @@ class Header extends React.Component {
     ) : (
       <ul id="links">
         <li>
-          <a href={`/home/${user._id}`}>Hi, {user.name}</a>
+          <a href={`${URL_HOME}/${user._id}`}>Hi, {user.name}</a>
         </li>
         <li>
           <span onClick={this.props.show}>

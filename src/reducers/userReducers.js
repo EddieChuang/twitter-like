@@ -1,41 +1,42 @@
 'use strict'
 
 export function userReducers(
-  state = { status: 0, user: null, message: '' },
+  state = { success: null, user: null, message: '' },
   action
 ) {
   switch (action.type) {
     case 'SIGNUP':
       return {
-        status: action.payload.status,
-        user: action.payload.data.user,
+        success: action.payload.success,
+        user: action.payload.user,
         message: ''
       }
     case 'SIGNUP_ERROR':
       return {
-        status: action.payload.status,
+        success: action.payload.success,
         user: null,
-        message: action.payload.data.message
+        message: action.payload.message
       }
     case 'SIGNIN':
+      console.log(action.payload)
       return {
-        status: action.payload.status,
-        user: action.payload.data.user,
+        success: action.payload.success,
+        user: action.payload.user,
         message: ''
       }
     case 'SIGNIN_ERROR':
       return {
-        status: action.payload.status,
+        success: action.payload.success,
         user: null,
-        message: action.payload.data.message
+        message: action.payload.message
       }
     case 'LOGOUT':
       return {
-        status: 0,
+        success: 0,
         message: ''
       }
     // case 'LOGOUT_ERROR':
-    //   return { status: action.payload.status, user: null, message: action.payload.data.message }
+    //   return { success: action.payload.success, user: null, message: action.payload.data.message }
     case 'FOLLOW':
       return { userToFollow: action.payload.userToFollow }
     case 'UNFOLLOW':
