@@ -18,7 +18,6 @@ export function userReducers(
         message: action.payload.message
       }
     case 'SIGNIN':
-      console.log(action.payload)
       return {
         success: action.payload.success,
         user: action.payload.user,
@@ -30,11 +29,8 @@ export function userReducers(
         user: null,
         message: action.payload.message
       }
-    case 'LOGOUT':
-      return {
-        success: 0,
-        message: ''
-      }
+    // case 'LOGOUT':
+    // return {}
     // case 'LOGOUT_ERROR':
     //   return { success: action.payload.success, user: null, message: action.payload.data.message }
     case 'FOLLOW':

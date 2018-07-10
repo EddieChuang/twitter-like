@@ -1,6 +1,6 @@
 'use strict'
 import axios from 'axios'
-import { auth } from '../utils/auth'
+import auth from '../utils/auth'
 import {
   URL_USER_SIGNUP,
   URL_USER_SIGNIN,
@@ -43,8 +43,9 @@ export function signin(user) {
 
 export function logout() {
   return dispatch => {
+    const headers = { token: auth.getToken() }
     axios
-      .get(URL_USER_LOGOUT)
+      .get(URL_USER_LOGOUT, { headers })
       .then(res => {
         console.log('logout res', res)
         // delete sessionStorage._id

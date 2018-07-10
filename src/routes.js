@@ -18,7 +18,7 @@ const routes = (
         path="/signin"
         render={() =>
           auth.signined() ? (
-            <Redirect to={`/home/${sessionStorage._id}`} />
+            <Redirect to={`/home/${auth.getUser()._id}`} />
           ) : (
             <SignIn />
           )
