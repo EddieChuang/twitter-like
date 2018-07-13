@@ -1,4 +1,5 @@
 import axios from 'axios'
+import auth from './auth'
 import {
   URL_USER_GET,
   URL_USER_GET_FOLLOWER,

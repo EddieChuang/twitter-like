@@ -1,7 +1,13 @@
 'use strict'
 
 export function userReducers(
-  state = { success: null, user: null, message: '' },
+  state = {
+    success: null,
+    user: null,
+    message: '',
+    userToUnFollow: null,
+    userToFollow: null
+  },
   action
 ) {
   switch (action.type) {
@@ -34,9 +40,9 @@ export function userReducers(
     // case 'LOGOUT_ERROR':
     //   return { success: action.payload.success, user: null, message: action.payload.data.message }
     case 'FOLLOW':
-      return { user: action.payload.userToFollow }
+      return { userToFollow: action.payload.userToFollow }
     case 'UNFOLLOW':
-      return { user: action.payload.userToFollow }
+      return { userToUnFollow: action.payload.userToUnFollow }
   }
 
   return state

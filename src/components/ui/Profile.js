@@ -12,15 +12,17 @@ class Profile extends React.Component {
   constructor() {
     super()
     this.state = {
-      user: this.props.user // user of the page
+      user: null // this.props.user // user of the page
     }
   }
 
+  // FOLLOW && UNFOLLOW action
   componentWillReceiveProps(props) {
-    this.setState({ user: props.userToFollow })
+    this.setState({ user: props.userToFollow || props.userToUnFollow })
   }
 
   componentDidMount() {
+    this.setState({ user: this.props.user })
     window.location.href = '#tab-following' // init tab
   }
 
@@ -32,7 +34,7 @@ class Profile extends React.Component {
 
   render() {
     const self = auth.getUser()
-    const user = this.state.user
+    const user = this.state.user ? this.state.user : this.props.user
     const isSelf = self._id === user._id
     const isFollowed = tweet.isFollowed(user)
     console.log('Profile render')
@@ -97,7 +99,8 @@ class Profile extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    userToFollow: state.user.userToFollow
+    userToFollow: state.user.userToFollow,
+    userToUnFollow: state.user.userToUnFollow
   }
 }
 

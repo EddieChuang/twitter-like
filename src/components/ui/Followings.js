@@ -12,13 +12,13 @@ class Followings extends React.Component {
 
   componentDidMount() {
     user.getFollowings(this.props.user._id, followings => {
-      this.state({ followings })
+      this.setState({ followings })
     })
   }
 
   componentWillReceiveProps(props) {
     user.getFollowings(props.user._id, followings => {
-      this.state({ followings })
+      this.setState({ followings })
     })
   }
 

@@ -18,7 +18,7 @@ class Home extends React.Component {
   }
 
   render() {
-    console.log('Home render')
+    console.log('Home render', this.state.user)
     const user = this.state.user
     return (
       <div className="container">

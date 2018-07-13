@@ -11,16 +11,14 @@ class Followers extends React.Component {
   }
 
   componentDidMount() {
-    // this.getFollowers(this.props.user._id)
     user.getFollowers(this.props.user._id, followers => {
-      this.state({ followers })
+      this.setState({ followers })
     })
   }
 
   componentWillReceiveProps(props) {
-    // this.getFollowers(props.user._id)
     user.getFollowers(props.user._id, followers => {
-      this.state({ followers })
+      this.setState({ followers })
     })
   }
 
