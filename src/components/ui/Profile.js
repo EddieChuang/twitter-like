@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Followings, Followers } from '.'
 import { follow } from '../../actions/userActions'
-import tweet from '../../utils/tweet'
+import userjs from '../../utils/user'
 import auth from '../../utils/auth'
 import { URL_HOME } from '../../constants/url'
 
@@ -36,8 +36,8 @@ class Profile extends React.Component {
     const self = auth.getUser()
     const user = this.state.user ? this.state.user : this.props.user
     const isSelf = self._id === user._id
-    const isFollowed = tweet.isFollowed(user)
-    console.log('Profile render')
+    const isFollowed = userjs.isFollowed(user)
+    console.log('Profile render', isFollowed)
     return (
       <section id="profile">
         <div className="profile-image">
@@ -50,11 +50,11 @@ class Profile extends React.Component {
             <i className="fas fa-user-circle" />
           ) : isFollowed ? (
             <span>
-              <i className="fas fa-user-plus" onClick={this.onUnFollow} />
+              <i className="fas fa-user-check" onClick={this.onUnFollow} />
             </span>
           ) : (
             <span>
-              <i className="fas fa-user" onClick={this.onFollow} />
+              <i className="fas fa-user-plus" onClick={this.onFollow} />
             </span>
           )}
           <span>

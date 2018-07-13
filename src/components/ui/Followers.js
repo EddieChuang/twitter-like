@@ -1,6 +1,7 @@
 'use strict'
 import React from 'react'
 import user from '../../utils/user'
+import { URL_HOME } from '../../constants/url'
 
 class Followers extends React.Component {
   constructor() {
@@ -25,9 +26,11 @@ class Followers extends React.Component {
   renderFollowers = () => {
     let followers = this.state.followers
     return followers.map((follower, i) => (
-      <div className="follower-user">
+      <div className="follower-user" key={i}>
         <img src={follower.photo} />
-        <span>{follower.name}</span>
+        <span>
+          <a href={`${URL_HOME}/${follower._id}`}>{follower.name}</a>
+        </span>
       </div>
     ))
   }

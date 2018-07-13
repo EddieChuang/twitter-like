@@ -134,11 +134,11 @@ router.post('/api/user/follow', (req, res, next) => {
       })
     },
     function(callback) {
-      let userToFollow = User.findById(
-        idToFollow,
-        '_id name email photo tweets followers followings'
-      )
-      res.json({ userToFollow: userToFollow })
+      User.findById(idToFollow)
+        .populate('_id name email photo tweets followers followings')
+        .exec(function(err, userToFollow) {
+          res.json({ userToFollow: userToFollow })
+        })
     }
   ])
 })

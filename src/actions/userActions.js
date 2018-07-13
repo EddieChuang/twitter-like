@@ -48,8 +48,6 @@ export function logout() {
       .get(URL_USER_LOGOUT, { headers })
       .then(res => {
         console.log('logout res', res)
-        // delete sessionStorage._id
-        // auth.logout()
         dispatch({ type: 'LOGOUT', payload: res })
       })
       .then(err => {
@@ -61,7 +59,7 @@ export function logout() {
 export function follow(idToFollow) {
   return dispatch => {
     const token = auth.getToken()
-    const id = auth.User()._id
+    const id = auth.getUser()._id
     const params = { token, id, idToFollow }
     axios
       .post(URL_USER_FOLLOW, params)

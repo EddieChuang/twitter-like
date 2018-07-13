@@ -40,5 +40,13 @@ export default {
       .catch(err => {
         console.log(err)
       })
+  },
+  isFollowed: user => {
+    const self = auth.getUser()
+    const isSelf = self._id === user._id
+    return (
+      !isSelf &&
+      user.followers.findIndex(followers => followers._id === self._id) !== -1
+    )
   }
 }
