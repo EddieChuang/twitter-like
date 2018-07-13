@@ -1,10 +1,7 @@
 'use strict'
 import React from 'react'
-import axios from 'axios'
 import { Header, Profile, TweetList } from '../ui'
-import parser from '../../utils/parser'
-import auth from '../../utils/auth'
-import { URL_USER_GET } from '../../constants/url'
+import user from '../../utils/user'
 
 class Home extends React.Component {
   constructor() {
@@ -15,17 +12,9 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    const userId = this.props.userId
-    const headers = { token: auth.getToken() }
-    axios
-      .get(`${URL_USER_GET}/${userId}`, { headers })
-      .then(res => {
-        this.setState({ user: res.data.user })
-      })
-      .catch(err => {
-        console.log(err)
-        console.log(err.response)
-      })
+    user.init(this.props.userId, user => {
+      this.setState({ user })
+    })
   }
 
   render() {
@@ -33,7 +22,7 @@ class Home extends React.Component {
     const user = this.state.user
     return (
       <div className="container">
-        {user ? <Header user={user} /> : ''}
+        {user ? <Header /> : ''}
         <div id="content">
           {user ? <Profile user={user} /> : ''}
           {user ? <TweetList user={user} /> : ''}
@@ -42,5 +31,4 @@ class Home extends React.Component {
     )
   }
 }
-
 export default Home

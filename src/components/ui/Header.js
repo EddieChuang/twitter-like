@@ -2,7 +2,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { auth } from '../../utils/auth'
+import auth from '../../utils/auth'
 import axios from 'axios'
 import { NewTweetModal } from './'
 import { show } from '../../actions/modalActions'
@@ -32,13 +32,12 @@ class Header extends React.Component {
   }
 
   renderNav = () => {
-    const user = this.props.user
-    const nav = !user ? (
-      ''
-    ) : (
+    const self = auth.getUser() //this.props.self
+    console.log('Header render', self)
+    const nav = self ? (
       <ul id="links">
         <li>
-          <a href={`${URL_HOME}/${user._id}`}>Hi, {user.name}</a>
+          <a href={`${URL_HOME}/${self._id}`}>Hi, {self.name}</a>
         </li>
         <li>
           <span onClick={this.props.show}>
@@ -51,6 +50,8 @@ class Header extends React.Component {
           </span>
         </li>
       </ul>
+    ) : (
+      ''
     )
 
     return nav
@@ -87,6 +88,7 @@ class Header extends React.Component {
 function mapStateToProps(state) {
   // console.log('mapStateToProps Header')
   return {
+    // self: state.user.user,
     visibility: state.modal.visibility
   }
 }

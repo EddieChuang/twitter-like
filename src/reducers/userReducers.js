@@ -34,9 +34,9 @@ export function userReducers(
     // case 'LOGOUT_ERROR':
     //   return { success: action.payload.success, user: null, message: action.payload.data.message }
     case 'FOLLOW':
-      return { userToFollow: action.payload.userToFollow }
+      return { user: action.payload.userToFollow }
     case 'UNFOLLOW':
-      return { userToFollow: action.payload.userToFollow }
+      return { user: action.payload.userToFollow }
   }
 
   return state

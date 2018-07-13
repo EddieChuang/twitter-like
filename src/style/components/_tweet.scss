@@ -1,46 +1,52 @@
-#tweet{
+#tweet {
   display: flex;
   flex-direction: column;
   flex: 0 0 calc(70%);
   padding: 10px 20px;
   margin: 10px 0px;
-  border: 2px solid #BBB;
+  border: 2px solid #bbb;
   border-radius: 3px;
   background: white;
 }
 
-.tweeter{
+.tweeter {
   flex: 0 0 calc(25% - 1em);
   display: flex;
   align-items: center;
+  span a {
+    text-decoration: none;
+    color: $light-blue;
+  }
 }
-.tweeter img{
+.tweeter img {
   width: 40px;
   height: 40px;
   margin-right: 5px;
   border-radius: 50%;
 }
-.tweeter span{
+.tweeter span {
   cursor: pointer;
   font-size: 30px;
   color: $light-blue;
 }
-.tweet-content{
+.tweet-content {
   flex: 1 0 auto;
-  border: 2px solid #BBB;
+  border: 2px solid #bbb;
   padding: 5px;
   margin: 5px 0px;
 }
-.tweet-footer{
+.tweet-footer {
   flex: 0 0 calc(15% - 1em);
   display: flex;
   align-items: center;
-  border: 2px solid #BBB;
+  border: 2px solid #bbb;
   padding: 5px;
 }
 .tweet-footer .comment,
-.tweet-footer .like{
+.tweet-footer .like {
   font-size: 20px;
   margin: 0 2px 0 2px;
   cursor: pointer;
+}
+.tweet-name a {
 }

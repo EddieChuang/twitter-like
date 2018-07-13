@@ -14,7 +14,7 @@ const rootReducers = (state, action) => {
   if (action.type === 'LOGOUT') {
     delete sessionStorage.token
     state = undefined
-    location.href = '/start'
+    // location.href = '/start'
   }
   return reducers(state, action)
 }

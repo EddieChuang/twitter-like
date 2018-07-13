@@ -3,6 +3,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { likeTweet, unlikeTweet } from '../../actions/tweetActions'
+import { URL_HOME } from '../../constants/url'
 
 class Tweet extends React.Component {
   constructor() {
@@ -38,7 +39,9 @@ class Tweet extends React.Component {
       <section id="tweet">
         <div className="tweeter">
           <img src="/images/avatar.png" />
-          <span>{tweet.owner.name}</span>
+          <span>
+            <a href={`${URL_HOME}/${tweet.owner._id}`}>{tweet.owner.name}</a>
+          </span>
         </div>
         <div className="tweet-content">{tweet.content}</div>
         <div className="tweet-footer">

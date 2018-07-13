@@ -60,7 +60,9 @@ export function logout() {
 
 export function follow(idToFollow) {
   return dispatch => {
-    let params = { token: auth.getToken(), idToFollow }
+    const token = auth.getToken()
+    const id = auht.User()._id
+    const params = { token, id, idToFollow }
     axios
       .post(URL_USER_FOLLOW, params)
       .then(res => {

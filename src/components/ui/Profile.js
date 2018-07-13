@@ -5,33 +5,35 @@ import { connect } from 'react-redux'
 import { Followings, Followers } from '.'
 import { follow } from '../../actions/userActions'
 import tweet from '../../utils/tweet'
+import auth from '../../utils/auth'
 import { URL_HOME } from '../../constants/url'
 
 class Profile extends React.Component {
   constructor() {
     super()
     this.state = {
-      user: null
+      user: this.props.user // user of the page
     }
   }
 
-  // componentWillReceiveProps(props){
-  //   this.setState({user: props.user})
-  // }
+  componentWillReceiveProps(props) {
+    this.setState({ user: props.userToFollow })
+  }
 
   componentDidMount() {
     window.location.href = '#tab-following' // init tab
   }
 
   onFollow = () => {
-    this.props.follow(this.props.user._id)
+    this.props.follow(this.state.user._id)
   }
 
   onUnFollow = () => {}
 
   render() {
-    // let empty_user = {_id: '', name: '', email: '', photo: '', tweets: [], followering: [], followers: []}
-    const user = this.props.user // === null ? empty_user : this.state.user
+    const self = auth.getUser()
+    const user = this.state.user
+    const isSelf = self._id === user._id
     const isFollowed = tweet.isFollowed(user)
     console.log('Profile render')
     return (
@@ -42,9 +44,11 @@ class Profile extends React.Component {
           </a>
         </div>
         <div className="profile-name">
-          {isFollowed ? (
+          {isSelf ? (
+            <i className="fas fa-user-circle" />
+          ) : isFollowed ? (
             <span>
-              <i className="fas fa-user-check" onClick={this.onUnFollow} />
+              <i className="fas fa-user-plus" onClick={this.onUnFollow} />
             </span>
           ) : (
             <span>
@@ -52,7 +56,8 @@ class Profile extends React.Component {
             </span>
           )}
           <span>
-            <a href={`${URL_HOME}/${user._id}`}>{user.name}</a>
+            {user.name}
+            {/* <a href={`${URL_HOME}/${user._id}`}>{user.name}</a> */}
           </span>
         </div>
         <hr />
@@ -92,7 +97,7 @@ class Profile extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user.user
+    userToFollow: state.user.userToFollow
   }
 }
 

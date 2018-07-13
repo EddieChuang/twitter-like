@@ -8,12 +8,13 @@ import {
 
 export function newTweet(text) {
   return dispatch => {
-    let tweet = {
+    let params = {
       token: auth.getToken(),
+      owner: auth.getUser()._id,
       content: text
     }
     return axios
-      .post(URL_TWEET_SAVE, tweet)
+      .post(URL_TWEET_SAVE, params)
       .then(res => {
         console.log(res.data)
         dispatch({ type: 'NEW_TWEET', payload: { tweet: res.data.tweet } })
