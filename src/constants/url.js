@@ -7,6 +7,7 @@ export const URL_USER_SIGNUP = `${SERVER}/user/signup`
 export const URL_USER_SIGNIN = `${SERVER}/user/signin`
 export const URL_USER_LOGOUT = `${SERVER}/api/user/logout`
 export const URL_USER_FOLLOW = `${SERVER}/api/user/follow`
+export const URL_USER_UNFOLLOW = `${SERVER}/api/user/unfollow`
 export const URL_USER_GET_FOLLOWER = `${SERVER}/api/user/followers`
 export const URL_USER_GET_FOLLOWING = `${SERVER}/api/user/followings`
 

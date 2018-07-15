@@ -3,16 +3,15 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Followings, Followers } from '.'
-import { follow } from '../../actions/userActions'
+import { follow, unFollow } from '../../actions/userActions'
 import userjs from '../../utils/user'
 import auth from '../../utils/auth'
-import { URL_HOME } from '../../constants/url'
 
 class Profile extends React.Component {
   constructor() {
     super()
     this.state = {
-      user: null // this.props.user // user of the page
+      user: null // user of the page
     }
   }
 
@@ -27,17 +26,21 @@ class Profile extends React.Component {
   }
 
   onFollow = () => {
-    this.props.follow(this.state.user._id)
+    const idToFollow = this.state.user._id
+    this.props.follow(idToFollow)
   }
 
-  onUnFollow = () => {}
+  onUnFollow = () => {
+    const idToUnFollow = this.state.user._id
+    this.props.unFollow(idToUnFollow)
+  }
 
   render() {
     const self = auth.getUser()
     const user = this.state.user ? this.state.user : this.props.user
     const isSelf = self._id === user._id
     const isFollowed = userjs.isFollowed(user)
-    console.log('Profile render', isFollowed)
+    console.log('Profile render', user)
     return (
       <section id="profile">
         <div className="profile-image">
@@ -107,7 +110,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      follow: follow
+      follow: follow,
+      unFollow: unFollow
     },
     dispatch
   )

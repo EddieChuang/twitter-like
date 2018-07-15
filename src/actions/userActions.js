@@ -5,7 +5,8 @@ import {
   URL_USER_SIGNUP,
   URL_USER_SIGNIN,
   URL_USER_LOGOUT,
-  URL_USER_FOLLOW
+  URL_USER_FOLLOW,
+  URL_USER_UNFOLLOW
 } from '../constants/url'
 
 export function signup(user) {
@@ -68,7 +69,24 @@ export function follow(idToFollow) {
         dispatch({ type: 'FOLLOW', payload: res.data })
       })
       .catch(err => {
-        console.log('follow err', err.response)
+        console.log('follow err', err)
+      })
+  }
+}
+
+export function unFollow(idToUnFollow) {
+  return dispatch => {
+    const token = auth.getToken()
+    const id = auth.getUser()._id
+    const params = { token, id, idToUnFollow }
+    axios
+      .post(URL_USER_UNFOLLOW, params)
+      .then(res => {
+        console.log('unfollow res', res)
+        dispatch({ type: 'UNFOLLOW', payload: res.data })
+      })
+      .catch(err => {
+        console.log('unfollow res', err)
       })
   }
 }

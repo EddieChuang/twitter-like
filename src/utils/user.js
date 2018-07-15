@@ -46,7 +46,7 @@ export default {
     const isSelf = self._id === user._id
     return (
       !isSelf &&
-      user.followers.findIndex(followers => followers._id === self._id) !== -1
+      user.followers.findIndex(follower => follower._id === self._id) !== -1
     )
   }
 }

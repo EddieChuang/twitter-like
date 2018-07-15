@@ -5,6 +5,7 @@ const passportConfig = require('../config/passport')
 const async = require('async')
 const secretConfig = require('../config/secret')
 const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose')
 
 router.route('/user/signup').post((req, res, next) => {
   User.findOne({ email: req.body.email }, (err, existingUser) => {
@@ -114,42 +115,66 @@ router.get('/api/user/followers/:id', (req, res, next) => {
     })
 })
 router.post('/api/user/follow', (req, res, next) => {
-  let { id, idToFollow } = req.body
-
+  const { id, idToFollow } = req.body
+  const filters = [{ _id: id }, { _id: idToFollow }]
+  const queries = [
+    { $push: { followings: idToFollow } },
+    { $push: { followers: id } }
+  ]
+  console.log('/api/user/follow', id, idToFollow)
   async.waterfall([
     function(callback) {
-      User.update({ _id: id }, { $push: { followings: idToFollow } }, function(
-        err,
-        count
-      ) {
+      User.update(filters[0], queries[0], function(err, count) {
         callback(err)
       })
     },
     function(callback) {
-      User.update({ _id: idToFollow }, { $push: { followers: id } }, function(
-        err,
-        count
-      ) {
+      User.update(filters[1], queries[1], function(err, count) {
         callback(err)
       })
     },
     function(callback) {
+      // User.findById(mongoose.Types.ObjectId(idToFollow))
       User.findById(idToFollow)
-        .populate('_id name email photo tweets followers followings')
+        .populate('tweets followers followings')
         .exec(function(err, userToFollow) {
-          res.json({ userToFollow: userToFollow })
+          console.log(userToFollow)
+          if (err) return console.log(err)
+          res.json({ userToFollow })
         })
     }
   ])
 })
-
-// const multer         = require('multer')()  // extract FormData
-// router.post('/user', multer.fields([]), (req, res, next) => {
-//   console.log('/user', req.body)
-//   User.findOne({_id: req.body.id}, function(err, user){
-//     let {_id, name, email, photo, tweets} = user
-//     res.json({user: {_id, name, email, photo, tweets}})
-//   })
-// })
+router.post('/api/user/unfollow', (req, res, next) => {
+  const { id, idToUnFollow } = req.body
+  const filters = [{ _id: id }, { _id: idToUnFollow }]
+  const queries = [
+    { $pull: { followings: idToUnFollow } },
+    { $pull: { followers: id } }
+  ]
+  console.log(id, idToUnFollow)
+  async.waterfall([
+    function(callback) {
+      User.update(filters[0], queries[0], function(err, count) {
+        callback(err)
+      })
+    },
+    function(callback) {
+      User.update(filters[1], queries[1], function(err, count) {
+        callback(err)
+      })
+    },
+    function(callback) {
+      // User.findById(mongoose.Types.ObjectId(idToUnFollow))
+      User.findById(idToUnFollow)
+        .populate('tweets followers followings')
+        .exec(function(err, userToUnFollow) {
+          console.log(userToUnFollow)
+          if (err) return console.log(err)
+          res.json({ userToUnFollow })
+        })
+    }
+  ])
+})
 
 module.exports = router
