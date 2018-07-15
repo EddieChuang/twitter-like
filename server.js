@@ -12,7 +12,7 @@ const passport = require('passport')
 const secretConfig = require('./config/secret')
 const cookieParser = require('cookie-parser')
 const passportSocketIo = require('passport.socketio')
-
+const cors = require('cors')
 const path = require('path')
 // const httpProxy  = require('http-proxy')
 
@@ -41,6 +41,7 @@ mongoose.connect(
 //   apiProxy.web(req, res)
 // })
 
+app.use(cors())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(morgan('dev'))
 app.use(bodyParser.json())

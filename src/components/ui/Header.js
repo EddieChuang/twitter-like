@@ -32,7 +32,7 @@ class Header extends React.Component {
   }
 
   renderNav = () => {
-    const self = auth.getUser() //this.props.self
+    const self = auth.getUser()
     console.log('Header render', self)
     const nav = self ? (
       <ul id="links">
