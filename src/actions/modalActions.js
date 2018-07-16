@@ -1,15 +1,25 @@
-"use strict"
-import axios from 'axios'
+'use strict'
 
-export function show(){
-  return (dispatch) => {
-    dispatch({type: "SHOW_MODAL"})
+export function openTweetModal() {
+  return dispatch => {
+    dispatch({ type: 'OPEN_TWEET_MODAL' })
   }
 }
 
-export function close(){
-  return (dispatch) => {
-    dispatch({type: "CLOSE_MODAL"})
+export function closeTweetModal() {
+  return dispatch => {
+    dispatch({ type: 'CLOSE_TWEET_MODAL' })
   }
 }
 
+export function openCommentModal() {
+  return dispatch => {
+    dispatch({ type: 'OPEN_COMMENT_BOX' })
+  }
+}
+
+export function closeCommentModal() {
+  return dispatch => {
+    dispatch({ type: 'CLOSE_COMMENT_BOX' })
+  }
+}

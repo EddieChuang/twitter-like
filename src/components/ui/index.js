@@ -8,5 +8,4 @@ export { default as Tweet } from './Tweet'
 export { default as NewTweetModal } from './NewTweetModal'
 export { default as Followings } from './Followings'
 export { default as Followers } from './Followers'
-
-
+export { default as MessageBox } from './MessageBox'

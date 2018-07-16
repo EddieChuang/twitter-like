@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import auth from '../../utils/auth'
 import axios from 'axios'
 import { NewTweetModal } from './'
-import { show } from '../../actions/modalActions'
+import { openTweetModal } from '../../actions/modalActions'
 import { logout } from '../../actions/userActions'
 import { URL_HOME } from '../../constants/url'
 
@@ -33,14 +33,13 @@ class Header extends React.Component {
 
   renderNav = () => {
     const self = auth.getUser()
-    console.log('Header render', self)
     const nav = self ? (
       <ul id="links">
         <li>
           <a href={`${URL_HOME}/${self._id}`}>Hi, {self.name}</a>
         </li>
         <li>
-          <span onClick={this.props.show}>
+          <span onClick={this.props.openTweetModal}>
             <i className="fas fa-user-edit" />
           </span>
         </li>
@@ -89,7 +88,7 @@ function mapStateToProps(state) {
   // console.log('mapStateToProps Header')
   return {
     // self: state.user.user,
-    visibility: state.modal.visibility
+    // visibility: state.modal.tweetModalVisibility
   }
 }
 
@@ -98,7 +97,7 @@ function mapDispatchToProps(dispatch) {
 
   return bindActionCreators(
     {
-      show: show,
+      openTweetModal: openTweetModal,
       logout: logout
     },
     dispatch

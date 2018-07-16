@@ -3,6 +3,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { likeTweet, unlikeTweet } from '../../actions/tweetActions'
+import { openCommentModal } from '../../actions/modalActions'
 import { URL_HOME } from '../../constants/url'
 
 class Tweet extends React.Component {
@@ -46,7 +47,10 @@ class Tweet extends React.Component {
         <div className="tweet-content">{tweet.content}</div>
         <div className="tweet-footer">
           <div className="comment">
-            <i className="far fa-comment" />
+            <i
+              className="far fa-comment"
+              onClick={this.props.openCommentModal}
+            />
             <span>{tweet.comments.length}</span>
           </div>
           <div className="like">
@@ -63,7 +67,8 @@ function mapStateToDispatch(dispatch) {
   return bindActionCreators(
     {
       likeTweet: likeTweet,
-      unlikeTweet: unlikeTweet
+      unlikeTweet: unlikeTweet,
+      openCommentModal: openCommentModal
     },
     dispatch
   )

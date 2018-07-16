@@ -1,12 +1,18 @@
 'use strict'
 
-export function modalReducers(state = { visibility: false }, action) {
+export function modalReducers(
+  state = { tweetModalVisibility: false, commentModalVisibility: false },
+  action
+) {
   switch (action.type) {
-    case 'SHOW_MODAL':
-      return { ...state, visibility: true }
-    case 'CLOSE_MODAL':
-      console.log('CLOSE_MODAL')
-      return { ...state, visibility: false }
+    case 'OPEN_TWEET_MODAL':
+      return { ...state, tweetModalVisibility: true }
+    case 'CLOSE_TWEET_MODAL':
+      return { ...state, tweetModalVisibility: false }
+    case 'OPEN_COMMENT_MODAL':
+      return { ...state, commentModalVisibility: true }
+    case 'CLOSE_COMMENT_MODAL':
+      return { ...state, commentModalVisibility: false }
   }
 
   return state
