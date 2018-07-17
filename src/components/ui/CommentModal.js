@@ -36,6 +36,7 @@ class CommentModal extends React.Component {
                       <div className="comment-user-name">chiamin</div>
                       <div className="comment-text">i am chiamin</div>
                     </div>
+                    {/* comment-content */}
                     <div className="comment-time">2018/07/17</div>
                   </div>
                   {/* comment-body */}
@@ -46,6 +47,7 @@ class CommentModal extends React.Component {
             </div>
             {/* comment-container */}
           </div>
+          {/* modal-body */}
           <div className="modal-footer">{/* input Comment*/}</div>
         </div>
       </div>
