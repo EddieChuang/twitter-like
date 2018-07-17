@@ -22,22 +22,29 @@ class CommentModal extends React.Component {
             </span>
           </div>
           <div className="modal-body">
-            <div className="comment-list">
-              <div className="comment">
-                <div className="comment-aside">
-                  <div className="comment-user-avatar">
-                    <img src="" />
+            <div className="comment-container">
+              <div className="comment-list">
+                <div className="comment">
+                  <div className="comment-aside">
+                    <div className="comment-user-avatar">
+                      <img src="" />
+                    </div>
                   </div>
-                </div>
-                <div className="comment-body">
-                  <div className="comment-content">
-                    <div className="comment-user-name">chiamin</div>
-                    <div className="comment-text">i am chiamin</div>
+                  {/* comment-aside */}
+                  <div className="comment-body">
+                    <div className="comment-content">
+                      <div className="comment-user-name">chiamin</div>
+                      <div className="comment-text">i am chiamin</div>
+                    </div>
+                    <div className="comment-time">2018/07/17</div>
                   </div>
-                  <div className="comment-time">2018/07/17</div>
+                  {/* comment-body */}
                 </div>
+                {/* comment */}
               </div>
+              {/* comment-list */}
             </div>
+            {/* comment-container */}
           </div>
           <div className="modal-footer">{/* input Comment*/}</div>
         </div>
