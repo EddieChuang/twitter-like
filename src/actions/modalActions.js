@@ -14,12 +14,12 @@ export function closeTweetModal() {
 
 export function openCommentModal() {
   return dispatch => {
-    dispatch({ type: 'OPEN_COMMENT_BOX' })
+    dispatch({ type: 'OPEN_COMMENT_MODAL' })
   }
 }
 
 export function closeCommentModal() {
   return dispatch => {
-    dispatch({ type: 'CLOSE_COMMENT_BOX' })
+    dispatch({ type: 'CLOSE_COMMENT_MODAL' })
   }
 }

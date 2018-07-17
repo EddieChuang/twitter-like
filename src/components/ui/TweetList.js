@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import { Tweet } from '../ui'
 import { URL_TWEET_GET } from '../../constants/url'
 import auth from '../../utils/auth'
+import { CommentModal } from './'
+
 class TweetList extends React.Component {
   constructor() {
     super()
@@ -109,6 +111,7 @@ class TweetList extends React.Component {
           </button>
         </div>
         <div className="tweetList-body">{this.renderTweet()}</div>
+        <CommentModal />
       </section>
     )
   }
