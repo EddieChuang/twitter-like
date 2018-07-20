@@ -11,9 +11,14 @@
 }
 .comment {
   display: flex;
+  margin: 5px 0;
+  padding: 10px 5px 10px 5px;
+  border: 2px solid #bbb;
+  border-radius: 15px;
 }
 .comment-aside {
   flex: 0 0 5%;
+  margin: 0 10px 0 0;
 }
 .comment-body {
   flex: 1 0 auto;
@@ -24,7 +29,25 @@
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
+  border: 1px solid #bbb;
+  border-radius: 30px;
+  padding: 10px;
+  width: 650;
 }
 .comment-time {
   flex: 0 0 10%;
+}
+.comment-user-avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.comment-user-name a {
+  color: $light-blue;
+  font-weight: bold;
+  cursor: pointer;
+}
+.comment-text {
+  width: 620px;
+  word-wrap: break-word;
 }

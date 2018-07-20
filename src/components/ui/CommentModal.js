@@ -27,17 +27,43 @@ class CommentModal extends React.Component {
                 <div className="comment">
                   <div className="comment-aside">
                     <div className="comment-user-avatar">
-                      <img src="" />
+                      <img src="https://gravatar.com/avatar/653c8594ceeda34ae16095fc7a289674?s=200&d=retro" />
                     </div>
                   </div>
                   {/* comment-aside */}
                   <div className="comment-body">
                     <div className="comment-content">
-                      <div className="comment-user-name">chiamin</div>
+                      <div className="comment-user-name">
+                        <a>chiamin</a>
+                      </div>
                       <div className="comment-text">i am chiamin</div>
                     </div>
                     {/* comment-content */}
-                    <div className="comment-time">2018/07/17</div>
+                    {/* <div className="comment-time">
+                      <span>2018-07-17</span>
+                    </div> */}
+                  </div>
+                  {/* comment-body */}
+                </div>
+                {/* comment */}
+                <div className="comment">
+                  <div className="comment-aside">
+                    <div className="comment-user-avatar">
+                      <img src="https://gravatar.com/avatar/653c8594ceeda34ae16095fc7a289674?s=200&d=retro" />
+                    </div>
+                  </div>
+                  {/* comment-aside */}
+                  <div className="comment-body">
+                    <div className="comment-content">
+                      <div className="comment-user-name">
+                        <a href="#">chiamin</a>
+                      </div>
+                      <div className="comment-text">i am chiamin</div>
+                    </div>
+                    {/* comment-content */}
+                    {/* <div className="comment-time">
+                      <span>2018-07-17</span>
+                    </div> */}
                   </div>
                   {/* comment-body */}
                 </div>
