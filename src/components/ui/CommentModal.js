@@ -8,6 +8,50 @@ class CommentModal extends React.Component {
     super()
   }
 
+  renderCommentList = () => {
+    return <div className="comment-list">{this.renderComment()}</div>
+  }
+
+  renderComment = user => {
+    return (
+      <div className="comment">
+        <div className="comment-aside">
+          <div className="comment-user-avatar">
+            <img src="https://gravatar.com/avatar/653c8594ceeda34ae16095fc7a289674?s=200&d=retro" />
+          </div>
+        </div>
+        {/* end of comment-aside */}
+        <div className="comment-body">
+          <div className="comment-content">
+            <div className="comment-user-name">
+              <a>chiamin</a>
+            </div>
+            <div className="comment-text">i am chiamin</div>
+          </div>
+          {/* end of comment-content */}
+        </div>
+        {/* end of comment-body */}
+      </div>
+      /* end of comment */
+    )
+  }
+
+  renderCommentInputSection = () => {
+    return (
+      <div className="comment-input-section">
+        <div className="comment-aside">
+          <div className="comment-user-avatar">
+            <img src="https://gravatar.com/avatar/653c8594ceeda34ae16095fc7a289674?s=200&d=retro" />
+          </div>
+        </div>
+        <div className="comment-input">
+          <input />
+          <button>SEND</button>
+        </div>
+      </div>
+    )
+  }
+
   render() {
     const hidden = this.props.visibility ? '' : 'hidden'
     return (
@@ -21,60 +65,8 @@ class CommentModal extends React.Component {
               &times;
             </span>
           </div>
-          <div className="modal-body">
-            <div className="comment-container">
-              <div className="comment-list">
-                <div className="comment">
-                  <div className="comment-aside">
-                    <div className="comment-user-avatar">
-                      <img src="https://gravatar.com/avatar/653c8594ceeda34ae16095fc7a289674?s=200&d=retro" />
-                    </div>
-                  </div>
-                  {/* comment-aside */}
-                  <div className="comment-body">
-                    <div className="comment-content">
-                      <div className="comment-user-name">
-                        <a>chiamin</a>
-                      </div>
-                      <div className="comment-text">i am chiamin</div>
-                    </div>
-                    {/* comment-content */}
-                    {/* <div className="comment-time">
-                      <span>2018-07-17</span>
-                    </div> */}
-                  </div>
-                  {/* comment-body */}
-                </div>
-                {/* comment */}
-                <div className="comment">
-                  <div className="comment-aside">
-                    <div className="comment-user-avatar">
-                      <img src="https://gravatar.com/avatar/653c8594ceeda34ae16095fc7a289674?s=200&d=retro" />
-                    </div>
-                  </div>
-                  {/* comment-aside */}
-                  <div className="comment-body">
-                    <div className="comment-content">
-                      <div className="comment-user-name">
-                        <a href="#">chiamin</a>
-                      </div>
-                      <div className="comment-text">i am chiamin</div>
-                    </div>
-                    {/* comment-content */}
-                    {/* <div className="comment-time">
-                      <span>2018-07-17</span>
-                    </div> */}
-                  </div>
-                  {/* comment-body */}
-                </div>
-                {/* comment */}
-              </div>
-              {/* comment-list */}
-            </div>
-            {/* comment-container */}
-          </div>
-          {/* modal-body */}
-          <div className="modal-footer">{/* input Comment*/}</div>
+          <div className="modal-body">{this.renderCommentList()}</div>
+          <div className="modal-footer">{this.renderCommentInputSection()}</div>
         </div>
       </div>
     )

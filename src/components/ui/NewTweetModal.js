@@ -33,9 +33,11 @@ class NewTweetModal extends React.Component {
             <textarea ref="text" placeholder="Sharing Your Life" />
           </div>
           <div className="modal-footer">
-            <button type="submit" onClick={this.onNewTweet}>
-              TWEET
-            </button>
+            <div className="modal-submit">
+              <button type="submit" onClick={this.onNewTweet}>
+                TWEET
+              </button>
+            </div>
           </div>
           {/* </form> */}
         </div>
