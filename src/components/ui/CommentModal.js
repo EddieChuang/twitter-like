@@ -45,7 +45,7 @@ class CommentModal extends React.Component {
           </div>
         </div>
         <div className="comment-input">
-          <input />
+          <input placeholder="Share Your Comment" />
           <button>SEND</button>
         </div>
       </div>
