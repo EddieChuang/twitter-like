@@ -1,7 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { closeCommentModal } from '../../actions/modalActions'
+import { sendComment } from '../../actions/tweetActions'
 import { bindActionCreators } from '../../../node_modules/redux'
+import auth from '../../utils/auth'
 
 class CommentModal extends React.Component {
   constructor() {
@@ -12,28 +14,37 @@ class CommentModal extends React.Component {
     return <div className="comment-list">{this.renderComment()}</div>
   }
 
-  renderComment = user => {
-    return (
-      <div className="comment">
-        <div className="comment-aside">
-          <div className="comment-user-avatar">
-            <img src="https://gravatar.com/avatar/653c8594ceeda34ae16095fc7a289674?s=200&d=retro" />
-          </div>
-        </div>
-        {/* end of comment-aside */}
-        <div className="comment-body">
-          <div className="comment-content">
-            <div className="comment-user-name">
-              <a>chiamin</a>
+  renderComment = () => {
+    const comments = this.props.comments
+    return comments.map(comment => {
+      console.log(comment)
+      return (
+        <div className="comment">
+          <div className="comment-aside">
+            <div className="comment-user-avatar">
+              <img src={comment.speaker.photo} />
             </div>
-            <div className="comment-text">i am chiamin</div>
           </div>
-          {/* end of comment-content */}
+          {/* end of comment-aside */}
+          <div className="comment-body">
+            <div className="comment-content">
+              <div className="comment-user-name">
+                <a>{comment.speaker}</a>
+              </div>
+              <div className="comment-text">{comment.text}</div>
+            </div>
+            {/* end of comment-content */}
+          </div>
+          {/* end of comment-body */}
         </div>
-        {/* end of comment-body */}
-      </div>
-      /* end of comment */
-    )
+        /* end of comment */
+      )
+    })
+  }
+
+  onSendComment = () => {
+    const text = this.refs.commentText.nodeValue
+    this.props.sendComment(text)
   }
 
   renderCommentInputSection = () => {
@@ -46,7 +57,7 @@ class CommentModal extends React.Component {
         </div>
         <div className="comment-input">
           <input placeholder="Share Your Comment" />
-          <button>SEND</button>
+          <button onClick={this.onSendComment}>SEND</button>
         </div>
       </div>
     )
@@ -75,14 +86,16 @@ class CommentModal extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    visibility: state.modal.commentModalVisibility
+    visibility: state.modal.commentModalVisibility,
+    comments: state.modal.comments
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      close: closeCommentModal
+      close: closeCommentModal,
+      sendComment: sendComment
     },
     dispatch
   )

@@ -8,7 +8,7 @@ import {
 
 export function newTweet(text) {
   return dispatch => {
-    let params = {
+    const params = {
       token: auth.getToken(),
       owner: auth.getUser()._id,
       content: text
@@ -29,7 +29,7 @@ export function newTweet(text) {
 
 export function likeTweet(idToLike) {
   return dispatch => {
-    let params = { token: auth.getToken(), idToLike }
+    const params = { token: auth.getToken(), idToLike }
     // console.log('likeTweet params', params)
     axios
       .post(URL_TWEET_LIKE, params)
@@ -46,7 +46,7 @@ export function likeTweet(idToLike) {
 
 export function unlikeTweet(idToUnlike) {
   return dispatch => {
-    let params = { token: auth.getToken(), idToUnlike }
+    const params = { token: auth.getToken(), idToUnlike }
     axios
       .post(URL_TWEET_UNLIKE, params)
       .then(res => {
@@ -56,6 +56,21 @@ export function unlikeTweet(idToUnlike) {
       .catch(err => {
         console.log('like err', err.response)
         dispatch({ type: 'FAIL_UNLIKE_TWEET' })
+      })
+  }
+}
+
+export function sendComment(commentText) {
+  return dispatch => {
+    const params = { token: auth.Token(), commentText }
+    axios
+      .post(URL_SEND_COMMENT, params)
+      .then(res => {
+        console.log('sendComment res', res)
+        dispath({ type: 'SEND_COMMENT', payload: { comments: res.comments } })
+      })
+      .catch(err => {
+        console.log('sendComment err', err.respnose)
       })
   }
 }

@@ -49,7 +49,7 @@ class Tweet extends React.Component {
           <div className="comment-icon">
             <i
               className="far fa-comment"
-              onClick={this.props.openCommentModal}
+              onClick={() => this.props.openCommentModal(tweet.comments)}
             />
             <span>{tweet.comments.length}</span>
           </div>
