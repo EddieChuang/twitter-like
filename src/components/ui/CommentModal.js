@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { closeCommentModal } from '../../actions/modalActions'
-import { sendComment } from '../../actions/tweetActions'
+import { newComment } from '../../actions/tweetActions'
 import { bindActionCreators } from '../../../node_modules/redux'
 import auth from '../../utils/auth'
 
@@ -28,7 +28,7 @@ class CommentModal extends React.Component {
           <div className="comment-body">
             <div className="comment-content">
               <div className="comment-user-name">
-                <a>{comment.speaker}</a>
+                <a>{comment.speaker.name}</a>
               </div>
               <div className="comment-text">{comment.text}</div>
             </div>
@@ -38,10 +38,10 @@ class CommentModal extends React.Component {
     })
   }
 
-  onSendComment = () => {
+  onNewComment = () => {
     const text = this.refs.commentText.value
     const tweetId = this.props.tweetId
-    this.props.sendComment(tweetId, text)
+    this.props.newComment(tweetId, text)
   }
 
   renderCommentInputSection = () => {
@@ -54,7 +54,7 @@ class CommentModal extends React.Component {
         </div>
         <div className="comment-input">
           <input ref="commentText" placeholder="Share Your Comment" />
-          <button onClick={this.onSendComment}>SEND</button>
+          <button onClick={this.onNewComment}>SEND</button>
         </div>
       </div>
     )
@@ -93,7 +93,7 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       close: closeCommentModal,
-      sendComment: sendComment
+      newComment: newComment
     },
     dispatch
   )

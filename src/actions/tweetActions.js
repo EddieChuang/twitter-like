@@ -4,7 +4,7 @@ import {
   URL_TWEET_SAVE,
   URL_TWEET_LIKE,
   URL_TWEET_UNLIKE,
-  URL_SEND_COMMENT
+  URL_NEW_COMMENT
 } from '../constants/url'
 
 export function newTweet(text) {
@@ -64,20 +64,22 @@ export function unlikeTweet(idToUnlike) {
   }
 }
 
-export function sendComment(tweetId, commentText) {
+export function newComment(tweetId, commentText) {
   return dispath => {
     const token = auth.getToken()
     const id = auth.getUser()._id
     const params = { token, id, tweetId, commentText }
     console.log(params)
     axios
-      .post(URL_SEND_COMMENT, params)
+      .post(URL_NEW_COMMENT, params)
       .then(res => {
-        console.log('sendComment res', res)
-        dispath({ type: 'SEND_COMMENT', payload: { comments: res.comments } })
+        console.log('newComment res', res)
+        const { tweet, comments } = res.data
+        dispath({ type: 'TWEET_NEW_COMMENT', payload: { tweet } })
+        dispath({ type: 'MODAL_NEW_COMMENT', payload: { comments } })
       })
       .catch(err => {
-        console.log('sendComment err', err.respnose)
+        console.log('newComment err', err.respnose)
       })
   }
 }

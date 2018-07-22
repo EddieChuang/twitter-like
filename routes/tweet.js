@@ -8,8 +8,14 @@ const Comment = require('../models/comment')
 router.get('/api/tweet/', (req, res, next) => {
   Tweet.find({})
     .sort('-created')
-    .populate('owner comments', '_id name speaker text created')
-    .populate({})
+    .populate({
+      path: 'owner comments',
+      select: '_id name text speaker created',
+      populate: {
+        path: 'speaker',
+        select: '_id name photo'
+      }
+    })
     .exec(function(err, tweets) {
       // console.log(tweets)
       res.json({ tweets })
@@ -91,7 +97,7 @@ router.post('/api/tweet/unlike', (req, res, next) => {
   )
 })
 
-router.post('/api/tweet/sendComment', (req, res, next) => {
+router.post('/api/tweet/newComment', (req, res, next) => {
   const { id, tweetId, commentText } = req.body
   let comment = Comment()
   comment.speaker = mongoose.Types.ObjectId(id)
@@ -103,10 +109,18 @@ router.post('/api/tweet/sendComment', (req, res, next) => {
       function(err, count) {
         Tweet.findById(tweetId)
           .sort('-created')
-          .populate('comments', 'text created')
+          // .populate('comments', 'text created')
+          .populate({
+            path: 'owner comments',
+            select: '_id name text speaker created',
+            populate: {
+              path: 'speaker',
+              select: '_id name photo'
+            }
+          })
           .exec(function(err, tweet) {
             console.log(tweet)
-            res.json({ comments: tweet.comments })
+            res.json({ tweet, comments: tweet.comments })
           })
       }
     )

@@ -8,6 +8,8 @@ export function tweetReducers(state = { tweet: {} }, action) {
       return { ...state, tweet: action.payload.tweet }
     case 'UNLIKE_TWEET':
       return { ...state, tweet: action.payload.tweet }
+    case 'TWEET_NEW_COMMENT':
+      return { ...state, tweet: action.payload.tweet }
   }
 
   return state

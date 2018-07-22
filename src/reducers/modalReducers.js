@@ -23,6 +23,8 @@ export function modalReducers(
       }
     case 'CLOSE_COMMENT_MODAL':
       return { ...state, commentModalVisibility: false }
+    case 'MODAL_NEW_COMMENT':
+      return { ...state, comments: action.payload.comments }
   }
 
   return state
