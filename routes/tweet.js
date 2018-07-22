@@ -1,13 +1,15 @@
 const router = require('express').Router()
 const async = require('async')
+const mongoose = require('mongoose')
 const User = require('../models/user')
 const Tweet = require('../models/tweet')
+const Comment = require('../models/comment')
 
 router.get('/api/tweet/', (req, res, next) => {
   Tweet.find({})
     .sort('-created')
-    .populate('owner', '_id name')
-    // .populate('comment')
+    .populate('owner comments', '_id name speaker text created')
+    .populate({})
     .exec(function(err, tweets) {
       // console.log(tweets)
       res.json({ tweets })
@@ -56,14 +58,12 @@ router.route('/api/tweet/save').post((req, res, next) => {
           // console.log(tweets)
           res.json({ tweet })
         })
-      // res.json({tweet: JSON.stringify(tweet)})
     }
   ])
 })
 
 router.post('/api/tweet/like', (req, res, next) => {
-  console.log('api/tweet/like req.body', req.body)
-  let { id, idToLike } = req.body
+  const { id, idToLike } = req.body
   Tweet.findByIdAndUpdate(idToLike, { $push: { like: { user: id } } }, function(
     err,
     count
@@ -77,7 +77,7 @@ router.post('/api/tweet/like', (req, res, next) => {
 })
 
 router.post('/api/tweet/unlike', (req, res, next) => {
-  let { id, idToUnlike } = req.body
+  const { id, idToUnlike } = req.body
   Tweet.findByIdAndUpdate(
     idToUnlike,
     { $pull: { like: { user: id } } },
@@ -90,4 +90,27 @@ router.post('/api/tweet/unlike', (req, res, next) => {
     }
   )
 })
+
+router.post('/api/tweet/sendComment', (req, res, next) => {
+  const { id, tweetId, commentText } = req.body
+  let comment = Comment()
+  comment.speaker = mongoose.Types.ObjectId(id)
+  comment.text = commentText
+  comment.save(function(err) {
+    Tweet.findByIdAndUpdate(
+      tweetId,
+      { $push: { comments: comment._id } },
+      function(err, count) {
+        Tweet.findById(tweetId)
+          .sort('-created')
+          .populate('comments', 'text created')
+          .exec(function(err, tweet) {
+            console.log(tweet)
+            res.json({ comments: tweet.comments })
+          })
+      }
+    )
+  })
+})
+
 module.exports = router

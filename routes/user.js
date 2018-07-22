@@ -121,7 +121,6 @@ router.post('/api/user/follow', (req, res, next) => {
     { $push: { followings: idToFollow } },
     { $push: { followers: id } }
   ]
-  console.log('/api/user/follow', id, idToFollow)
   async.waterfall([
     function(callback) {
       User.update(filters[0], queries[0], function(err, count) {
@@ -152,7 +151,6 @@ router.post('/api/user/unfollow', (req, res, next) => {
     { $pull: { followings: idToUnFollow } },
     { $pull: { followers: id } }
   ]
-  console.log(id, idToUnFollow)
   async.waterfall([
     function(callback) {
       User.update(filters[0], queries[0], function(err, count) {

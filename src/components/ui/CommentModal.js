@@ -25,7 +25,6 @@ class CommentModal extends React.Component {
               <img src={comment.speaker.photo} />
             </div>
           </div>
-          {/* end of comment-aside */}
           <div className="comment-body">
             <div className="comment-content">
               <div className="comment-user-name">
@@ -33,18 +32,16 @@ class CommentModal extends React.Component {
               </div>
               <div className="comment-text">{comment.text}</div>
             </div>
-            {/* end of comment-content */}
           </div>
-          {/* end of comment-body */}
         </div>
-        /* end of comment */
       )
     })
   }
 
   onSendComment = () => {
-    const text = this.refs.commentText.nodeValue
-    this.props.sendComment(text)
+    const text = this.refs.commentText.value
+    const tweetId = this.props.tweetId
+    this.props.sendComment(tweetId, text)
   }
 
   renderCommentInputSection = () => {
@@ -56,7 +53,7 @@ class CommentModal extends React.Component {
           </div>
         </div>
         <div className="comment-input">
-          <input placeholder="Share Your Comment" />
+          <input ref="commentText" placeholder="Share Your Comment" />
           <button onClick={this.onSendComment}>SEND</button>
         </div>
       </div>
@@ -87,7 +84,8 @@ class CommentModal extends React.Component {
 function mapStateToProps(state) {
   return {
     visibility: state.modal.commentModalVisibility,
-    comments: state.modal.comments
+    comments: state.modal.comments,
+    tweetId: state.modal.tweetId
   }
 }
 

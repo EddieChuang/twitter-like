@@ -12,9 +12,9 @@ export function closeTweetModal() {
   }
 }
 
-export function openCommentModal(comments) {
+export function openCommentModal(tweetId, comments) {
   return dispatch => {
-    dispatch({ type: 'OPEN_COMMENT_MODAL', payload: { comments } })
+    dispatch({ type: 'OPEN_COMMENT_MODAL', payload: { tweetId, comments } })
   }
 }
 

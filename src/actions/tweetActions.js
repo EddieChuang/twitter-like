@@ -3,7 +3,8 @@ import auth from '../utils/auth'
 import {
   URL_TWEET_SAVE,
   URL_TWEET_LIKE,
-  URL_TWEET_UNLIKE
+  URL_TWEET_UNLIKE,
+  URL_SEND_COMMENT
 } from '../constants/url'
 
 export function newTweet(text) {
@@ -29,8 +30,9 @@ export function newTweet(text) {
 
 export function likeTweet(idToLike) {
   return dispatch => {
-    const params = { token: auth.getToken(), idToLike }
-    // console.log('likeTweet params', params)
+    const token = auth.getToken()
+    const id = auth.getUser()._id
+    const params = { token, id, idToLike }
     axios
       .post(URL_TWEET_LIKE, params)
       .then(res => {
@@ -46,7 +48,9 @@ export function likeTweet(idToLike) {
 
 export function unlikeTweet(idToUnlike) {
   return dispatch => {
-    const params = { token: auth.getToken(), idToUnlike }
+    const token = auth.getToken()
+    const id = auth.getUser()._id
+    const params = { token, id, idToUnlike }
     axios
       .post(URL_TWEET_UNLIKE, params)
       .then(res => {
@@ -60,9 +64,12 @@ export function unlikeTweet(idToUnlike) {
   }
 }
 
-export function sendComment(commentText) {
-  return dispatch => {
-    const params = { token: auth.Token(), commentText }
+export function sendComment(tweetId, commentText) {
+  return dispath => {
+    const token = auth.getToken()
+    const id = auth.getUser()._id
+    const params = { token, id, tweetId, commentText }
+    console.log(params)
     axios
       .post(URL_SEND_COMMENT, params)
       .then(res => {

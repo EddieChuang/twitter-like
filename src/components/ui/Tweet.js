@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { likeTweet, unlikeTweet } from '../../actions/tweetActions'
 import { openCommentModal } from '../../actions/modalActions'
 import { URL_HOME } from '../../constants/url'
+import { CommentModal } from './CommentModal'
 
 class Tweet extends React.Component {
   constructor() {
@@ -49,7 +50,9 @@ class Tweet extends React.Component {
           <div className="comment-icon">
             <i
               className="far fa-comment"
-              onClick={() => this.props.openCommentModal(tweet.comments)}
+              onClick={() =>
+                this.props.openCommentModal(tweet._id, tweet.comments)
+              }
             />
             <span>{tweet.comments.length}</span>
           </div>

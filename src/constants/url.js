@@ -15,3 +15,4 @@ export const URL_TWEET_GET = `${SERVER}/api/tweet`
 export const URL_TWEET_SAVE = `${SERVER}/api/tweet/save`
 export const URL_TWEET_LIKE = `${SERVER}/api/tweet/like`
 export const URL_TWEET_UNLIKE = `${SERVER}/api/tweet/unlike`
+export const URL_SEND_COMMENT = `${SERVER}/api/tweet/sendComment`

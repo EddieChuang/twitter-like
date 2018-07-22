@@ -4,6 +4,7 @@ export function modalReducers(
   state = {
     tweetModalVisibility: false,
     commentModalVisibility: false,
+    tweetId: '', // id for commentModal
     comments: []
   },
   action
@@ -17,7 +18,8 @@ export function modalReducers(
       return {
         ...state,
         commentModalVisibility: true,
-        comments: actions.payload.comments
+        comments: action.payload.comments,
+        tweetId: action.payload.tweetId
       }
     case 'CLOSE_COMMENT_MODAL':
       return { ...state, commentModalVisibility: false }
