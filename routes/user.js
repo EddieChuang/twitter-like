@@ -50,13 +50,6 @@ router.route('/user/signup').post((req, res, next) => {
             }
           }
         )(req, res, next)
-
-        // req.login(user, function(err) {
-        //   if (err) return next(err)
-        //   let { _id, name, email, photo, tweets } = user
-        //   res.status(200)
-        //   res.json({ user: { _id, name, email, photo, tweets } })
-        // })
       })
     }
   })

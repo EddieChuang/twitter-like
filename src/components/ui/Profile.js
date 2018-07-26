@@ -4,6 +4,9 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Followings, Followers } from '.'
 import { follow, unFollow } from '../../actions/userActions'
+import { ChatModal } from '.'
+import { openChatModal } from '../../actions/modalActions'
+
 import userjs from '../../utils/user'
 import auth from '../../utils/auth'
 
@@ -64,6 +67,9 @@ class Profile extends React.Component {
             {user.name}
             {/* <a href={`${URL_HOME}/${user._id}`}>{user.name}</a> */}
           </span>
+          <span>
+            <i className="far fa-comments" onClick={this.props.openChatModal} />
+          </span>
         </div>
         <hr />
         <div className="profile-email">
@@ -95,6 +101,7 @@ class Profile extends React.Component {
             <Followers user={user} />
           </div>
         </div>
+        <ChatModal />
       </section>
     )
   }
@@ -111,7 +118,8 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       follow: follow,
-      unFollow: unFollow
+      unFollow: unFollow,
+      openChatModal: openChatModal
     },
     dispatch
   )

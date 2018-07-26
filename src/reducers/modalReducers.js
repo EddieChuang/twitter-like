@@ -4,6 +4,7 @@ export function modalReducers(
   state = {
     tweetModalVisibility: false,
     commentModalVisibility: false,
+    chatModalVisibility: false,
     tweetId: '', // id for commentModal
     comments: []
   },
@@ -23,6 +24,10 @@ export function modalReducers(
       }
     case 'CLOSE_COMMENT_MODAL':
       return { ...state, commentModalVisibility: false }
+    case 'OPEN_CHAT_MODAL':
+      return { ...state, chatModalVisibility: true }
+    case 'CLOSE_CHAT_MODAL':
+      return { ...state, chatModalVisibility: false }
     case 'MODAL_NEW_COMMENT':
       return { ...state, comments: action.payload.comments }
   }

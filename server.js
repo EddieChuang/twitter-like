@@ -62,16 +62,16 @@ app.use(function(req, res, next) {
   res.locals.user = req.user
   next()
 })
-io.use(
-  passportSocketIo.authorize({
-    cookieParser: cookieParser,
-    key: 'connect.sid',
-    secret: secretConfig.secret,
-    store: sessionStore,
-    success: onAuthorizeSuccess,
-    fail: onAuthorizeFail
-  })
-)
+// io.use(
+//   passportSocketIo.authorize({
+//     cookieParser: cookieParser,
+//     key: 'connect.sid',
+//     secret: secretConfig.secret,
+//     store: sessionStore,
+//     success: onAuthorizeSuccess,
+//     fail: onAuthorizeFail
+//   })
+// )
 function onAuthorizeSuccess(data, accept) {
   console.log('SocketIO Connection Success ')
   accept()

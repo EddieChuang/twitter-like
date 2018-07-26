@@ -23,3 +23,15 @@ export function closeCommentModal() {
     dispatch({ type: 'CLOSE_COMMENT_MODAL' })
   }
 }
+
+export function openChatModal() {
+  return dispatch => {
+    dispatch({ type: 'OPEN_CHAT_MODAL' })
+  }
+}
+
+export function closeChatModal() {
+  return dispatch => {
+    dispatch({ type: 'CLOSE_CHAT_MODAL' })
+  }
+}

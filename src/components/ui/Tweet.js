@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { likeTweet, unlikeTweet } from '../../actions/tweetActions'
 import { openCommentModal } from '../../actions/modalActions'
 import { URL_HOME } from '../../constants/url'
-import { CommentModal } from './CommentModal'
 
 class Tweet extends React.Component {
   constructor() {
