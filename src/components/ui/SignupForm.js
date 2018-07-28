@@ -37,11 +37,11 @@ class SignupForm extends React.Component {
     }
 
     return success ? (
-      <div className="message message-success">
+      <div className="signup-message signup-message-success">
         Successfully. After 3s redirecting to home page...
       </div>
     ) : (
-      <div className="message message-error">{message}</div>
+      <div className="signup-message signup-message-error">{message}</div>
     )
   }
 

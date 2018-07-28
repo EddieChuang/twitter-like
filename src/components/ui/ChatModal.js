@@ -10,22 +10,62 @@ class ChatModal extends React.Component {
 
   renderMessage = () => {
     return (
-      <div className="message">
-        <div className="message-username" />
-        <div className="message-text" />
-      </div>
+      <React.Fragment>
+        <div className="message-container">
+          <div className="message">
+            <div className="message-username">chiamin</div>
+            <div className="message-text-box">
+              <div className="message-text">i am chiamin</div>
+            </div>
+          </div>
+        </div>
+        <div className="message-container self">
+          <div className="message self">
+            <div className="message-username">chiamin</div>
+            <div className="message-text-box">
+              <div className="message-text">i am chiamin</div>
+            </div>
+          </div>
+        </div>
+        <div className="message-container self">
+          <div className="message self">
+            <div className="message-username">chiamin</div>
+            <div className="message-text-box">
+              <div className="message-text">i am chiamin</div>
+            </div>
+          </div>
+        </div>
+        <div className="message-container self">
+          <div className="message self">
+            <div className="message-username">chiamin</div>
+            <div className="message-text-box">
+              <div className="message-text">i am chiamin</div>
+            </div>
+          </div>
+        </div>
+      </React.Fragment>
     )
   }
 
   renderMessageBox = () => {
+    return <div className="message-box">{this.renderMessage()}</div>
+  }
+
+  renderMessageInput = () => {
     return (
-      <div className="message-container">
-        <div className="message-box">{this.renderMessage()}</div>
+      <div className="message-input-section">
+        <div className="message-aside">
+          <div className="message-user-avatar">
+            <img src="https://gravatar.com/avatar/653c8594ceeda34ae16095fc7a289674?s=200&d=retro" />
+          </div>
+        </div>
+        <div className="message-input">
+          <input ref="messageText" placeholder="Share Your Comment" />
+          <button onClick={this.onNewComment}>SEND</button>
+        </div>
       </div>
     )
   }
-
-  renderMessageInput = () => {}
 
   render() {
     const hidden = this.props.visibility ? '' : 'hidden'

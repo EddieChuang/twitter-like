@@ -1,4 +1,4 @@
-#signup{
+#signup {
   display: flex;
   // height: $signup-form-height;
   flex: 1 0 auto;
@@ -6,22 +6,22 @@
   align-items: center;
 }
 
-.signup-form li{
+.signup-form li {
   display: flex;
   list-style-type: none;
   margin: 20px auto;
   justify-content: flex-end;
 }
-.signup-form h3{
+.signup-form h3 {
   font-size: 40px;
   color: $light-blue;
   text-align: center;
 }
-.signup-form{
+.signup-form {
   display: flex;
   flex-direction: column;
 }
-.signup-form i{
+.signup-form i {
   font-size: 30px;
   margin-right: 5px;
   color: $dark-blue;
@@ -29,17 +29,17 @@
   justify-content: center;
 }
 
-.signup-form input{
+.signup-form input {
   font-size: 25px;
   border-radius: 5px;
 }
-.signup-form input::placeholder{
-  color: #BBB;
+.signup-form input::placeholder {
+  color: #bbb;
 }
-.signup-form input:focus{
+.signup-form input:focus {
   border-radius: 5px;
 }
-.signup-form button{
+.signup-form button {
   font-size: 20px;
   color: $light-grey;
   background: $blue-green;
@@ -49,21 +49,19 @@
   margin: 0px 10px;
   cursor: pointer;
   justify-content: flex-end;
-  transition:
-    background-color 1s ease,
-    border 1s ease
+  transition: background-color 1s ease, border 1s ease;
 }
-.signup-form button:hover{
+.signup-form button:hover {
   background: transparent;
   color: $blue-green;
 }
-.signup-form a{
+.signup-form a {
   text-decoration: none;
   align-self: flex-end;
   justify-content: flex-end;
   font-style: italic;
 }
-.message{
+.signup-message {
   // display: none;
   text-align: center;
   padding: 10px;
@@ -71,14 +69,14 @@
   font-weight: bold;
 }
 
-.message span{
+.signup-message span {
   // display: none;
 }
 
-.message-success{
+.signup-message-success {
   background: $light-green;
 }
 
-.message-error{
+.signup-message-error {
   background: $pink;
 }

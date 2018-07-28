@@ -1,0 +1,79 @@
+.message-box {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+.message-container {
+  display: flex;
+  justify-content: flex-start;
+  padding: 10px;
+  flex: 0 0 35%;
+}
+.message-container.self {
+  justify-content: flex-end !important;
+}
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.message.self {
+  align-items: flex-end !important;
+}
+.message-username {
+  font-weight: bold;
+}
+.message-text-box {
+  background-color: #ddd;
+  border-radius: 5px;
+  max-width: 70%;
+  padding: 10px;
+}
+.message-text {
+  word-break: break-word;
+}
+.message-input-section {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  align-content: center;
+  background: #eee;
+}
+
+.message-aside {
+  flex: 0 0 5%;
+  margin: 0 10px 0 0;
+  display: flex;
+  align-items: center;
+}
+.message-aside .message-user-avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.message-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex: 1 0 auto;
+}
+.message-input button {
+  background-color: $primary;
+  color: white;
+  border-color: $primary;
+  border-radius: 20px;
+  height: 100%;
+  padding: 6px 12px;
+  font-size: 15px;
+  margin: 0;
+}
+.message-input input {
+  width: 90%;
+  height: 100%;
+  border: 1px solid #bbb;
+  border-radius: 20px;
+  font-size: 20px;
+  padding: 0 10px;
+}
