@@ -1,5 +1,5 @@
 $(function() {
-  // let socket = io()
+  let socket = io()
   console.log('custom.js', socket)
 
   socket.emit('chat', 'chat')

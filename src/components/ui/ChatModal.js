@@ -2,10 +2,27 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { closeChatModal } from '../../actions/modalActions'
+import { isObject } from 'util'
 
 class ChatModal extends React.Component {
   constructor() {
     super()
+    this.state = {
+      socket: ''
+    }
+  }
+
+  componentDidMount() {
+    const socket = io.connect()
+    this.setState({ socket })
+  }
+
+  onSendMessage = () => {
+    const socket = this.state.socket
+    const text = this.refs.messageText.value
+    const data = { text }
+    socket.emit('message', data)
+    this.refs.messageText.value = ''
   }
 
   renderMessage = () => {
@@ -61,7 +78,7 @@ class ChatModal extends React.Component {
         </div>
         <div className="message-input">
           <input ref="messageText" placeholder="Share Your Comment" />
-          <button onClick={this.onNewComment}>SEND</button>
+          <button onClick={this.onSendMessage}>SEND</button>
         </div>
       </div>
     )
