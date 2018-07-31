@@ -2,66 +2,61 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { closeChatModal } from '../../actions/modalActions'
-import { isObject } from 'util'
+import auth from '../../utils/auth'
 
 class ChatModal extends React.Component {
   constructor() {
     super()
     this.state = {
-      socket: ''
+      socket: '',
+      messages: [] // { name, text }
     }
   }
 
   componentDidMount() {
-    const socket = io.connect()
-    this.setState({ socket })
+    const self = auth.getUser()._id
+
+    const chatTo = this.props.user._id
+    const chatId = self > chatTo ? self + chatTo : chatTo + self
+    const query = `chatId=${chatId}`
+    const socket = io.connect(
+      'http://127.0.0.1:3030',
+      { query }
+    )
+    socket.on('chatId', data => {
+      console.log('receive', data)
+      const messages = this.state.messages.concat(data)
+      console.log(messages)
+      this.setState({ messages })
+    })
+    this.setState({ socket, chatId })
   }
 
   onSendMessage = () => {
-    const socket = this.state.socket
+    const { _id, name } = auth.getUser()
+    const { chatId, socket } = this.state
     const text = this.refs.messageText.value
-    const data = { text }
-    socket.emit('message', data)
+    const data = { userId: _id, name, text }
+    socket.emit('chatId', data)
     this.refs.messageText.value = ''
   }
 
   renderMessage = () => {
-    return (
-      <React.Fragment>
-        <div className="message-container">
-          <div className="message">
-            <div className="message-username">chiamin</div>
+    const self = auth.getUser()._id
+
+    return this.state.messages.map((message, i) => {
+      const isSelf = self === message.userId ? 'self' : ''
+      return (
+        <div key={i} className={`message-container ${isSelf}`}>
+          <div className={`message ${isSelf}`}>
+            <div className="message-username">{message.name}</div>
             <div className="message-text-box">
-              <div className="message-text">i am chiamin</div>
+              <div className="message-text">{message.text}</div>
             </div>
           </div>
         </div>
-        <div className="message-container self">
-          <div className="message self">
-            <div className="message-username">chiamin</div>
-            <div className="message-text-box">
-              <div className="message-text">i am chiamin</div>
-            </div>
-          </div>
-        </div>
-        <div className="message-container self">
-          <div className="message self">
-            <div className="message-username">chiamin</div>
-            <div className="message-text-box">
-              <div className="message-text">i am chiamin</div>
-            </div>
-          </div>
-        </div>
-        <div className="message-container self">
-          <div className="message self">
-            <div className="message-username">chiamin</div>
-            <div className="message-text-box">
-              <div className="message-text">i am chiamin</div>
-            </div>
-          </div>
-        </div>
-      </React.Fragment>
-    )
+      )
+    })
   }
 
   renderMessageBox = () => {
@@ -85,7 +80,9 @@ class ChatModal extends React.Component {
   }
 
   render() {
+    const socket = this.state.socket
     const hidden = this.props.visibility ? '' : 'hidden'
+
     return (
       <div className={`modal ${hidden}`}>
         <div className="modal-content">

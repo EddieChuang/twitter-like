@@ -101,7 +101,7 @@ class Profile extends React.Component {
             <Followers user={user} />
           </div>
         </div>
-        <ChatModal />
+        <ChatModal user={user} />
       </section>
     )
   }

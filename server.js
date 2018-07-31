@@ -72,14 +72,14 @@ app.use(function(req, res, next) {
 //     fail: onAuthorizeFail
 //   })
 // )
-function onAuthorizeSuccess(data, accept) {
-  console.log('SocketIO Connection Success ')
-  accept()
-}
-function onAuthorizeFail(data, message, error, accept) {
-  console.log('SocketIO Connection Fail ', message)
-  if (error) accept(new Error(message))
-}
+// function onAuthorizeSuccess(data, accept) {
+//   console.log('SocketIO Connection Success ')
+//   accept()
+// }
+// function onAuthorizeFail(data, message, error, accept) {
+//   console.log('SocketIO Connection Fail ', message)
+//   if (error) accept(new Error(message))
+// }
 
 require('./realtime/io')(io)
 const authJWT = require('./middleware/auth-jwt')
